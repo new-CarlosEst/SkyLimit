@@ -8,7 +8,8 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 
-COPY . .
+# Esto lo comento pq me esta cogiendo lo de dist en vez de lo de mi codigo real, y solo actualiza el host y las cosas que salen cuando lo reinicio
+# COPY . .
 
 # Arranca en modo dev con start:dev
 CMD ["npm", "run", "start:dev"]

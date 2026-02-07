@@ -33,25 +33,26 @@ services:
       - postgres
 
   # Servicio de backend de nestjs
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    container_name: backend
-    restart: "no"
-    ports:
-      - "3000:3000"
-    environment:
-    # variable con la url para la base de datos, como uso el ORM prisma esta esta variable deberia estar en el .env de dentro de /backend
-    #   DATABASE_URL: ${DATABASE_URL} url para la base de datos, como uso el ORM prisma esta esta variable deberia estar en el .env de dentro de /backend
-      - CHOKIDAR_USEPOLLING=true
-    volumes:
-      - ./backend:/app
-      - /app/node_modules
-    networks:
-      - app_network
-    depends_on:
-      - postgres
+  # Comentado ya que no funciona el "hotreload" por lo que mietras el contendor este levantado no se actualizan los cambios en el host local, solo al reinicarlo
+  # TODO: Cuando ya funcione la aplicacion y este lista para ponerla en "produccion" descomentar el servicio de backend, en desarrollo trabajar con nestJS en local
+  # backend:
+  #   build:
+  #     context: ./backend
+  #     dockerfile: Dockerfile
+  #   container_name: backend
+  #   restart: "no"
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - CHOKIDAR_USEPOLLING=true
+  #     - CHOKIDAR_INTERVAL=1000
+  #   volumes:
+  #     - ./backend:/app
+  #     - /app/node_modules
+  #   networks:
+  #     - app_network
+  #   depends_on:
+  #     - postgres
 
   #Servicio de front de vite con react + swc
   frontend:
@@ -69,8 +70,9 @@ services:
       - CHOKIDAR_USEPOLLING=true
     networks:
     - app_network
-    depends_on:
-    - backend
+    # TODO: Descomentar esto tambien cuando ya no este en desarrollo
+    # depends_on:
+    # - backend
 
 volumes:
   postgres_data:
