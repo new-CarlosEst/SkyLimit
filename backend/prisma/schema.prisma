@@ -4,18 +4,15 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
-//Ejecuta las migraciones npx prisma migrate dev --name <nombreMigracion>
-
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+  url = env("DATABASE_URL") //No tocar ya que migre a la version 6 y esto sigue funcionando
 }
 
-//Esto crea un tabla en la bd al migralo
 model User {
   //Si pongo @id es como una fk
   //Si pongo un @default te pone uno por defecto si no pasas id, en este caso con autoincremento

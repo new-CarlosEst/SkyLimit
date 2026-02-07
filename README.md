@@ -40,20 +40,26 @@ SkyLimit elimina estas prácticas ofreciendo:
 
 ## 🛠️ Stack Tecnológico
 
-### Frontend
-- **React** + **TypeScript** - UI reactiva y tipado seguro
-- **React Router** - Navegación SPA fluida
-- **Axios** - Comunicación HTTP asíncrona
-- **Zustand** - Gestión de estado global
+### Frontend (detected versions)
+- **React** 19.2.0 + **TypeScript** ~5.9.3 - UI reactiva y tipado seguro
+- **Vite** ^7.2.4 - Bundler / dev server
+- **React Router** ^7.13.0 - Navegación SPA
+- **Axios** ^1.13.4 - Comunicación HTTP
+- **TailwindCSS** ^4.1.18 - Utilidades CSS
+- **Zustand** ^5.0.11 - Gestión de estado
 
-### Backend
-- **NestJS** + **TypeScript** - Arquitectura robusta y mantenible
-- **Express.js** - Framework base de Node.js
-- **APIs Externas** - Amadeus & SkyScanner para datos reales
+### Backend (detected versions)
+- **NestJS** ^11.0.1 + **TypeScript** ^5.7.3 - Arquitectura robusta y mantenible
+- **Node.js** 20 (images: `node:20-alpine`) - Runtime utilizado en Dockerfiles
+- **@prisma/client / prisma** 6.19.2 - ORM y cliente Prisma
+- **Express.js** - Framework base (usado por NestJS)
 
-### Base de Datos
-- **PostgreSQL** - Base de datos relacional de alto rendimiento
-- **Prisma** - ORM moderno para TypeScript
+### Base de Datos & DevTools
+- **PostgreSQL** 16 (image: `postgres:16-alpine`) - Base de datos relacional
+- **pgAdmin** image: `dpage/pgadmin4:latest` - Interfaz de administración
+- **Docker / Docker Compose** - Contenerización (compose file in repo)
+
+> Notas: versiones detectadas desde `backend/package.json`, `frontend/package.json`, los Dockerfiles y `docker-compose.yml`.
 
 ### DevOps
 - **Docker** - Contenedorización de la aplicación
