@@ -11,7 +11,7 @@ import * as bcrypt from 'bcrypt';
 export class AuthService {
 
     //Me creo un userService para poder llamar a los metodos del crud de modulo users
-    constructor(private userService: UsersService) {}
+    constructor(private readonly userService: UsersService) {}
 
     /**
      * Funcion que recibe un email y una contraseña y verifica si coinciden

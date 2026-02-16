@@ -1,6 +1,13 @@
-function AuthButton(){
+type AuthButtonProps = {
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+function AuthButton({setIsOpen} : AuthButtonProps){
     return (
-        <button className="bg-gray-200 h-8 w-20 border-black border-2 text-center rounded-2xl hover:bg-blue-300">
+        <button 
+            className=""
+            onClick={() => setIsOpen(true)}
+        >
             Login
         </button>
     )

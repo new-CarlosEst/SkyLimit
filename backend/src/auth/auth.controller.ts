@@ -9,14 +9,18 @@ export class AuthController {
     //Me creo un service de auth
     constructor(private readonly authService: AuthService){} //le pongo readonly para que sea inmutable y no pueda ser nulo el AuthService
 
-    //Me creo una ruta de post para el registro
+    //TODO: Crear el token con jwt y devolver el token en vez de los datos tanto para /login como para /register
+
+    //Me creo una ruta de post para el registro (Codigo 201 en caso de exito)
     @Post("register")
+    @HttpCode(201)
     async register(@Body() registerDto : RegisterDto){
         return this.authService.register(registerDto)
     }
 
-    //Me croe la ruta de post para el login
+    //Me croe la ruta de post para el login (Codigo 200 en caso de exito)
     @Post("login")
+    @HttpCode(200)
     async login(@Body() loginDto: LoginDto){
         return this.authService.login(loginDto)
     }
