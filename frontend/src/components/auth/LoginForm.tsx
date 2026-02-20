@@ -33,7 +33,7 @@ function LoginForm({isLogin, setIsLogin} : loginProps){
         <form onSubmit={enviarDatos}>
             <h2>Inicia sesion en Skylimit</h2>
             <label htmlFor="email">Email
-                <input type="text" name="email" id="" />
+                <input type="email" name="email" id="" />
             </label>
 
             <label htmlFor="password">Contraseña

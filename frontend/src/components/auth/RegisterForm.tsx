@@ -19,6 +19,8 @@ function RegisterForm({isLogin, setIsLogin}: loginProps){
         //Me saco los datos del form
         const formData = new FormData(e.currentTarget)
 
+        let a = formData.get("name")
+        console.log(a)
         const datos: RegisterData = {
             name: formData.get("name") as string,
             surname: formData.get("surname") as string,
@@ -45,7 +47,7 @@ function RegisterForm({isLogin, setIsLogin}: loginProps){
             </label>
 
             <label htmlFor="email">Email
-                <input type="text" name="email" id="" />
+                <input type="email" name="email" id="" />
             </label>
 
             <label htmlFor="password">Contraseña
