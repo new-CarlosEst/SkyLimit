@@ -56,8 +56,11 @@ export class AuthService {
 
         //Creo un dto de modulo user para crear el usuario
         const createUserDto: CreateUserDto = {
-            ...registerDto, //Cogemos los datos del dto (name, surname, email y password)
+            name: registerDto.name,
+            surname: registerDto.surname,
+            email: registerDto.email,
             password: pwdEncriptada, //sobrescribimos la contraseña con la contraseña encriptada
+            role: registerDto.role || 'USER', //asignamos el rol o el valor por defecto
         };
 
         //Me guardo el usuario

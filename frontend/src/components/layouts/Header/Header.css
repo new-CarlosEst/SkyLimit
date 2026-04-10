@@ -1,0 +1,37 @@
+.header{
+    display: flex;
+    background-color: #2c5aa0;
+    justify-content: space-between;
+    align-items: center;
+    height: 4rem;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    color: white;
+    /* Añado position fixed para que no se pueda mover y un zindex de 1000*/
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.header img {
+    margin-left: 2rem;
+    width: 10rem;
+}
+
+.navigation ul {
+    display: flex;
+    gap: 2rem;
+    margin-right: 2rem;
+    font-size: 1.2rem;
+}
+
+.navigation li {
+    cursor: pointer;
+    user-select: none;
+}
+
+.navigation li:hover{
+    color: #bfdbfe
+}
+

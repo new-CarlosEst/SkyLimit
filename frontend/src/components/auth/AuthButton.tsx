@@ -1,16 +1,8 @@
-type AuthButtonProps = {
-    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-function AuthButton({setIsOpen} : AuthButtonProps){
-    return (
-        <button 
-            className=""
-            onClick={() => setIsOpen(true)}
-        >
-            Login
-        </button>
-    )
+function AuthButton() {
+  return (
+    <>
+    </>
+  )
 }
 
-export default AuthButton;
+export default AuthButton

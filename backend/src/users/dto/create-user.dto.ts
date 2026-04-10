@@ -1,4 +1,4 @@
-import { IsEmail, IsString, MinLength } from "class-validator";
+import { IsEmail, IsString, MinLength, IsOptional, IsEnum } from "class-validator";
 
 /**
  * Clase que añade restricciones a como vienen datos, si no vienen en el formato correctos devuelve un error.
@@ -17,4 +17,8 @@ export class CreateUserDto{
 
     @IsString()
     surname: string;
+
+    @IsOptional()
+    @IsEnum(['USER', 'ADMIN', 'SUPERADMIN'], { message: "El rol debe ser USER, ADMIN o SUPERADMIN" })
+    role?: string = 'USER';
 }

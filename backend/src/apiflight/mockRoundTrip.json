@@ -1,0 +1,417 @@
+{
+    "sessionToken": "ac7ed753-12d7-4728-9af9-fc6a0fc31178",
+    "status": "RESULT_STATUS_COMPLETE",
+    "itineraries": [
+        {
+            "id": "13870-2604202135--32222-0-9772-2604202250|9772-2604301450--32222-0-13870-2604301615",
+            "price": {
+                "amount": 370.99,
+                "currency": "EUR",
+                "formatted": "EUR 370.99"
+            },
+            "legs": [
+                {
+                    "origin": "MAD",
+                    "destination": "BCN",
+                    "departure": "2026-04-20T21:35:00",
+                    "arrival": "2026-04-20T22:50:00",
+                    "durationMinutes": 75,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Iberia",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/IB.png"
+                        }
+                    ]
+                },
+                {
+                    "origin": "BCN",
+                    "destination": "MAD",
+                    "departure": "2026-04-30T14:50:00",
+                    "arrival": "2026-04-30T16:15:00",
+                    "durationMinutes": 85,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Iberia",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/IB.png"
+                        }
+                    ]
+                }
+            ],
+            "score": 0,
+            "tags": [],
+            "bookingUrl": "https://www.skyscanner.net/transport_deeplink/4.0/ES/en-GB/EUR/a582/2/13870.9772.2026-04-20,9772.13870.2026-04-30/air/trava/flights?itinerary=flight|-32222|427|13870|2026-04-20T21:35|9772|2026-04-20T22:50|75|LDNNB4|L|-,flight|-32222|414|9772|2026-04-30T14:50|13870|2026-04-30T16:15|85|VDNNB4|V|-&carriers=-32222&operators=-32222,-32222&passengers=2&channel=website&cabin_class=economy&fps_session_id=ac7ed753-12d7-4728-9af9-fc6a0fc31178&ticket_price=370.99&is_npt=false&is_multipart=false&client_id=skyscanner_website&q_ids=H4sIAAAAAAAA_xPS42JJNLUwEhLgYuZYlyPEzLHGR6Lh5tTzbGCRNT5CIGGJhu2nzrNJMSkwAQDhjmojMAAAAA|-7085510443407021943|2&q_sources=JACQUARD&commercial_filters=false&q_datetime_utc=2026-04-10T09:14:56&pqid=true&fare_type=base_fare"
+        },
+        {
+            "id": "13870-2604202135--32222-0-9772-2604202250|9772-2604301335--32222-0-13870-2604301500",
+            "price": {
+                "amount": 326.99,
+                "currency": "EUR",
+                "formatted": "EUR 326.99"
+            },
+            "legs": [
+                {
+                    "origin": "MAD",
+                    "destination": "BCN",
+                    "departure": "2026-04-20T21:35:00",
+                    "arrival": "2026-04-20T22:50:00",
+                    "durationMinutes": 75,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Iberia",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/IB.png"
+                        }
+                    ]
+                },
+                {
+                    "origin": "BCN",
+                    "destination": "MAD",
+                    "departure": "2026-04-30T13:35:00",
+                    "arrival": "2026-04-30T15:00:00",
+                    "durationMinutes": 85,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Iberia",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/IB.png"
+                        }
+                    ]
+                }
+            ],
+            "score": 0,
+            "tags": [],
+            "bookingUrl": "https://www.skyscanner.net/transport_deeplink/4.0/ES/en-GB/EUR/a582/2/13870.9772.2026-04-20,9772.13870.2026-04-30/air/trava/flights?itinerary=flight|-32222|427|13870|2026-04-20T21:35|9772|2026-04-20T22:50|75|LDNNB4|L|-,flight|-32222|412|9772|2026-04-30T13:35|13870|2026-04-30T15:00|85|NDNNB4|N|-&carriers=-32222&operators=-32222,-32222&passengers=2&channel=website&cabin_class=economy&fps_session_id=ac7ed753-12d7-4728-9af9-fc6a0fc31178&ticket_price=326.99&is_npt=false&is_multipart=false&client_id=skyscanner_website&q_ids=H4sIAAAAAAAA_xPS42JJNLUwEhLgYuZYlyPEzLHGR6Lh5tTzbGCRNT5CIGGJhu2nzrNJMSkwAQDhjmojMAAAAA|4853279631105406854|2&q_sources=JACQUARD&commercial_filters=false&q_datetime_utc=2026-04-10T09:14:56&pqid=true&fare_type=base_fare"
+        },
+        {
+            "id": "13870-2604202135--32222-0-9772-2604202250|9772-2604300915--32222-0-13870-2604301040",
+            "price": {
+                "amount": 363.98,
+                "currency": "EUR",
+                "formatted": "EUR 363.98"
+            },
+            "legs": [
+                {
+                    "origin": "MAD",
+                    "destination": "BCN",
+                    "departure": "2026-04-20T21:35:00",
+                    "arrival": "2026-04-20T22:50:00",
+                    "durationMinutes": 75,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Iberia",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/IB.png"
+                        }
+                    ]
+                },
+                {
+                    "origin": "BCN",
+                    "destination": "MAD",
+                    "departure": "2026-04-30T09:15:00",
+                    "arrival": "2026-04-30T10:40:00",
+                    "durationMinutes": 85,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Iberia",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/IB.png"
+                        }
+                    ]
+                }
+            ],
+            "score": 0,
+            "tags": [],
+            "bookingUrl": "https://www.skyscanner.net/transport_deeplink/4.0/ES/en-GB/EUR/veci/2/13870.9772.2026-04-20,9772.13870.2026-04-30/air/trava/flights?itinerary=flight|-32222|427|13870|2026-04-20T21:35|9772|2026-04-20T22:50|75|LDNNB4|-|-,flight|-32222|404|9772|2026-04-30T09:15|13870|2026-04-30T10:40|85|LDNNB4|-|-&carriers=-32222&operators=-32222,-32222&passengers=2&channel=website&cabin_class=economy&fps_session_id=ac7ed753-12d7-4728-9af9-fc6a0fc31178&ticket_price=363.98&is_npt=false&is_multipart=false&client_id=skyscanner_website&q_ids=H4sIAAAAAAAA_xPS42IpS03OFBLgYuZYlyPEzLHGR6Lh5tTzbGCRNT5CIGGJhu2nzrNJMSkwAQCEtXcfMAAAAA|-8200190986729773983|2&q_sources=JACQUARD&commercial_filters=false&q_datetime_utc=2026-04-10T09:14:55&pqid=false&fare_type=base_fare"
+        },
+        {
+            "id": "13870-2604202135--32222-0-9772-2604202250|9772-2604302005--32222-0-13870-2604302130",
+            "price": {
+                "amount": 372.99,
+                "currency": "EUR",
+                "formatted": "EUR 372.99"
+            },
+            "legs": [
+                {
+                    "origin": "MAD",
+                    "destination": "BCN",
+                    "departure": "2026-04-20T21:35:00",
+                    "arrival": "2026-04-20T22:50:00",
+                    "durationMinutes": 75,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Iberia",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/IB.png"
+                        }
+                    ]
+                },
+                {
+                    "origin": "BCN",
+                    "destination": "MAD",
+                    "departure": "2026-04-30T20:05:00",
+                    "arrival": "2026-04-30T21:30:00",
+                    "durationMinutes": 85,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Iberia",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/IB.png"
+                        }
+                    ]
+                }
+            ],
+            "score": 0,
+            "tags": [],
+            "bookingUrl": "https://www.skyscanner.net/transport_deeplink/4.0/ES/en-GB/EUR/a582/2/13870.9772.2026-04-20,9772.13870.2026-04-30/air/trava/flights?itinerary=flight|-32222|427|13870|2026-04-20T21:35|9772|2026-04-20T22:50|75|LDNNB4|L|-,flight|-32222|422|9772|2026-04-30T20:05|13870|2026-04-30T21:30|85|VDNNB4|V|-&carriers=-32222&operators=-32222,-32222&passengers=2&channel=website&cabin_class=economy&fps_session_id=ac7ed753-12d7-4728-9af9-fc6a0fc31178&ticket_price=372.99&is_npt=false&is_multipart=false&client_id=skyscanner_website&q_ids=H4sIAAAAAAAA_xPS42JJNLUwEhLgYuZYlyPEzLHGR6Lh5tTzbGCRNT5CIGGJhu2nzrNJMSkwAQDhjmojMAAAAA|7469127870363224135|2&q_sources=JACQUARD&commercial_filters=false&q_datetime_utc=2026-04-10T09:14:56&pqid=true&fare_type=base_fare"
+        },
+        {
+            "id": "13870-2604202135--32222-0-9772-2604202250|9772-2604300850--32222-0-13870-2604301015",
+            "price": {
+                "amount": 320.99,
+                "currency": "EUR",
+                "formatted": "EUR 320.99"
+            },
+            "legs": [
+                {
+                    "origin": "MAD",
+                    "destination": "BCN",
+                    "departure": "2026-04-20T21:35:00",
+                    "arrival": "2026-04-20T22:50:00",
+                    "durationMinutes": 75,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Iberia",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/IB.png"
+                        }
+                    ]
+                },
+                {
+                    "origin": "BCN",
+                    "destination": "MAD",
+                    "departure": "2026-04-30T08:50:00",
+                    "arrival": "2026-04-30T10:15:00",
+                    "durationMinutes": 85,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Iberia",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/IB.png"
+                        }
+                    ]
+                }
+            ],
+            "score": 0,
+            "tags": [],
+            "bookingUrl": "https://www.skyscanner.net/transport_deeplink/4.0/ES/en-GB/EUR/a582/2/13870.9772.2026-04-20,9772.13870.2026-04-30/air/trava/flights?itinerary=flight|-32222|427|13870|2026-04-20T21:35|9772|2026-04-20T22:50|75|LDNNB4|L|-,flight|-32222|402|9772|2026-04-30T08:50|13870|2026-04-30T10:15|85|NWNNB4|N|-&carriers=-32222&operators=-32222,-32222&passengers=2&channel=website&cabin_class=economy&fps_session_id=ac7ed753-12d7-4728-9af9-fc6a0fc31178&ticket_price=320.99&is_npt=false&is_multipart=false&client_id=skyscanner_website&q_ids=H4sIAAAAAAAA_xPS42JJNLUwEhLgYuZYlyPEzLHGR6Lh5tTzbGCRNT5CIGGJhu2nzrNJMSkwAQDhjmojMAAAAA|483437793898629652|2&q_sources=JACQUARD&commercial_filters=false&q_datetime_utc=2026-04-10T09:14:56&pqid=true&fare_type=base_fare"
+        },
+        {
+            "id": "13870-2604202135--32222-0-9772-2604202250|9772-2604300700--32222-0-13870-2604300825",
+            "price": {
+                "amount": 358.99,
+                "currency": "EUR",
+                "formatted": "EUR 358.99"
+            },
+            "legs": [
+                {
+                    "origin": "MAD",
+                    "destination": "BCN",
+                    "departure": "2026-04-20T21:35:00",
+                    "arrival": "2026-04-20T22:50:00",
+                    "durationMinutes": 75,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Iberia",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/IB.png"
+                        }
+                    ]
+                },
+                {
+                    "origin": "BCN",
+                    "destination": "MAD",
+                    "departure": "2026-04-30T07:00:00",
+                    "arrival": "2026-04-30T08:25:00",
+                    "durationMinutes": 85,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Iberia",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/IB.png"
+                        }
+                    ]
+                }
+            ],
+            "score": 0,
+            "tags": [],
+            "bookingUrl": "https://www.skyscanner.net/transport_deeplink/4.0/ES/en-GB/EUR/a582/2/13870.9772.2026-04-20,9772.13870.2026-04-30/air/trava/flights?itinerary=flight|-32222|427|13870|2026-04-20T21:35|9772|2026-04-20T22:50|75|LDNNB4|L|-,flight|-32222|426|9772|2026-04-30T07:00|13870|2026-04-30T08:25|85|VZNNB4|V|-&carriers=-32222&operators=-32222,-32222&passengers=2&channel=website&cabin_class=economy&fps_session_id=ac7ed753-12d7-4728-9af9-fc6a0fc31178&ticket_price=358.99&is_npt=false&is_multipart=false&client_id=skyscanner_website&q_ids=H4sIAAAAAAAA_xPS42JJNLUwEhLgYuZYlyPEzLHGR6Lh5tTzbGCRNT5CIGGJhu2nzrNJMSkwAQDhjmojMAAAAA|3184730333000189969|2&q_sources=JACQUARD&commercial_filters=false&q_datetime_utc=2026-04-10T09:14:56&pqid=true&fare_type=base_fare"
+        },
+        {
+            "id": "13870-2604202135--32222-0-9772-2604202250|9772-2604301815--32222-0-13870-2604301940",
+            "price": {
+                "amount": 385.98,
+                "currency": "EUR",
+                "formatted": "EUR 385.98"
+            },
+            "legs": [
+                {
+                    "origin": "MAD",
+                    "destination": "BCN",
+                    "departure": "2026-04-20T21:35:00",
+                    "arrival": "2026-04-20T22:50:00",
+                    "durationMinutes": 75,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Iberia",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/IB.png"
+                        }
+                    ]
+                },
+                {
+                    "origin": "BCN",
+                    "destination": "MAD",
+                    "departure": "2026-04-30T18:15:00",
+                    "arrival": "2026-04-30T19:40:00",
+                    "durationMinutes": 85,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Iberia",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/IB.png"
+                        }
+                    ]
+                }
+            ],
+            "score": 0,
+            "tags": [],
+            "bookingUrl": "https://www.skyscanner.net/transport_deeplink/4.0/ES/en-GB/EUR/iber/2/13870.9772.2026-04-20,9772.13870.2026-04-30/air/airli/flights?itinerary=flight|-32222|427|13870|2026-04-20T21:35|9772|2026-04-20T22:50|75|LDNNB4|L|YR2PA,flight|-32222|418|9772|2026-04-30T18:15|13870|2026-04-30T19:40|85|LZNNB4|L|YR2PA&carriers=-32222&operators=-32222,-32222&passengers=2&channel=website&cabin_class=economy&fps_session_id=ac7ed753-12d7-4728-9af9-fc6a0fc31178&ticket_price=385.98&is_npt=false&is_multipart=false&client_id=skyscanner_website&q_ids=H4sIAAAAAAAA_xPS42LJTEotEhLgYuZYlyPEzLHGR6Lh5tTzbGCRNT5CIGGJhu2nzrNJMSkwAQDoljJmMAAAAA|-1558206712853264055|2&q_sources=JACQUARD&commercial_filters=false&q_datetime_utc=2026-04-10T09:14:51&pqid=false&fare_type=base_fare"
+        },
+        {
+            "id": "13870-2604202135--32222-0-9772-2604202250|9772-2604300800--32222-0-13870-2604300925",
+            "price": {
+                "amount": 336.99,
+                "currency": "EUR",
+                "formatted": "EUR 336.99"
+            },
+            "legs": [
+                {
+                    "origin": "MAD",
+                    "destination": "BCN",
+                    "departure": "2026-04-20T21:35:00",
+                    "arrival": "2026-04-20T22:50:00",
+                    "durationMinutes": 75,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Iberia",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/IB.png"
+                        }
+                    ]
+                },
+                {
+                    "origin": "BCN",
+                    "destination": "MAD",
+                    "departure": "2026-04-30T08:00:00",
+                    "arrival": "2026-04-30T09:25:00",
+                    "durationMinutes": 85,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Iberia",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/IB.png"
+                        }
+                    ]
+                }
+            ],
+            "score": 0,
+            "tags": [],
+            "bookingUrl": "https://www.skyscanner.net/transport_deeplink/4.0/ES/en-GB/EUR/a582/2/13870.9772.2026-04-20,9772.13870.2026-04-30/air/trava/flights?itinerary=flight|-32222|427|13870|2026-04-20T21:35|9772|2026-04-20T22:50|75|LDNNB4|L|-,flight|-32222|428|9772|2026-04-30T08:00|13870|2026-04-30T09:25|85|SZNNB4|S|-&carriers=-32222&operators=-32222,-32222&passengers=2&channel=website&cabin_class=economy&fps_session_id=ac7ed753-12d7-4728-9af9-fc6a0fc31178&ticket_price=336.99&is_npt=false&is_multipart=false&client_id=skyscanner_website&q_ids=H4sIAAAAAAAA_xPS42JJNLUwEhLgYuZYlyPEzLHGR6Lh5tTzbGCRNT5CIGGJhu2nzrNJMSkwAQDhjmojMAAAAA|-628048325727473280|2&q_sources=JACQUARD&commercial_filters=false&q_datetime_utc=2026-04-10T09:14:56&pqid=true&fare_type=base_fare"
+        },
+        {
+            "id": "13870-2604202135--32222-0-9772-2604202250|9772-2604301855--32222-0-13870-2604302020",
+            "price": {
+                "amount": 377.98,
+                "currency": "EUR",
+                "formatted": "EUR 377.98"
+            },
+            "legs": [
+                {
+                    "origin": "MAD",
+                    "destination": "BCN",
+                    "departure": "2026-04-20T21:35:00",
+                    "arrival": "2026-04-20T22:50:00",
+                    "durationMinutes": 75,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Iberia",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/IB.png"
+                        }
+                    ]
+                },
+                {
+                    "origin": "BCN",
+                    "destination": "MAD",
+                    "departure": "2026-04-30T18:55:00",
+                    "arrival": "2026-04-30T20:20:00",
+                    "durationMinutes": 85,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Iberia",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/IB.png"
+                        }
+                    ]
+                }
+            ],
+            "score": 0,
+            "tags": [],
+            "bookingUrl": "https://www.skyscanner.net/transport_deeplink/4.0/ES/en-GB/EUR/iber/2/13870.9772.2026-04-20,9772.13870.2026-04-30/air/airli/flights?itinerary=flight|-32222|427|13870|2026-04-20T21:35|9772|2026-04-20T22:50|75|LDNNB4|L|YR2PA,flight|-32222|420|9772|2026-04-30T18:55|13870|2026-04-30T20:20|85|VDNNB4|V|YR2PA&carriers=-32222&operators=-32222,-32222&passengers=2&channel=website&cabin_class=economy&fps_session_id=ac7ed753-12d7-4728-9af9-fc6a0fc31178&ticket_price=377.98&is_npt=false&is_multipart=false&client_id=skyscanner_website&q_ids=H4sIAAAAAAAA_xPS42LJTEotEhLgYuZYlyPEzLHGR6Lh5tTzbGCRNT5CIGGJhu2nzrNJMSkwAQDoljJmMAAAAA|-8478864951466468419|2&q_sources=JACQUARD&commercial_filters=false&q_datetime_utc=2026-04-10T09:14:51&pqid=false&fare_type=base_fare"
+        },
+        {
+            "id": "13870-2604202135--32222-0-9772-2604202250|9772-2604301230--32222-0-13870-2604301355",
+            "price": {
+                "amount": 344.99,
+                "currency": "EUR",
+                "formatted": "EUR 344.99"
+            },
+            "legs": [
+                {
+                    "origin": "MAD",
+                    "destination": "BCN",
+                    "departure": "2026-04-20T21:35:00",
+                    "arrival": "2026-04-20T22:50:00",
+                    "durationMinutes": 75,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Iberia",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/IB.png"
+                        }
+                    ]
+                },
+                {
+                    "origin": "BCN",
+                    "destination": "MAD",
+                    "departure": "2026-04-30T12:30:00",
+                    "arrival": "2026-04-30T13:55:00",
+                    "durationMinutes": 85,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Iberia",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/IB.png"
+                        }
+                    ]
+                }
+            ],
+            "score": 0,
+            "tags": [],
+            "bookingUrl": "https://www.skyscanner.net/transport_deeplink/4.0/ES/en-GB/EUR/a582/2/13870.9772.2026-04-20,9772.13870.2026-04-30/air/trava/flights?itinerary=flight|-32222|427|13870|2026-04-20T21:35|9772|2026-04-20T22:50|75|LDNNB4|L|-,flight|-32222|410|9772|2026-04-30T12:30|13870|2026-04-30T13:55|85|SWNNB4|S|-&carriers=-32222&operators=-32222,-32222&passengers=2&channel=website&cabin_class=economy&fps_session_id=ac7ed753-12d7-4728-9af9-fc6a0fc31178&ticket_price=344.99&is_npt=false&is_multipart=false&client_id=skyscanner_website&q_ids=H4sIAAAAAAAA_xPS42JJNLUwEhLgYuZYlyPEzLHGR6Lh5tTzbGCRNT5CIGGJhu2nzrNJMSkwAQDhjmojMAAAAA|3377472128580685488|2&q_sources=JACQUARD&commercial_filters=false&q_datetime_utc=2026-04-10T09:14:56&pqid=true&fare_type=base_fare"
+        }
+    ],
+    "total": 10
+}

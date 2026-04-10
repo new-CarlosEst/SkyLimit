@@ -1,0 +1,100 @@
+.trip-type {
+    display: flex;
+    border: 1.5px solid #d1daf0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+}
+
+.search-card {
+    background-color: white;
+    border-radius: 1rem;
+    padding: 1.75rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+}
+
+.add-trayecto-btn {
+    background-color: #2c5aa0;
+    color: white;
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+    border: none;
+    cursor: pointer;
+}
+
+.add-trayecto-btn:hover {
+    background-color: #1e3a6f;
+}
+
+.inputs-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    align-items: flex-end;
+}
+
+.multi-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: left;
+}
+
+.multi-inputs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap: 1rem;
+    align-items: flex-end;
+}
+
+.remove-leg-btn {
+    background: #fff;
+    border: 1.5px solid #fed7d7;
+    color: #e53e3e;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 2px;
+}
+
+.remove-leg-btn:hover {
+    background-color: #fff5f5;
+    border-color: #f56565;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(229, 62, 62, 0.1);
+}
+
+.remove-leg-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.actions-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+/* Selector de Clase de Cabina */
+.cabinClass-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 2.25rem;
+    text-align: left;
+}
+
+.cabin-options-wrapper {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}

@@ -1,2 +1,7 @@
-/*TODO: Descomentar cuando quiera usar tailwind para los estilos */
-/* @import 'tailwindcss' */
+@import 'tailwindcss';
+
+body {
+    padding: 0;
+    margin: 0;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
+}

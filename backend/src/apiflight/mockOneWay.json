@@ -1,0 +1,293 @@
+{
+    "sessionToken": "aadde5cc-9a89-48e6-b2f8-2ad98ac0d3f8",
+    "status": "RESULT_STATUS_COMPLETE",
+    "itineraries": [
+        {
+            "id": "13870-2605060855--31747,-30858-1-13416-2605061730",
+            "price": {
+                "amount": 432.42,
+                "currency": "EUR",
+                "formatted": "EUR 432.42"
+            },
+            "legs": [
+                {
+                    "origin": "MAD",
+                    "destination": "LAX",
+                    "departure": "2026-05-06T08:55:00",
+                    "arrival": "2026-05-06T17:30:00",
+                    "durationMinutes": 1055,
+                    "stopCount": 1,
+                    "carriers": [
+                        {
+                            "name": "Transavia France",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/T1.png"
+                        },
+                        {
+                            "name": "French Bee",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/BF.png"
+                        }
+                    ]
+                }
+            ],
+            "score": 0,
+            "tags": [],
+            "bookingUrl": "https://www.skyscanner.net/transport_deeplink/4.0/ES/en-GB/EUR/fbvi/1/13870.13416.2026-05-06/air/airli/flights?itinerary=flight|-31747|4631|13870|2026-05-06T08:55|15083|2026-05-06T11:00|125|-|-|-;flight|-30858|730|15083|2026-05-06T14:50|13416|2026-05-06T17:30|700|-|-|-&carriers=-31747,-30858&operators=-31747;-30858&passengers=1&channel=website&cabin_class=economy&fps_session_id=aadde5cc-9a89-48e6-b2f8-2ad98ac0d3f8&ticket_price=432.42&is_npt=true&is_multipart=false&client_id=skyscanner_website&q_ids=H4sIAAAAAAAA_-OS4mJJSyrLFGLmWJcjxczxIkOhofPVeTYjJgVGAFGgTdQcAAAA|4658329940393120390|2&q_sources=JACQUARD&commercial_filters=false&q_datetime_utc=2026-04-10T08:38:42&transfer_protection=non-protected&pqid=false&fare_type=base_fare"
+        },
+        {
+            "id": "13870-2605060705--32415-1-13416-2605061445",
+            "price": {
+                "amount": 709.99,
+                "currency": "EUR",
+                "formatted": "EUR 709.99"
+            },
+            "legs": [
+                {
+                    "origin": "MAD",
+                    "destination": "LAX",
+                    "departure": "2026-05-06T07:05:00",
+                    "arrival": "2026-05-06T14:45:00",
+                    "durationMinutes": 1000,
+                    "stopCount": 1,
+                    "carriers": [
+                        {
+                            "name": "Condor",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/DE.png"
+                        }
+                    ]
+                }
+            ],
+            "score": 0,
+            "tags": [],
+            "bookingUrl": "https://www.skyscanner.net/transport_deeplink/4.0/ES/en-GB/EUR/cond/1/13870.13416.2026-05-06/air/airli/flights?itinerary=flight|-32415|1503|13870|2026-05-06T07:05|11616|2026-05-06T09:45|160|SPO|Y|-;flight|-32415|2080|11616|2026-05-06T11:45|13416|2026-05-06T14:45|720|SPO|Y|-&carriers=-32415&operators=-32680;-32415&passengers=1&channel=website&cabin_class=economy&fps_session_id=aadde5cc-9a89-48e6-b2f8-2ad98ac0d3f8&ticket_price=709.99&is_npt=false&is_multipart=false&client_id=skyscanner_website&q_ids=H4sIAAAAAAAA_-OS4mJJzs9LEWLmWJcjxczxIkOhofPVeTYjJgVGAFqxnR8cAAAA|8438923142811185840|2&q_sources=JACQUARD&commercial_filters=false&q_datetime_utc=2026-04-10T08:38:42&pqid=false&fare_type=base_fare"
+        },
+        {
+            "id": "13870-2605060800--32680,-30858-1-13416-2605061730",
+            "price": {
+                "amount": 480,
+                "currency": "EUR",
+                "formatted": "EUR 480.00"
+            },
+            "legs": [
+                {
+                    "origin": "MAD",
+                    "destination": "LAX",
+                    "departure": "2026-05-06T08:00:00",
+                    "arrival": "2026-05-06T17:30:00",
+                    "durationMinutes": 1110,
+                    "stopCount": 1,
+                    "carriers": [
+                        {
+                            "name": "Air Europa",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/UX.png"
+                        },
+                        {
+                            "name": "French Bee",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/BF.png"
+                        }
+                    ]
+                }
+            ],
+            "score": 0,
+            "tags": [],
+            "bookingUrl": "https://www.skyscanner.net/transport_deeplink/4.0/ES/en-GB/EUR/gtes/1/13870.13416.2026-05-06/air/trava/flights?itinerary=flight|-32680|1027|13870|2026-05-06T08:00|15083|2026-05-06T09:55|115|-|-|-;flight|-30858|730|15083|2026-05-06T14:50|13416|2026-05-06T17:30|700|-|-|-&carriers=-32680,-30858&operators=-31597;-30858&passengers=1&channel=website&cabin_class=economy&fps_session_id=aadde5cc-9a89-48e6-b2f8-2ad98ac0d3f8&ticket_price=480.00&is_npt=false&is_multipart=false&client_id=skyscanner_website&q_ids=H4sIAAAAAAAA_-OS52JJL0ktFmLmWJcjxczxIkOhofPVeTYjJgXGKmbX0CAAjjVmfCEAAAA|3276779964671263072|2&q_sources=JACQUARD&commercial_filters=false&q_datetime_utc=2026-04-10T08:38:47&transfer_protection=protected&pqid=true&fare_type=base_fare"
+        },
+        {
+            "id": "13870-2605060615--31747,-30858-1-13416-2605061730",
+            "price": {
+                "amount": 432.42,
+                "currency": "EUR",
+                "formatted": "EUR 432.42"
+            },
+            "legs": [
+                {
+                    "origin": "MAD",
+                    "destination": "LAX",
+                    "departure": "2026-05-06T06:15:00",
+                    "arrival": "2026-05-06T17:30:00",
+                    "durationMinutes": 1215,
+                    "stopCount": 1,
+                    "carriers": [
+                        {
+                            "name": "Transavia France",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/T1.png"
+                        },
+                        {
+                            "name": "French Bee",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/BF.png"
+                        }
+                    ]
+                }
+            ],
+            "score": 0,
+            "tags": [],
+            "bookingUrl": "https://www.skyscanner.net/transport_deeplink/4.0/ES/en-GB/EUR/fbvi/1/13870.13416.2026-05-06/air/airli/flights?itinerary=flight|-31747|4631|13870|2026-05-06T08:55|15083|2026-05-06T11:00|125|-|-|-;flight|-30858|730|15083|2026-05-06T14:50|13416|2026-05-06T17:30|700|-|-|-&carriers=-31747,-30858&operators=-31747;-30858&passengers=1&channel=website&cabin_class=economy&fps_session_id=aadde5cc-9a89-48e6-b2f8-2ad98ac0d3f8&ticket_price=432.42&is_npt=true&is_multipart=false&client_id=skyscanner_website&q_ids=H4sIAAAAAAAA_-OS4mJJSyrLFGLmWJcjxczxIkOhofPVeTYjJgVGAFGgTdQcAAAA|4658329940393120390|2&q_sources=JACQUARD&commercial_filters=false&q_datetime_utc=2026-04-10T08:38:42&transfer_protection=non-protected&pqid=false&fare_type=base_fare"
+        },
+        {
+            "id": "13870-2605061040--32753-1-13416-2605061825",
+            "price": {
+                "amount": 664,
+                "currency": "EUR",
+                "formatted": "EUR 664.00"
+            },
+            "legs": [
+                {
+                    "origin": "MAD",
+                    "destination": "LAX",
+                    "departure": "2026-05-06T10:40:00",
+                    "arrival": "2026-05-06T18:25:00",
+                    "durationMinutes": 1005,
+                    "stopCount": 1,
+                    "carriers": [
+                        {
+                            "name": "Aer Lingus",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/EI.png"
+                        }
+                    ]
+                }
+            ],
+            "score": 0,
+            "tags": [],
+            "bookingUrl": "https://www.skyscanner.net/transport_deeplink/4.0/ES/en-GB/EUR/stbf/1/13870.13416.2026-05-06/air/trava/flights?itinerary=flight|-32753|593|13870|2026-05-06T10:40|11154|2026-05-06T12:20|160|-|V|-;flight|-32753|69|11154|2026-05-06T15:25|13416|2026-05-06T18:25|660|-|N|-&carriers=-32753&operators=-32753;-32753&passengers=1&channel=website&cabin_class=economy&fps_session_id=aadde5cc-9a89-48e6-b2f8-2ad98ac0d3f8&ticket_price=664.00&is_npt=false&is_multipart=false&client_id=skyscanner_website&q_ids=H4sIAAAAAAAA_-OS4mIpLklKE2LmWJcjxczxIkOhofPVeTYjJgVGAE2G_hYcAAAA|-5828094828101597152|2&q_sources=JACQUARD&commercial_filters=false&q_datetime_utc=2026-04-10T08:38:42&pqid=false&fare_type=base_fare"
+        },
+        {
+            "id": "13870-2605061125--32222-1-13416-2605061810",
+            "price": {
+                "amount": 1064,
+                "currency": "EUR",
+                "formatted": "EUR 1064.00"
+            },
+            "legs": [
+                {
+                    "origin": "MAD",
+                    "destination": "LAX",
+                    "departure": "2026-05-06T11:25:00",
+                    "arrival": "2026-05-06T18:10:00",
+                    "durationMinutes": 945,
+                    "stopCount": 1,
+                    "carriers": [
+                        {
+                            "name": "Iberia",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/IB.png"
+                        }
+                    ]
+                }
+            ],
+            "score": 0,
+            "tags": [],
+            "bookingUrl": "https://www.skyscanner.net/transport_deeplink/4.0/ES/en-GB/EUR/bces/1/13870.13416.2026-05-06/air/trava/flights?itinerary=flight|-32222|411|13870|2026-05-06T11:25|9772|2026-05-06T12:45|80|-|-|-;flight|-32222|2623|9772|2026-05-06T14:05|13416|2026-05-06T18:10|785|-|-|-&carriers=-32222&operators=-32222;-31071&passengers=1&channel=website&cabin_class=economy&fps_session_id=aadde5cc-9a89-48e6-b2f8-2ad98ac0d3f8&ticket_price=1064.00&is_npt=false&is_multipart=false&client_id=skyscanner_website&q_ids=H4sIAAAAAAAA_-OS52JJSk4tFmLmWJcjxczxIkOhofPVeTYjJgXGKmbX0CAA-KxZVyEAAAA|8065839050268576183|2&q_sources=JACQUARD&commercial_filters=false&q_datetime_utc=2026-04-10T08:38:47&pqid=true&fare_type=base_fare"
+                },
+        {
+            "id": "13870-2605061325--32222-1-13416-2605062020",
+            "price": {
+                "amount": 1069.99,
+                "currency": "EUR",
+                "formatted": "EUR 1069.99"
+            },
+            "legs": [
+                {
+                    "origin": "MAD",
+                    "destination": "LAX",
+                    "departure": "2026-05-06T13:25:00",
+                    "arrival": "2026-05-06T20:20:00",
+                    "durationMinutes": 955,
+                    "stopCount": 1,
+                    "carriers": [
+                        {
+                            "name": "Iberia",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/IB.png"
+                        }
+                    ]
+                }
+            ],
+            "score": 0,
+            "tags": [],
+            "bookingUrl": "https://www.skyscanner.net/transport_deeplink/4.0/ES/en-GB/EUR/a582/1/13870.13416.2026-05-06/air/trava/flights?itinerary=flight|-32222|717|13870|2026-05-06T13:25|13554|2026-05-06T14:55|150|MKX7C5BW|M|-;flight|-32222|4265|13554|2026-05-06T17:00|13416|2026-05-06T20:20|680|MKX7C5BW|M|-&carriers=-32222&operators=-32222;-32573&passengers=1&channel=website&cabin_class=economy&fps_session_id=aadde5cc-9a89-48e6-b2f8-2ad98ac0d3f8&ticket_price=1069.99&is_npt=false&is_multipart=false&client_id=skyscanner_website&q_ids=H4sIAAAAAAAA_-OS4mJJNLUwEmLmWJcjxczxQUmhofPVeTYjJgVGAFLBskkcAAAA|-7206722015863556209|2&q_sources=JACQUARD&commercial_filters=false&q_datetime_utc=2026-04-10T08:38:44&pqid=true&fare_type=base_fare"
+        },
+        {
+            "id": "13870-2605060720--32222,-32693-1-13416-2605061730",
+            "price": {
+                "amount": 501.16,
+                "currency": "EUR",
+                "formatted": "EUR 501.16"
+            },
+            "legs": [
+                {
+                    "origin": "MAD",
+                    "destination": "LAX",
+                    "departure": "2026-05-06T07:20:00",
+                    "arrival": "2026-05-06T17:30:00",
+                    "durationMinutes": 1150,
+                    "stopCount": 1,
+                    "carriers": [
+                        {
+                            "name": "Iberia",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/IB.png"
+                        },
+                        {
+                            "name": "Air Caraibes",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/TX.png"
+                        }
+                    ]
+                }
+            ],
+            "score": 0,
+            "tags": [],
+            "bookingUrl": "https://www.skyscanner.net/transport_deeplink/4.0/ES/en-GB/EUR/ates/1/13870.13416.2026-05-06/air/trava/flights?itinerary=flight|-32222|569|13870|2026-05-06T07:20|15083|2026-05-06T09:20|120|-|-|-;flight|-32693|6730|15083|2026-05-06T14:50|13416|2026-05-06T17:30|700|-|-|-&carriers=-32222,-32693&operators=-32222;-30858&passengers=1&channel=website&cabin_class=economy&fps_session_id=aadde5cc-9a89-48e6-b2f8-2ad98ac0d3f8&ticket_price=501.16&is_npt=false&is_multipart=false&client_id=skyscanner_website&q_ids=H4sIAAAAAAAA_-OS52JJLEktFmLmWJcjxczxIkOhofPVeTYjJgXGKmbX0CAAF-UH7SEAAAA|-7226180093050520134|2&q_sources=JACQUARD&commercial_filters=false&q_datetime_utc=2026-04-10T08:39:02&pqid=true&fare_type=base_fare"
+        },
+        {
+            "id": "13870-2605061210--32222-1-13416-2605061815",
+            "price": {
+                "amount": 1059,
+                "currency": "EUR",
+                "formatted": "EUR 1059.00"
+            },
+            "legs": [
+                {
+                    "origin": "MAD",
+                    "destination": "LAX",
+                    "departure": "2026-05-06T12:10:00",
+                    "arrival": "2026-05-06T18:15:00",
+                    "durationMinutes": 905,
+                    "stopCount": 1,
+                    "carriers": [
+                        {
+                            "name": "Iberia",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/IB.png"
+                        }
+                    ]
+                }
+            ],
+            "score": 0,
+            "tags": [],
+            "bookingUrl": "https://www.skyscanner.net/transport_deeplink/4.0/ES/en-GB/EUR/bces/1/13870.13416.2026-05-06/air/trava/flights?itinerary=flight|-32222|3644|13870|2026-05-06T12:10|13554|2026-05-06T13:35|145|-|-|-;flight|-32222|3614|13554|2026-05-06T15:05|13416|2026-05-06T18:15|670|-|-|-&carriers=-32222&operators=-32480;-32480&passengers=1&channel=website&cabin_class=economy&fps_session_id=aadde5cc-9a89-48e6-b2f8-2ad98ac0d3f8&ticket_price=1059.00&is_npt=false&is_multipart=false&client_id=skyscanner_website&q_ids=H4sIAAAAAAAA_-OS52JJSk4tFmLmWJcjxczxIkOhofPVeTYjJgXGKmbX0CAA-KxZVyEAAAA|1648640862828637714|2&q_sources=JACQUARD&commercial_filters=false&q_datetime_utc=2026-04-10T08:38:47&pqid=true&fare_type=base_fare"
+        },
+        {
+            "id": "13870-2605061210--32573-1-13416-2605061815",
+            "price": {
+                "amount": 1058.77,
+                "currency": "EUR",
+                "formatted": "EUR 1058.77"
+            },
+            "legs": [
+                {
+                    "origin": "MAD",
+                    "destination": "LAX",
+                    "departure": "2026-05-06T12:10:00",
+                    "arrival": "2026-05-06T18:15:00",
+                    "durationMinutes": 905,
+                    "stopCount": 1,
+                    "carriers": [
+                        {
+                            "name": "American Airlines",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/AA.png"
+                        }
+                    ]
+                }
+            ],
+            "score": 0,
+            "tags": [],
+            "bookingUrl": "https://www.skyscanner.net/transport_deeplink/4.0/ES/en-GB/EUR/aaes/1/13870.13416.2026-05-06/air/airli/flights?itinerary=flight|-32573|6803|13870|2026-05-06T12:10|13554|2026-05-06T13:35|145|MKX7C5BW|M|BASIC+ECONOMY;flight|-32573|6984|13554|2026-05-06T15:05|13416|2026-05-06T18:15|670|MKX7C5BW|M|BASIC+ECONOMY&carriers=-32573&operators=-32480;-32480&passengers=1&channel=website&cabin_class=economy&fps_session_id=aadde5cc-9a89-48e6-b2f8-2ad98ac0d3f8&ticket_price=1058.77&is_npt=false&is_multipart=false&client_id=skyscanner_website&q_ids=H4sIAAAAAAAA_-OS4mJJTEwtFmLmWJcjxczxIkOhofPVeTYjJgVGAP1T7YkcAAAA|3718641894104546343|2&q_sources=JACQUARD&commercial_filters=false&q_datetime_utc=2026-04-10T08:38:43&pqid=false&fare_type=base_fare"
+        }
+    ],
+    "total": 10
+}

@@ -10,16 +10,162 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url = env("DATABASE_URL") //No tocar ya que migre a la version 6 y esto sigue funcionando
+  url      = env("DATABASE_URL") //No tocar ya que migre a la version 6 y esto sigue funcionando
+}
+
+// ------------------------------------------------------
+//  MODELS
+// ------------------------------------------------------
+
+// NOTE: Al usar Prisma no hace falta poner un orden de relaciones lógico como en SQL
+// -------------------- User ----------------------------
+
+//Primero el enum con el rol 
+enum Role {
+  USER
+  ADMIN
+  SUPERADMIN
 }
 
 model User {
-  //Si pongo @id es como una fk
-  //Si pongo un @default te pone uno por defecto si no pasas id, en este caso con autoincremento
   id        Int      @id @default(autoincrement())
   name      String
   surname   String
   email     String   @unique
   password  String
   createdAt DateTime @default(now())
+  role      Role     @default(USER)
+
+  // Relations
+  paymentMethods    PaymentMethod[]
+  reservations      Reservation[]
+  favoriteAirportId Int?
+  favoriteAirport   Airport?        @relation("UserFavoriteAirport", fields: [favoriteAirportId], references: [id])
+}
+
+// -------------------- Payment Method ------------------
+model PaymentMethod {
+  id             Int      @id @default(autoincrement())
+  holderName     String
+  brand          String
+  expirationDate DateTime
+  cvv            String
+  last4Digits    String
+
+  // Relations
+  userId       Int
+  user         User          @relation(fields: [userId], references: [id])
+  transactions Transaction[]
+}
+
+// -------------------- Transaction ---------------------
+model Transaction {
+  id              Int      @id @default(autoincrement())
+  paymentDate     DateTime
+  amount          Float
+  status          String
+  paymentIntentId String?
+
+  // Relations
+  reservationId   Int?
+  reservation     Reservation?   @relation(fields: [reservationId], references: [id])
+  paymentMethodId Int?
+  paymentMethod   PaymentMethod? @relation(fields: [paymentMethodId], references: [id])
+}
+
+// -------------------- Reservation ---------------------
+model Reservation {
+  id              Int      @id @default(autoincrement())
+  status          String
+  reservationDate DateTime @default(now())
+  travelClass     String // Economy, Business, etc.
+  price           Float
+
+  // Relations
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  flightId Int
+  flight   Flight @relation(fields: [flightId], references: [id])
+
+  passengers   Passenger[]
+  transactions Transaction[]
+}
+
+// -------------------- Passenger ------------------------
+model Passenger {
+  id          Int      @id @default(autoincrement())
+  name        String
+  surname     String
+  nationality String
+  gender      String
+  birthDate   DateTime
+  email       String
+  phone       String
+
+  // Relations
+  reservations Reservation[]
+  documents    Document[]
+}
+
+// -------------------- Document -------------------------
+model Document {
+  id             Int      @id @default(autoincrement())
+  number         String
+  type           String
+  country        String
+  expirationDate DateTime
+
+  passengerId Int
+  passenger   Passenger @relation(fields: [passengerId], references: [id])
+}
+
+// -------------------- Airport --------------------------
+model Airport {
+  id      Int    @id @default(autoincrement())
+  iata    String @unique
+  name    String
+  country String
+  city    String
+
+  // Relations
+  departures    Flight[] @relation("Departure")
+  arrivals      Flight[] @relation("Arrival")
+  stopovers     Flight[] @relation("Stopover")
+  favoriteUsers User[]   @relation("UserFavoriteAirport")
+}
+
+// -------------------- Flight ---------------------------
+model Flight {
+  id                Int      @id @default(autoincrement())
+  flightNumber      String
+  gate              String?
+  departureDateTime DateTime
+  arrivalDateTime   DateTime
+  stopoverCount     Int?
+  airline           String
+  price             Float
+
+  // Relations
+  reservations Reservation[]
+
+  airportDepartureId Int
+  airportDeparture   Airport @relation("Departure", fields: [airportDepartureId], references: [id])
+
+  airportArrivalId Int
+  airportArrival   Airport @relation("Arrival", fields: [airportArrivalId], references: [id])
+
+  airportStopoverId Int?
+  airportStopover   Airport?         @relation("Stopover", fields: [airportStopoverId], references: [id])
+  flightStopovers   FlightStopover[]
+}
+
+model FlightStopover {
+  id                Int      @id @default(autoincrement())
+  order             Int // 1, 2, 3... para ordenar las escalas
+  arrivalDateTime   DateTime // cuando llega a la escala
+  departureDateTime DateTime // cuando sale de la escala
+
+  flightId Int
+  flight   Flight @relation(fields: [flightId], references: [id])
 }

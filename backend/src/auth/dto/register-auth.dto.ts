@@ -1,4 +1,4 @@
-import { IsEmail, IsString, MinLength } from "class-validator";
+import { IsEmail, IsString, MinLength, IsOptional, IsEnum } from "class-validator";
 
 /**
  * Clase dto para verificar que el formato de los campos es correcto
@@ -16,4 +16,8 @@ export class RegisterDto {
 
     @IsString()
     surname: string;
+
+    @IsOptional()
+    @IsEnum(['USER', 'ADMIN', 'SUPERADMIN'], { message: "El rol debe ser USER, ADMIN o SUPERADMIN" })
+    role?: string = 'USER';
 }

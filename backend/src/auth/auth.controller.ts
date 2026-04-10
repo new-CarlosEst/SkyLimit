@@ -8,9 +8,7 @@ import { LoginDto } from './dto/login-auth.dto';
 export class AuthController {
     //Me creo un service de auth
     constructor(private readonly authService: AuthService){} //le pongo readonly para que sea inmutable y no pueda ser nulo el AuthService
-
-    //TODO: Crear el token con jwt y devolver el token en vez de los datos tanto para /login como para /register
-
+    
     //Me creo una ruta de post para el registro (Codigo 201 en caso de exito)
     @Post("register")
     @HttpCode(201)
