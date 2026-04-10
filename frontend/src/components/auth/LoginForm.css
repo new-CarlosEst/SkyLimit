@@ -1,0 +1,62 @@
+.login-form-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+}
+
+.login-form-container .image-side {
+    background-image: url("../../assets/backgrounds/Login-Avion-azul.jpg");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: top;
+}
+
+.image-side .go-to-register {
+    margin-top: 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.image-side,
+.form-side {
+    width: 50%;
+    height: 100%;
+}
+
+.login-form-container .form-side {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 2rem;
+    overflow-y: auto;
+    width: 50%;
+}
+
+.logo-skylimit {
+    width: 250px;
+    height: auto;
+    margin-bottom: 2rem;
+    margin-top: auto;
+    /* Empuja el contenido hacia el centro vertical */
+}
+
+.form-login-content {
+    width: 100%;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: auto;
+    /* Empuja el contenido hacia el centro vertical */
+}
+
+.form-side>img {
+    margin-left: 2rem;
+    width: 10rem;
+}

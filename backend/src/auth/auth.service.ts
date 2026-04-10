@@ -24,14 +24,19 @@ export class AuthService {
      * @returns Devuelve un token y la informacion
      */
     public async login (loginDto : LoginDto): Promise<Object>{
-        const user = await this.userService.getUserByEmail(loginDto.email)
+        let user;
+        try {
+            user = await this.userService.getUserByEmail(loginDto.email)
+        } catch (error) {
+            throw new UnauthorizedException("Usuario y/o contraseña incorrectos");
+        }
 
         //Compruebo la contrseña que viene en "texto plano" con la funcion compare de bycrypt para comprobarla encriptada
         const comprobarContraseñas = await bcrypt.compare(loginDto.password, user.password);
 
         //Si no coinciden salta que la contraseña es incorrecta
         if (!comprobarContraseñas){
-            throw new UnauthorizedException("Contraseña incorrecta");
+            throw new UnauthorizedException("Usuario y/o contraseña incorrectos");
         }
         //si no devuelvo el los datos y el token
         else {

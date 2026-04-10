@@ -4,6 +4,8 @@ import "./Header.css";
 import AuthModal from "../../auth/AuthModal";
 
 function Header() {
+
+    //TODO: Ver si meter este estado en zustand para evitar el prop drilling
     const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
     return (
@@ -19,11 +21,11 @@ function Header() {
                 </ul>
             </nav>
             <div className="session-actions">
-                <button 
+                <button
                     className="login-button bg-white text-[#2c5aa0] py-2 px-6 rounded-lg mr-6 font-semibold hover:bg-blue-200 transition-colors"
                     onClick={() => setIsAuthModalOpen(true)}
                 >
-                    Iniciar sesión
+                    Iniciar Sesión
                 </button>
             </div>
 
