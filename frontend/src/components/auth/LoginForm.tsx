@@ -1,22 +1,23 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { login } from "../../api/auth.api";
-import type { LoginData } from "../../api/types";
+import type { LoginData } from "../../types/auth.types";
 import AuthButton from "./AuthButton";
 import ChangeAuthBtn from "./ChangeAuthBtn";
 import MailInput from "./MailInput";
 import PasswordInput from "./PasswordInput";
 import "./LoginForm.css";
+import { sileo } from "sileo";
+import { useAuthStore } from "../../store/authStore";
 
 // Import logo
 import logo from "../../assets/logo/logo-skylimit-letters-blue-rounded.svg";
 
-function LoginForm({ setIsLogin }: { setIsLogin: React.Dispatch<React.SetStateAction<boolean>> }) {
-
-    const [error, setError] = useState<string | null>(null);
-
+function LoginForm(
+    { setIsLogin, setIsOpen }:
+        { setIsLogin: React.Dispatch<React.SetStateAction<boolean>>, setIsOpen: React.Dispatch<React.SetStateAction<boolean>> }
+) {
     const enviarDatos = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        setError(null)
         const formData = new FormData(e.currentTarget)
         const datos: LoginData = {
             email: formData.get("email") as string,
@@ -24,10 +25,19 @@ function LoginForm({ setIsLogin }: { setIsLogin: React.Dispatch<React.SetStateAc
         }
 
         login(datos)
-            .then(res => console.log(res.data))
+            .then(res => {
+                console.log(res.data);
+                useAuthStore.getState().login(res.data.user, res.data.token);
+                sileo.success({ title: "Sesión iniciada con éxito" });
+                setIsOpen(false);
+            })
             .catch(err => {
                 const message = err.response?.data?.message || "Error al iniciar sesión";
-                setError(Array.isArray(message) ? message[0] : message);
+                const errorString = Array.isArray(message) ? message[0] : message;
+
+                sileo.error({
+                    title: typeof errorString === 'string' ? errorString : "Error al iniciar sesión",
+                });
             })
     }
 
@@ -55,11 +65,6 @@ function LoginForm({ setIsLogin }: { setIsLogin: React.Dispatch<React.SetStateAc
                         </label>
                         <a href="#" className="text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors">¿Has olvidado tu contraseña?</a>
                     </div>
-                    {error && (
-                        <p className="text-red-500 text-xs font-semibold mb-3 bg-red-50 p-2 rounded border border-red-100 animate-shake">
-                            {error}
-                        </p>
-                    )}
                     <AuthButton text="Iniciar Sesión" />
                 </form>
             </div>

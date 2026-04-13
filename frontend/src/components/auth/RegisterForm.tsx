@@ -1,18 +1,20 @@
 import { useState } from "react";
 import { register } from "../../api/auth.api";
-import type { RegisterData } from "../../api/types";
+import type { RegisterData } from "../../types/auth.types";
 import AuthButton from "./AuthButton";
 import "./RegisterForm.css";
 import ChangeAuthBtn from "./ChangeAuthBtn";
 import MailInput from "./MailInput";
 import PasswordInput from "./PasswordInput";
 import TextInput from "./TextInput";
+import { sileo } from "sileo";
 
 // Import logo
 import logo from "../../assets/logo/logo-skylimit-letters-blue-rounded.svg";
 
 function RegisterForm(
-    { setIsLogin }: { setIsLogin: React.Dispatch<React.SetStateAction<boolean>> }
+    { setIsLogin, setIsOpen }:
+        { setIsLogin: React.Dispatch<React.SetStateAction<boolean>>, setIsOpen: React.Dispatch<React.SetStateAction<boolean>> }
 ) {
 
     const [error, setError] = useState<string | null>(null);
@@ -29,10 +31,19 @@ function RegisterForm(
         }
 
         register(datos)
-            .then(res => console.log(res.data))
+            .then(res => {
+                console.log(res.data);
+                sileo.success({ title: "Registro completado con éxito" });
+                setIsOpen(false);
+            })
             .catch(err => {
-                const message = err.response?.data?.message || "Error al registrarse";
-                setError(Array.isArray(message) ? message[0] : message);
+                const message = err.response?.data?.message || err.message || "Error al registrarse";
+                const errorString = Array.isArray(message) ? message[0] : message;
+
+                sileo.error({
+                    title: "Error de autenticación",
+                    description: typeof errorString === 'string' ? errorString : "Verifica los datos",
+                });
             })
     }
 
