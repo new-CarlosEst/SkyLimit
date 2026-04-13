@@ -8,7 +8,7 @@ RUN npm install
 COPY . .
 
 RUN npx prisma generate
-RUN npx @nestjs/cli build
+RUN npx tsc -p tsconfig.build.json
 RUN ls -la /app/dist || echo "DIST NO EXISTE"
 
 CMD ["node", "dist/main"]
