@@ -8,6 +8,7 @@ import MailInput from "./MailInput";
 import PasswordInput from "./PasswordInput";
 import TextInput from "./TextInput";
 import { sileo } from "sileo";
+import { useAuthStore } from "../../store/authStore";
 
 // Import logo
 import logo from "../../assets/logo/logo-skylimit-letters-blue-rounded.svg";
@@ -32,7 +33,7 @@ function RegisterForm(
 
         register(datos)
             .then(res => {
-                console.log(res.data);
+                useAuthStore.getState().login(res.data.user, res.data.token);
                 sileo.success({ title: "Registro completado con éxito" });
                 setIsOpen(false);
             })
