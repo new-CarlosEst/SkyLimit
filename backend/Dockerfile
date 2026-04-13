@@ -9,5 +9,6 @@ COPY . .
 
 RUN npx prisma generate
 RUN npx @nestjs/cli build
+RUN ls -la /app/dist || echo "DIST NO EXISTE"
 
 CMD ["node", "dist/main"]
