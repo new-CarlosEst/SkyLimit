@@ -1,20 +1,20 @@
-import { Exclude } from "class-transformer";
+import { Exclude } from 'class-transformer';
 
 /**
  * Clase que sirve como plantilla para cuando se envien los datos al front
  */
-export class UserEntity{
-    id: number;
-    name: string;
-    surname: string;
-    email: string;
-    createdAt: Date;
-    role: string;
+export class UserEntity {
+  id: number;
+  name: string;
+  surname: string;
+  email: string;
+  createdAt: Date;
+  role: string;
 
-    @Exclude()
-    password: string;
+  @Exclude()
+  password: string;
 
-    constructor(partial: Partial<UserEntity>) {
-        Object.assign(this, partial);
-    }
+  constructor(partial: Partial<UserEntity>) {
+    Object.assign(this, partial);
+  }
 }

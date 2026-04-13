@@ -10,10 +10,14 @@ import { AirportModule } from './airport/airport.module';
 @Module({
   //Aqui en el modulo de app solo importo los modulos necesarios, nada de controllers ni services (solo los propios de app)
   imports: [
-    ConfigModule.forRoot({isGlobal: true}),
-    PrismaModule, UsersModule, AuthModule, ApiflightModule, AirportModule
+    ConfigModule.forRoot({ isGlobal: true }),
+    PrismaModule,
+    UsersModule,
+    AuthModule,
+    ApiflightModule,
+    AirportModule,
   ],
   controllers: [AppController],
-  providers: [AppService]
+  providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

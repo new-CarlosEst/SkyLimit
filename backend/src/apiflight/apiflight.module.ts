@@ -6,6 +6,6 @@ import { AirportModule } from '../airport/airport.module';
 @Module({
   imports: [AirportModule],
   controllers: [ApiflightController],
-  providers: [ApiflightService]
+  providers: [ApiflightService],
 })
 export class ApiflightModule {}
