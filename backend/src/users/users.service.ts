@@ -1,10 +1,10 @@
-import { 
-    Injectable, 
-    ConflictException, 
-    InternalServerErrorException, 
-    NotFoundException 
+import {
+    Injectable,
+    ConflictException,
+    InternalServerErrorException,
+    NotFoundException
 } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { UserEntity } from './entities/user.entity';
 import { User } from '@prisma/client';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -25,11 +25,11 @@ export class UsersService {
     public async getUserByEmail(email: string): Promise<User> {
         //Busco por email (si usas findUnique el campo tiene que tener @unique en el esquema de prisma)
         const user = await this.prisma.user.findUnique({
-            where: {email}
+            where: { email }
         })
 
         //Si el email no existe devuelvo null, si no devuelvo el user
-        if (!user){
+        if (!user) {
             throw new NotFoundException("Usuario no encontrado")
         }
         else {
@@ -42,7 +42,7 @@ export class UsersService {
      * @param email 
      * @returns Devuelve un userEntity (todos los datos menos la contraseña)
      */
-    public async findUserByEmail(email : string): Promise <UserEntity>{
+    public async findUserByEmail(email: string): Promise<UserEntity> {
         const user = await this.getUserByEmail(email)
         return new UserEntity(user)
     }
@@ -52,19 +52,19 @@ export class UsersService {
      * @param createUserDto 
      * @returns Devuelve los datos del usuario o un error
      */
-    public async createUser(createUserDto : CreateUserDto ): Promise <UserEntity>{
-        try{
+    public async createUser(createUserDto: CreateUserDto): Promise<UserEntity> {
+        try {
             const user = await this.prisma.user.create({
                 data: createUserDto
             });
 
             return new UserEntity(user)
-        } catch (error){
-            if (error.code === "P2002"){
-                throw new ConflictException ("Este usuario ya está registrado")
+        } catch (error) {
+            if (error.code === "P2002") {
+                throw new ConflictException("Este usuario ya está registrado")
             }
             throw new InternalServerErrorException("Error al crear al usuario");
         }
     }
-    
+
 }
