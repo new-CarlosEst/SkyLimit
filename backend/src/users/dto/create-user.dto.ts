@@ -1,24 +1,32 @@
-import { IsEmail, IsString, MinLength, IsOptional, IsEnum } from "class-validator";
+import {
+  IsEmail,
+  IsString,
+  MinLength,
+  IsOptional,
+  IsEnum,
+} from 'class-validator';
 
 /**
  * Clase que añade restricciones a como vienen datos, si no vienen en el formato correctos devuelve un error.
  * Esta clase DTO es especifica a cuando se va a crear un usuario
  */
-export class CreateUserDto{
-    @IsEmail({}, { message: "El formato del email no es valido"})
-    email: string;
+export class CreateUserDto {
+  @IsEmail({}, { message: 'El formato del email no es valido' })
+  email: string;
 
-    @IsString()
-    @MinLength(8, {message: "La contraseña debe tener al menos 8 caracteres"})
-    password: string;
+  @IsString()
+  @MinLength(8, { message: 'La contraseña debe tener al menos 8 caracteres' })
+  password: string;
 
-    @IsString()
-    name: string;
+  @IsString()
+  name: string;
 
-    @IsString()
-    surname: string;
+  @IsString()
+  surname: string;
 
-    @IsOptional()
-    @IsEnum(['USER', 'ADMIN', 'SUPERADMIN'], { message: "El rol debe ser USER, ADMIN o SUPERADMIN" })
-    role?: string = 'USER';
+  @IsOptional()
+  @IsEnum(['USER', 'ADMIN', 'SUPERADMIN'], {
+    message: 'El rol debe ser USER, ADMIN o SUPERADMIN',
+  })
+  role?: string = 'USER';
 }
