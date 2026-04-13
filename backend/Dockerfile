@@ -8,8 +8,6 @@ RUN npm install
 COPY . .
 
 RUN npx prisma generate
-RUN npm run build
+RUN npx @nestjs/cli build
 
-EXPOSE 3000
-
-CMD ["node", "dist/main.js"]
+CMD ["node", "dist/main"]
