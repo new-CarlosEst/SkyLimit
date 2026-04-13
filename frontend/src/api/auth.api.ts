@@ -1,5 +1,5 @@
 //Importo los tipos
-import type { RegisterData, LoginData } from "./types";
+import type { RegisterData, LoginData } from "../types/auth.types";
 //Importo el cliente
 import apiClient from "./cliente";
 
