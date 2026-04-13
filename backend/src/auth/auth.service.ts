@@ -1,9 +1,9 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { RegisterDto } from './dto/register-auth.dto';
 import { LoginDto } from './dto/login-auth.dto';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
-import { UsersService } from 'src/users/users.service';
-import { UserEntity } from 'src/users/entities/user.entity';
+import { CreateUserDto } from '../users/dto/create-user.dto';
+import { UsersService } from '../users/users.service';
+import { UserEntity } from '../users/entities/user.entity';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 
@@ -15,7 +15,7 @@ export class AuthService {
     constructor(
         private readonly userService: UsersService,
         private readonly jwtService: JwtService,
-    ) {}
+    ) { }
 
     /**
      * Funcion que recibe un email y una contraseña y verifica si coinciden
@@ -23,7 +23,7 @@ export class AuthService {
      * @param password Contraseña del usuario
      * @returns Devuelve un token y la informacion
      */
-    public async login (loginDto : LoginDto): Promise<Object>{
+    public async login(loginDto: LoginDto): Promise<Object> {
         let user;
         try {
             user = await this.userService.getUserByEmail(loginDto.email)
@@ -35,7 +35,7 @@ export class AuthService {
         const comprobarContraseñas = await bcrypt.compare(loginDto.password, user.password);
 
         //Si no coinciden salta que la contraseña es incorrecta
-        if (!comprobarContraseñas){
+        if (!comprobarContraseñas) {
             throw new UnauthorizedException("Usuario y/o contraseña incorrectos");
         }
         //si no devuelvo el los datos y el token
@@ -45,7 +45,7 @@ export class AuthService {
             return {
                 access_token: await this.jwtService.signAsync(payload),
                 user: new UserEntity(user),
-        };
+            };
 
         }
     }
@@ -55,7 +55,7 @@ export class AuthService {
      * @param registerDto Datos de recibidos como dto
      * @
      */
-    public async register (registerDto : RegisterDto): Promise<Object>{
+    public async register(registerDto: RegisterDto): Promise<Object> {
         //Hasheo la contraseña
         const pwdEncriptada = await bcrypt.hash(registerDto.password, 10);
 
