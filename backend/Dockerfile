@@ -8,6 +8,8 @@ RUN npm install
 COPY . .
 
 RUN npx prisma generate
-RUN npx nest build
+RUN npm run build
 
-CMD ["node", "dist/main"]
+EXPOSE 3000
+
+CMD ["node", "dist/main.js"]
