@@ -26,7 +26,6 @@ function LoginForm(
 
         login(datos)
             .then(res => {
-                console.log(res.data);
                 useAuthStore.getState().login(res.data.user, res.data.token);
                 sileo.success({ title: "Sesión iniciada con éxito" });
                 setIsOpen(false);
