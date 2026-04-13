@@ -11,4 +11,4 @@ RUN npx prisma generate
 RUN npx tsc -p tsconfig.build.json
 RUN ls -la /app/dist || echo "DIST NO EXISTE"
 
-CMD ["node", "dist/src/main"]
+CMD ["node", "-r", "tsconfig-paths/register", "dist/src/main"]
