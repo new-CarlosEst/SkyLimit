@@ -1,4 +1,4 @@
-import userIcon from "../../assets/ui/ProiconsPerson.svg";
+import userIcon from "../../../assets/ui/ProiconsPerson.svg";
 
 interface TextInputProps {
     label: string;

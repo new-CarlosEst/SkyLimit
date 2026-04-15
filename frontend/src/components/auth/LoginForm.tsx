@@ -1,10 +1,10 @@
 // import { useState } from "react";
 import { login } from "../../api/auth.api";
 import type { LoginData } from "../../types/auth.types";
-import AuthButton from "./AuthButton";
+import AuthButton from "../ui/auth/AuthButton";
 import ChangeAuthBtn from "./ChangeAuthBtn";
-import MailInput from "./MailInput";
-import PasswordInput from "./PasswordInput";
+import MailInput from "../ui/auth/MailInput";
+import PasswordInput from "../ui/auth/PasswordInput";
 import "./LoginForm.css";
 import { sileo } from "sileo";
 import { useAuthStore } from "../../store/authStore";
@@ -91,7 +91,12 @@ function LoginForm(
                                 className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 transition-all cursor-pointer" />
                             <span className="text-gray-600 text-sm font-medium">Recuérdame</span>
                         </label>
-                        <button type="button" onClick={() => setView('forgot')} className="text-blue-600 hover:text-blue-800 hover:underline text-sm font-medium transition-colors">¿Has olvidado tu contraseña?</button>
+                        <button
+                            type="button" onClick={() => setView('forgot')}
+                            className="text-blue-600 hover:text-blue-800 hover:underline text-sm font-medium transition-colors"
+                        >
+                            ¿Has olvidado tu contraseña?
+                        </button>
                     </div>
                     <AuthButton text="Iniciar Sesión" />
                 </form>

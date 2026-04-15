@@ -32,4 +32,12 @@ export class AuthController {
     //Valido el token
     return this.authService.validateJWT(token);
   }
+
+  //Ruta para enviar un correo de recuperacion de contraseña
+  @Post('forgot-password')
+  @HttpCode(200)
+  async forgotPassword(@Body() email: string) {
+    //TODO: Descomentar cuando este la funcion
+    //return this.authService.forgotPassword(email);
+  }
 }

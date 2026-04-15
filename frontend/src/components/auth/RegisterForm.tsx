@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { register } from "../../api/auth.api";
 import type { RegisterData } from "../../types/auth.types";
-import AuthButton from "./AuthButton";
+import AuthButton from "../ui/auth/AuthButton";
 import "./RegisterForm.css";
 import ChangeAuthBtn from "./ChangeAuthBtn";
-import MailInput from "./MailInput";
-import PasswordInput from "./PasswordInput";
-import TextInput from "./TextInput";
+import MailInput from "../ui/auth/MailInput";
+import PasswordInput from "../ui/auth/PasswordInput";
+import TextInput from "../ui/auth/TextInput";
 import { sileo } from "sileo";
 import { useAuthStore } from "../../store/authStore";
 

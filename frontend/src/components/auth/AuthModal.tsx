@@ -2,6 +2,7 @@ import RegisterForm from "./RegisterForm"
 import LoginForm from "./LoginForm"
 import { useState } from "react";
 import "./AuthModal.css";
+import ForgotPassword from "./ForgotPassword";
 
 
 function AuthModal({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
@@ -20,7 +21,7 @@ function AuthModal({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: React.Di
                         <LoginForm setView={setView} setIsOpen={setIsOpen} />
                     </div>
                     <div className="auth-panel">
-                        {/* TODO: Poner aqui el formulario de recuperacion de contraseña */}
+                        <ForgotPassword setView={setView} />
                     </div>
                 </div>
             </div>

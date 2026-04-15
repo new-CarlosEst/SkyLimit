@@ -93,4 +93,8 @@ export class AuthService {
       throw new UnauthorizedException('Token invalido');
     }
   }
+
+  //TODO: Hacer el metodo para enviar el email de recuperacion de contraseña (hacerlo en 2 metodos dif) e instalar las librerias:
+  //npm install @nestjs-modules/mailer nodemailer
+  //npm install -D @types/nodemailer
 }
