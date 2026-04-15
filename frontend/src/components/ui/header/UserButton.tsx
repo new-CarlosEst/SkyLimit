@@ -1,6 +1,6 @@
-import type { User } from "../../types/user.types";
+import type { User } from "../../../types/user.types";
 import { useState } from "react";
-import { useAuthStore } from "../../store/authStore";
+import { useAuthStore } from "../../../store/authStore";
 
 function UserButton({ user }: { user: User }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);

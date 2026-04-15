@@ -14,8 +14,8 @@ import { useAuthStore } from "../../store/authStore";
 import logo from "../../assets/logo/logo-skylimit-letters-blue-rounded.svg";
 
 function RegisterForm(
-    { setIsLogin, setIsOpen }:
-        { setIsLogin: React.Dispatch<React.SetStateAction<boolean>>, setIsOpen: React.Dispatch<React.SetStateAction<boolean>> }
+    { setView, setIsOpen }:
+        { setView: React.Dispatch<React.SetStateAction<'login' | 'register' | 'forgot'>>, setIsOpen: React.Dispatch<React.SetStateAction<boolean>> }
 ) {
 
     const [error, setError] = useState<string | null>(null);
@@ -33,7 +33,16 @@ function RegisterForm(
 
         register(datos)
             .then(res => {
-                useAuthStore.getState().login(res.data.user, res.data.token);
+                const token = res.data.access_token;
+                useAuthStore.getState().login(res.data.user, token);
+
+                // Guardamos la sesión en el sessionStorage
+                sessionStorage.setItem("auth-storage", JSON.stringify({
+                    state: {
+                        token: token
+                    },
+                }));
+
                 sileo.success({ title: "Registro completado con éxito" });
                 setIsOpen(false);
             })
@@ -74,7 +83,7 @@ function RegisterForm(
                 <div className="go-to-login">
                     <h2 className="text-white text-4xl font-extrabold">¡Únete ahora!</h2>
                     <p className="text-white text-lg font-medium">¿Ya tienes cuenta?</p>
-                    <ChangeAuthBtn setIsLogin={setIsLogin} text="Inicia Sesión" />
+                    <ChangeAuthBtn onClick={() => setView('login')} text="Inicia Sesión" />
                 </div>
             </div>
         </div>

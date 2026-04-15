@@ -1,4 +1,4 @@
-import { Body, Controller, Post, HttpCode, HttpStatus } from '@nestjs/common';
+import { Body, Controller, Post, HttpCode, Get, Headers } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register-auth.dto';
 import { LoginDto } from './dto/login-auth.dto';
@@ -21,5 +21,15 @@ export class AuthController {
   @HttpCode(200)
   async login(@Body() loginDto: LoginDto) {
     return this.authService.login(loginDto);
+  }
+
+  //Ruta para validar el token
+  @Get('validateJWT')
+  @HttpCode(200)
+  async validateJWT(@Headers('Authorization') authHeader: string) {
+    //Separo el beaer y el valor del token
+    const token = authHeader.split(' ')[1];
+    //Valido el token
+    return this.authService.validateJWT(token);
   }
 }

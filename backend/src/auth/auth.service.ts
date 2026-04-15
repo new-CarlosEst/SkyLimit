@@ -14,7 +14,7 @@ export class AuthService {
   constructor(
     private readonly userService: UsersService,
     private readonly jwtService: JwtService,
-  ) {}
+  ) { }
 
   /**
    * Funcion que recibe un email y una contraseña y verifica si coinciden
@@ -79,5 +79,18 @@ export class AuthService {
       access_token: await this.jwtService.signAsync(payload),
       user: new UserEntity(user),
     };
+  }
+
+  public async validateJWT(token: string): Promise<object> {
+    try {
+      const payload = await this.jwtService.verifyAsync(token);
+      return {
+        //Devuelvo el token y los datos de usuario
+        access_token: token,
+        user: await this.userService.getUserByEmail(payload.email),
+      };
+    } catch (error) {
+      throw new UnauthorizedException('Token invalido');
+    }
   }
 }

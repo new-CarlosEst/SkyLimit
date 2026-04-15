@@ -5,19 +5,22 @@ import "./AuthModal.css";
 
 
 function AuthModal({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
-    const [isLogin, setIsLogin] = useState(true);
+    const [view, setView] = useState<'login' | 'register' | 'forgot'>('login');
 
     if (!isOpen) return null;
 
     return (
         <div className="auth-modal-overlay" onClick={() => setIsOpen(false)}>
             <div className="auth-modal-container" onClick={(e) => e.stopPropagation()}>
-                <div className={`auth-slider ${isLogin ? 'show-login' : 'show-register'}`}>
+                <div className={`auth-slider show-${view}`}>
                     <div className="auth-panel">
-                        <RegisterForm setIsLogin={setIsLogin} setIsOpen={setIsOpen} />
+                        <RegisterForm setView={setView} setIsOpen={setIsOpen} />
                     </div>
                     <div className="auth-panel">
-                        <LoginForm setIsLogin={setIsLogin} setIsOpen={setIsOpen} />
+                        <LoginForm setView={setView} setIsOpen={setIsOpen} />
+                    </div>
+                    <div className="auth-panel">
+                        {/* TODO: Poner aqui el formulario de recuperacion de contraseña */}
                     </div>
                 </div>
             </div>
