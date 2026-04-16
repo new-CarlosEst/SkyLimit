@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import eyeIcon from "../../assets/ui/eye.svg";
-import eyeOffIcon from "../../assets/ui/eye-closed.svg";
-import padlock from "../../assets/ui/padlock.svg";
+import eyeIcon from "../../../assets/ui/eye.svg";
+import eyeOffIcon from "../../../assets/ui/eye-closed.svg";
+import padlock from "../../../assets/ui/padlock.svg";
 
 function PasswordInput() {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);

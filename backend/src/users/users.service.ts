@@ -30,7 +30,7 @@ export class UsersService {
 
     //Si el email no existe devuelvo null, si no devuelvo el user
     if (!user) {
-      throw new NotFoundException('Usuario no encontrado');
+      throw new NotFoundException('No existe ningún usuario registrado con ese email');
     } else {
       return user;
     }
@@ -64,5 +64,19 @@ export class UsersService {
       }
       throw new InternalServerErrorException('Error al crear al usuario');
     }
+  }
+
+  /**
+   * Actualiza la contraseña de un usuario por su email
+   * @param email Email del usuario
+   * @param newPassword Nueva contraseña
+   * @returns Devuelve el usuario actualizado
+   */
+  public async updatePassword(email: string, newPassword: string): Promise<UserEntity> {
+    const user = await this.prisma.user.update({
+      where: { email },
+      data: { password: newPassword },
+    });
+    return new UserEntity(user);
   }
 }

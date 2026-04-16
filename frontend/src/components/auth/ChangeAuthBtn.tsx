@@ -1,8 +1,8 @@
 function ChangeAuthBtn(
-    { setIsLogin, text }: { setIsLogin: React.Dispatch<React.SetStateAction<boolean>>, text: string }
+    { onClick, text }: { onClick: () => void, text: string }
 ) {
     return (
-        <button onClick={() => setIsLogin(prev => !prev)}
+        <button type="button" onClick={onClick}
             className="border-2 border-white rounded-md px-20 py-2 font-bold text-lg bg-transparent hover:bg-white/20 transition-colors duration-150"
         >{text}</button>
     )

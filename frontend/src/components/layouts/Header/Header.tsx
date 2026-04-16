@@ -3,12 +3,11 @@ import fullLogoWhite from "../../../assets/logo/logo-skylimit-letters-white-roun
 import "./Header.css";
 import AuthModal from "../../auth/AuthModal";
 import { useAuthStore } from "../../../store/authStore";
-import UserButton from "../../ui/UserButton";
+import UserButton from "../../ui/header/UserButton";
 import { Link } from "react-router-dom";
 
 function Header() {
 
-    //TODO: Ver si meter este estado en zustand para evitar el prop drilling
     const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
     const { user } = useAuthStore();
 
