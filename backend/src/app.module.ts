@@ -7,6 +7,7 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { ApiflightModule } from './apiflight/apiflight.module';
 import { AirportModule } from './airport/airport.module';
+import { MailModule } from './mail/mail.module';
 @Module({
   //Aqui en el modulo de app solo importo los modulos necesarios, nada de controllers ni services (solo los propios de app)
   imports: [
@@ -16,6 +17,7 @@ import { AirportModule } from './airport/airport.module';
     AuthModule,
     ApiflightModule,
     AirportModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

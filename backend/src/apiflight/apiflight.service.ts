@@ -1,6 +1,6 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import axios from 'axios';
-import dotenv from 'dotenv';
 import { CabinClass } from './enums/CabinClass';
 import * as mockOneWay from './mockOneWay.json';
 import * as mockRoundTrip from './mockRoundTrip.json';
@@ -12,11 +12,12 @@ import {
   AirportDetail,
 } from './entities/flight.entity';
 
-dotenv.config();
-
 @Injectable()
 export class ApiflightService {
-  constructor(private readonly airportService: AirportService) {}
+  constructor(
+    private readonly airportService: AirportService,
+    private readonly configService: ConfigService,
+  ) {}
 
   /**
    * Funcion que recibe los parametros de un vuelo de ida y vuelta y devuelve los resultados de la busqueda
@@ -78,7 +79,7 @@ export class ApiflightService {
       },
       headers: {
         //todo: una vez hecho ya el testing o quedarse sin peticiones en esta usar la variable de entorno RAPID_API
-        'x-rapidapi-key': process.env.RAPID_API_TEST,
+        'x-rapidapi-key': this.configService.get<string>('RAPID_API_TEST'),
         'x-rapidapi-host': 'skyscanner-flights-travel-api.p.rapidapi.com',
         'Content-Type': 'application/json',
       },
@@ -137,7 +138,7 @@ export class ApiflightService {
       },
       headers: {
         //todo: una vez hecho ya el testing o quedarse sin peticiones en esta usar la variable de entorno RAPID_API
-        'x-rapidapi-key': process.env.RAPID_API_TEST,
+        'x-rapidapi-key': this.configService.get<string>('RAPID_API_TEST'),
         'x-rapidapi-host': 'skyscanner-flights-travel-api.p.rapidapi.com',
         'Content-Type': 'application/json',
       },
@@ -184,7 +185,7 @@ export class ApiflightService {
       params: { query: name },
       headers: {
         //TODO: Una vez termiando el testing usar RAPID_API_TEST
-        'x-rapidapi-key': process.env.RAPID_API_TEST,
+        'x-rapidapi-key': this.configService.get<string>('RAPID_API_TEST'),
         'x-rapidapi-host': 'skyscanner-flights-travel-api.p.rapidapi.com',
         'Content-Type': 'application/json',
       },

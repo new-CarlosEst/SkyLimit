@@ -6,6 +6,7 @@ import { UsersService } from '../users/users.service';
 import { UserEntity } from '../users/entities/user.entity';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { MailService } from '../mail/mail.service';
 
 //Aqui usare bcrypt par encriptar las contraseñas, para generar el token de validacion y comprare la contraseña que me devuelve el recurso de users
 @Injectable()
@@ -14,6 +15,7 @@ export class AuthService {
   constructor(
     private readonly userService: UsersService,
     private readonly jwtService: JwtService,
+    private readonly mailService: MailService,
   ) { }
 
   /**
@@ -81,6 +83,11 @@ export class AuthService {
     };
   }
 
+  /**
+   * Metodo que valida el token
+   * @param token Token a validar
+   * @returns Devuelve el token y los datos de usuario
+   */
   public async validateJWT(token: string): Promise<object> {
     try {
       const payload = await this.jwtService.verifyAsync(token);
@@ -94,7 +101,27 @@ export class AuthService {
     }
   }
 
-  //TODO: Hacer el metodo para enviar el email de recuperacion de contraseña (hacerlo en 2 metodos dif) e instalar las librerias:
-  //npm install @nestjs-modules/mailer nodemailer
-  //npm install -D @types/nodemailer
+
+  public async forgotPassword(email: string): Promise<object> {
+    //Me busco el usuario
+    const user = await this.userService.getUserByEmail(email);
+
+    //si no existe lanzo el error
+    if (!user) {
+      throw new UnauthorizedException('Usuario no encontrado');
+    }
+
+    //Genero el token que expirar en 15 min
+    const token = await this.jwtService.signAsync(
+      { email: user.email },
+      { expiresIn: '15m' },
+    );
+
+    //Envio el email con el token
+    await this.mailService.sendRecoveryEmail(user.email, token, user.name);
+    
+    return {
+      message: 'Email de recuperación enviado',
+    };
+  }
 }
