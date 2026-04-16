@@ -1,6 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { RegisterDto } from './dto/register-auth.dto';
 import { LoginDto } from './dto/login-auth.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { UsersService } from '../users/users.service';
 import { UserEntity } from '../users/entities/user.entity';
@@ -102,6 +103,11 @@ export class AuthService {
   }
 
 
+  /**
+   * Metodo que envia un correo de recuperacion de contraseña
+   * @param email Email del usuario
+   * @returns Devuelve un mensaje de confirmacion
+   */
   public async forgotPassword(email: string): Promise<object> {
     //Me busco el usuario
     const user = await this.userService.getUserByEmail(email);
@@ -119,9 +125,34 @@ export class AuthService {
 
     //Envio el email con el token
     await this.mailService.sendRecoveryEmail(user.email, token, user.name);
-    
+
     return {
       message: 'Email de recuperación enviado',
     };
+  }
+
+  /**
+   * Metodo que resetea la contraseña usando el token
+   * @param resetPasswordDto Token y nueva contraseña
+   * @returns Devuelve un mensaje de confirmacion
+   */
+  public async resetPassword(resetPasswordDto: ResetPasswordDto): Promise<object> {
+    try {
+      // Verifico el token y obtengo el email del payload
+      const payload = await this.jwtService.verifyAsync(resetPasswordDto.token);
+      const email = payload.email;
+
+      // Hasheo la nueva contraseña
+      const hashedPassword = await bcrypt.hash(resetPasswordDto.password, 10);
+
+      // Actualizo la contraseña
+      await this.userService.updatePassword(email, hashedPassword);
+
+      return {
+        message: 'Contraseña actualizada correctamente',
+      };
+    } catch (error) {
+      throw new UnauthorizedException('Token inválido o expirado');
+    }
   }
 }

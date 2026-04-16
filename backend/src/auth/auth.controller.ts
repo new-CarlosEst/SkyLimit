@@ -2,6 +2,8 @@ import { Body, Controller, Post, HttpCode, Get, Headers } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register-auth.dto';
 import { LoginDto } from './dto/login-auth.dto';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 
 //Aqui me encargare de recibir las rutas de login o registro
 @Controller('auth') //Ruta "auth"
@@ -36,8 +38,14 @@ export class AuthController {
   //Ruta para enviar un correo de recuperacion de contraseña
   @Post('forgot-password')
   @HttpCode(200)
-  async forgotPassword(@Body() email: string) {
-    //TODO: Descomentar cuando este la funcion
-    //return this.authService.forgotPassword(email);
+  async forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
+    return this.authService.forgotPassword(forgotPasswordDto.email);
+  }
+
+  //Ruta para resetear la contraseña con el token
+  @Post('reset-password')
+  @HttpCode(200)
+  async resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
+    return this.authService.resetPassword(resetPasswordDto);
   }
 }

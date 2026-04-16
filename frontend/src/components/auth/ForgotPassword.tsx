@@ -1,8 +1,10 @@
 import "./ForgotPassword.css";
 import logo from "../../assets/logo/logo-skylimit-letters-blue-rounded.svg";
-import AuthButton from "../ui/auth/AuthButton";
+import { forgotPassword } from "../../api/auth.api";
 import MailInput from "../ui/auth/MailInput";
+import AuthButton from "../ui/auth/AuthButton";
 import ChangeAuthBtn from "./ChangeAuthBtn";
+import { sileo } from "sileo";
 
 function ForgotPassword({ setView }: { setView: React.Dispatch<React.SetStateAction<'login' | 'register' | 'forgot'>> }) {
 
@@ -10,6 +12,22 @@ function ForgotPassword({ setView }: { setView: React.Dispatch<React.SetStateAct
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const email = formData.get("email") as string;
+
+        forgotPassword(email)
+            .then(res => {
+                sileo.success({ title: "Correo enviado correctamente" });
+                console.log(res);
+            })
+            .catch(err => {
+                const message = err.response?.data?.message || "Error al enviar el correo";
+                const errorString = Array.isArray(message) ? message[0] : message;
+
+                sileo.error({
+                    title: "Error al enviar el correo",
+                    description: typeof errorString === 'string' ? errorString : "Por favor, verifica el correo e inténtalo de nuevo"
+                });
+                console.log(err);
+            });
     }
     return (
         <div className="forgot-password-form-container">

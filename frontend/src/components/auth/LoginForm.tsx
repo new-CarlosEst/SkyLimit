@@ -60,7 +60,8 @@ function LoginForm(
                 const errorString = Array.isArray(message) ? message[0] : message;
 
                 sileo.error({
-                    title: typeof errorString === 'string' ? errorString : "Error al iniciar sesión",
+                    title: "Error al iniciar sesión",
+                    description: typeof errorString === 'string' ? errorString : "Verifica tus credenciales",
                 });
             })
     }

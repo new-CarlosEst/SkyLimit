@@ -25,6 +25,16 @@ export const validateJWT = async (token: string) => {
     )
 }
 
+//Peticion con axios para el forgot password
+export const forgotPassword = async (email : string) => {
+    return apiClient.post("/auth/forgot-password", { email })
+}
+
+//Peticion con axios para el reset password
+export const resetPassword = async (token: string, password: string) => {
+    return apiClient.post("/auth/reset-password", { token, password })
+}
+
 
 
 
