@@ -3,7 +3,7 @@ import axios from "axios";
 
 //Me hago un cliente de axios para hacer petciones
 const apiClient = axios.create({
-    baseURL: 'http://localhost:3000/api', // Url de mi backend
+    baseURL: import.meta.env.VITE_BACKEND_ROUTE, // Url de mi backend
     headers: {
         'Content-Type': 'application/json', //Le digo que lo envie en formato json
     },
