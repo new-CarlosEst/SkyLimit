@@ -20,7 +20,7 @@ function Header() {
                     <li><Link to="/">Inicio</Link></li>
                     <li>Vuelos</li>
                     <li>Destinos</li>
-                    <li>Blog</li>
+                    <li><Link to="/blog">Blog</Link></li>
                     <li>Contacto</li>
                 </ul>
             </nav>
