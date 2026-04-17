@@ -6,6 +6,7 @@ import "sileo/styles.css"; // Hay que traerse este css para ver los toast de sil
 import { useToastStore } from "./store/toastStore";
 import { useAuthPersistence } from "./hooks/useAuthPersistence";
 import PasswordRecovery from "./pages/PasswordRecovery";
+import Blog from "./pages/Blog";
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         {/* Aqui van las rutas de la aplicacion */}
         <Route path="/" element={<Landing />} />
         <Route path="/reset-password" element={<PasswordRecovery />} />
+        <Route path="/blog" element={<Blog />} />
       </Routes>
     </>
   )
