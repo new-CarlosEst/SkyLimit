@@ -26,7 +26,7 @@ export class MailService {
                 <p>Haz clic en el botón de abajo:</p>
 
                 <div style="text-align: center; margin: 20px 0;">
-                    <a href="${this.configService.get<string>('FRONTEND_URL')}/reset-password?token=${token}"
+                    <a href="${this.configService.get<string>('FRONTEND_URL')}/?token=${token}"
                         style="background-color: #007bff; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px;">
                         Recuperar contraseña
                     </a>
@@ -34,7 +34,7 @@ export class MailService {
 
                 <p>Si el botón no funciona, copia y pega esta URL en tu navegador:</p>
                 <p style="word-break: break-all;">
-                    ${this.configService.get<string>('FRONTEND_URL')}/reset-password?token=${token}
+                    ${this.configService.get<string>('FRONTEND_URL')}/?token=${token}
                 </p>
             </div>
         </div>
