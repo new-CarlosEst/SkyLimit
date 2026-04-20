@@ -4,6 +4,8 @@ import axios from 'axios';
 import { CabinClass } from './enums/CabinClass';
 import * as mockOneWay from './mockOneWay.json';
 import * as mockRoundTrip from './mockRoundTrip.json';
+import * as mockMulti from './mockMulti.json';
+import * as mockOffers from './mockOffers.json';
 import { AirportService } from '../airport/airport.service';
 import {
   FlightEntity,
@@ -19,6 +21,7 @@ export class ApiflightService {
     private readonly configService: ConfigService,
   ) {}
 
+  //Metodos que hacen la peticion a la api
   /**
    * Funcion que recibe los parametros de un vuelo de ida y vuelta y devuelve los resultados de la busqueda
    * @params originName: Nombre del aeropuerto de origen
@@ -94,6 +97,19 @@ export class ApiflightService {
     }
   }
 
+  /**
+   * Busca vuelos de ida
+   * @params originName: Nombre del aeropuerto de origen
+   * @params destinationName: Nombre del aeropuerto de destino
+   * @params originIATA: Codigo IATA del aeropuerto de origen
+   * @params destinationIATA: Codigo IATA del aeropuerto de destino
+   * @params cabinClass: Clase de vuelo (economy, premium, business, first)
+   * @params departureDate: Fecha de salida
+   * @params adults: Número de adultos
+   * @params children: Número de niños
+   * @params infants: Número de infantes
+   * @returns Promise<any> - Respuesta de la API de Skyscanner
+   */
   public async getFlightsOneWay(
     originName: string,
     destinationName: string,
@@ -153,9 +169,137 @@ export class ApiflightService {
     }
   }
 
-  //TODO: Hacer una funcion que procese la solicitud de cuando hay un viaje con varios trayectos
-  public async getFlightsMulti() {}
+  /**
+   * Busca vuelos con escalas múltiples
+   * @params legs: Array de objetos con originSkyId, destinationSkyId y date
+   * @params cabinClass: Clase de vuelo (economy, premium, business, first)
+   * @params adults: Número de adultos
+   * @returns Promise<any> - Respuesta de la API de Skyscanner
+   */
+  public async getFlightsMulti(
+    legs: { originSkyId: string; destinationSkyId: string; date: string }[], //El originSkyId y destinationSkyId son los códigos IATA de los aeropuertos, y la fecha es el dia de el primer vuelo
+    cabinClass: string,
+    adults: string,
+  ) {
 
+    //Verifico que la  clase del vuelo es valida
+    const cabinClassVerified = this.verifyCabinClass(cabinClass);
+
+    //Convierto las legs a string JSON como espera la API
+    const legsForApi = JSON.stringify(legs);
+
+
+    const options = {
+      method: 'GET',
+      url: 'https://skyscanner-flights-travel-api.p.rapidapi.com/flights/searchFlightsMultiStops',
+      params: {
+        adults: adults,
+        cabinClass: cabinClassVerified,
+        currency: 'USD',
+        legs: legsForApi
+      },
+      headers: {
+        'x-rapidapi-key': this.configService.get<string>('RAPID_API_TEST'),
+        'x-rapidapi-host': 'skyscanner-flights-travel-api.p.rapidapi.com',
+        'Content-Type': 'application/json'
+      }
+    };
+    
+    try {
+      const response = await axios.request(options);
+      return await this.mapToFlightEntity(response.data);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  /**
+   * Funcion que recibe sitio de salida y te devuelve datos con ofertas a diferentes destinos, pero sin devolver datos de los vuelos
+   * @params originName: Nombre del sitio de salida
+   * @params originIATA: Codigo IATA del sitio de salida
+   * @params cabinClass: Clase de vuelo (economy, premium, business, first)
+   * @params adults: Numero de adultos
+   * @returns Promise<any> - Respuesta de la API de Skyscanner
+   */
+  public async getBestOffers(
+    originName: string,
+    originIATA: string,
+    cabinClass: string,
+    adults: string,
+  ) {
+    //Saco el id de la entidad
+    const originEntityId = await this.getAirportIdByName(
+      originName,
+      originIATA,
+    );
+
+    //Verifico que la  clase del vuelo es valida
+    const cabinClassVerified = this.verifyCabinClass(cabinClass);
+    
+    //Hago la peticion con sus opciones 
+    const options = {
+      method: 'GET',
+      url: 'https://skyscanner-flights-travel-api.p.rapidapi.com/flights/searchFlightEverywhere',
+      params: {
+        originSkyId: originIATA,
+        originEntityId: originEntityId,
+        cabinClass: cabinClassVerified,
+        adults: adults,
+        currency: 'EUR',
+        market: 'ES',
+      },
+      headers: {
+        //todo: una vez hecho ya el testing o quedarse sin peticiones en esta usar la variable de entorno RAPID_API
+        'x-rapidapi-key': this.configService.get<string>('RAPID_API_TEST'),
+        'x-rapidapi-host': 'skyscanner-flights-travel-api.p.rapidapi.com',
+        'Content-Type': 'application/json',
+      },
+    };
+
+    try {
+      const response = await axios.request(options);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+
+
+  }
+
+  //TODO: Este metodo recibira el lugar de salida y destino (solo iata) y el mes y te dara las mejores opciones
+  public async getFlightsBestPrice(
+    originIATA: string,
+    destinationIATA: string,
+    month: string,
+  ){
+
+
+    const options = {
+      method: 'GET',
+      url: 'https://skyscanner-flights-travel-api.p.rapidapi.com/flights/getCheapestOneway',
+      params: {
+        destinationSkyId: destinationIATA,
+        originSkyId: originIATA,
+        market: 'ES',
+        month: month,
+        currency: 'EUR'
+      },
+      headers: {
+        'x-rapidapi-key': this.configService.get<string>('RAPID_API_TEST') || '',
+        'x-rapidapi-host': 'skyscanner-flights-travel-api.p.rapidapi.com',
+        'Content-Type': 'application/json'
+      }
+    };
+
+    //todo: hacer la peticion con axios (en rapidapi.com fallaba esta peticion, comprobar)
+  }
+
+
+
+  //Datos mock para pintar los datos en el front
+  //TODO: No usarlos cuando ya la peticion de vuelos en front este montada bien
   /**
    * Funcion que devuelve los resultados de la busqueda de solo ida mockeados
    * @returns Resultados de la busqueda mockeados mapeados a FlightEntity
@@ -171,6 +315,25 @@ export class ApiflightService {
   public async getFlightsRoundTripMock(): Promise<FlightEntity[]> {
     return await this.mapToFlightEntity(mockRoundTrip);
   }
+  /**
+   * Funcion que devuelve los resultados de la busqueda de multiples destinos mockeados
+   * @returns Resultados de la busqueda mockeados mapeados a FlightEntity
+   */
+  public async getFlightsMultiMock(): Promise<FlightEntity[]> {
+    return await this.mapToFlightEntity(mockMulti);
+  }
+
+  /**
+   * Funcion que devuelve los resultados de la busqueda de ofertas mockeados
+   * @returns Resultados de la busqueda mockeados
+   */
+  public async getFlightsOffersMock() {
+    return mockOffers;
+  }
+
+
+
+  //Funciones extra que aportan datos y formateo a las peticiones
 
   /**
    * Funcion que recibe el nombre de un aeropuerto y su IATA y devuelve su entityId consultando la API de Skyscanner
@@ -242,7 +405,6 @@ export class ApiflightService {
    * @params apiResponse: Response de la API de Skyscanner
    * @returns Array de FlightEntity - Lista de vuelos mapeados
    */
-  //TODO: Comprobar si es de ida y vuelta con 1 o mas escalas que no me coja los mismos datos de la escalada para la ida y para la vuelta
   private async mapToFlightEntity(apiResponse: any): Promise<FlightEntity[]> {
     const itineraries = apiResponse.itineraries || [];
 
@@ -280,7 +442,6 @@ export class ApiflightService {
                 name: c.name,
                 logoUrl: c.logoUrl,
               })),
-              stopovers: this.parseStopoverTimes(itinerary.bookingUrl),
             };
             return legEntity;
           }),
@@ -294,7 +455,6 @@ export class ApiflightService {
             formatted: itinerary.price.formatted,
           },
           legs: legs,
-          bookingUrl: itinerary.bookingUrl,
         };
         return flightEntity;
       }),
@@ -303,29 +463,5 @@ export class ApiflightService {
     return mappedItineraries;
   }
 
-  /**
-   * Funcion que recibe la url de compra de vuelo y saca datos importantes
-   * @params bookingUrl: string - Url de compra de vuelo
-   * @returns Array<Object> - Array de objetos con los datos importantes del vuelo
-   */
-  private parseStopoverTimes(bookingUrl: string) {
-    const itinerary = new URL(bookingUrl).searchParams.get('itinerary');
-    if (!itinerary) {
-      throw new HttpException(`Itinerario no encontrado`, HttpStatus.NOT_FOUND);
-    }
-
-    const segments = itinerary.split(';');
-
-    return segments.map((segment, index) => {
-      const parts = segment.split('|');
-      return {
-        order: index + 1,
-        origin: parts[3],
-        departure: parts[4],
-        destination: parts[5],
-        arrival: parts[6],
-        durationMinutes: parseInt(parts[7]),
-      };
-    });
-  }
 }
+

@@ -43,4 +43,34 @@ export class ApiflightController {
     //LLamo a un metodo con datos de mock de una peticion exitosa que realize para no gastar tokens en proximas pruebas
     return this.apiflightService.getFlightsOneWayMock();
   }
+
+  @Get('multi')
+  async getFlightsMulti(
+    @Query('legs') legs: string,
+    @Query('cabinClass') cabinClass: string,
+    @Query('adults') adults: string,
+  ) {
+    //Parseo el string JSON de legs a array de objetos
+    const legsArray = JSON.parse(legs);
+
+    //TODO: Devolver este metodo para devolver resultados reales
+    //return this.apiflightService.getFlightsMulti(legsArray, cabinClass, adults);
+
+    //LLamo a un metodo con datos de mock de una peticion exitosa que realize para no gastar tokens en proximas pruebas
+    return this.apiflightService.getFlightsMultiMock();
+  }
+
+  @Get('offers')
+  async getFlightsOffers(
+    @Query('originName') originName: string,
+    @Query('originIATA') originIATA: string,
+    @Query('cabinClass') cabinClass: string,
+    @Query('adults') adults: string,
+  ) {
+    //TODO: Devolver este metodo para devolver resultados reales
+    //return this.apiflightService.getBestOffers(originName, originIATA, cabinClass, adults);
+
+    //LLamo a un metodo con datos de mock de una peticion exitosa que realize para no gastar tokens en proximas pruebas
+    return this.apiflightService.getFlightsOffersMock();
+  }
 }

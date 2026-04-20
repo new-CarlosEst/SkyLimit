@@ -18,8 +18,7 @@ function Header() {
                 <ul>
                     {/* TODO: Meter los enlaces en rutas de react-router cuando tenga las paginas */}
                     <li><Link to="/">Inicio</Link></li>
-                    <li>Vuelos</li>
-                    <li>Destinos</li>
+                    <li>Ofertas</li>
                     <li><Link to="/blog">Blog</Link></li>
                     <li>Contacto</li>
                 </ul>

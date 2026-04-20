@@ -4,10 +4,10 @@ import TripTypePill from "./TripTypePill";
 import InputPill from "./InputPill";
 import CabinTypeSelector from "./CabinTypeSelector";
 import PassengerSelector from "./PassengerSelector";
+import DatePicker from "../../ui/flights/DatePicker";
 
 import locationIcon from "../../../assets/ui/ProiconsLocation.svg";
 import planeIcon from "../../../assets/ui/MynauiPlane.svg";
-import calendarIcon from "../../../assets/ui/IconoirCalendar.svg";
 
 //Me creo un tipo para ver el tipo de viaje
 type TripType = "oneWay" | "roundTrip" | "multi";
@@ -25,12 +25,25 @@ function SearchCard() {
     //Estado para guardar el tipo de cabina
     const [cabinClass, setCabinClass] = useState<CabinClass>("economy");
 
+    //Estado para guardar las fechas de viaje
+    const [travelDates, setTravelDates] = useState<Date | [Date, Date] | null>(null);
+
+    //Array para guardar fechas por trayecto en múltiples destinos
+    const [multiDates, setMultiDates] = useState<(Date | null)[]>([null]);
+
     //Funcion que recibe el indice del array del destino a borrar y lo saca del array
     const removeDestination = (indexToRemove: number) => {
         if (multiDestinations.length > 1) {
-            //En vez de borrar del array hace un filtro y se queda con los indices que no coinciden con el que va a borrar y cambia el valor de array por el del filtro
+            //En vez de borrar del array ha un filtro y se queda con los indices que no coinciden con el que va a borrar y cambia el valor de array por el del filtro
             setMultiDestinations(multiDestinations.filter((_, index) => index !== indexToRemove));
+            setMultiDates(multiDates.filter((_, index) => index !== indexToRemove));
         }
+    };
+
+    //Funcion para añadir un nuevo trayecto en multiples destinos
+    const addDestination = () => {
+        setMultiDestinations([...multiDestinations, multiDestinations.length]);
+        setMultiDates([...multiDates, null]);
     };
 
     return (
@@ -74,12 +87,14 @@ function SearchCard() {
                                     inputType="text"
                                 />
 
-                                {/* TODO: Cambiar esto a un componente que usa la libreria React Datepicker */}
-                                <InputPill
+                                <DatePicker
+                                    mode="single"
+                                    onDateChange={(date) => {
+                                        const newDates = [...multiDates];
+                                        newDates[index] = date as Date | null;
+                                        setMultiDates(newDates);
+                                    }}
                                     name={`Fecha ${index + 1}`}
-                                    icon={calendarIcon}
-                                    placeHolder="Selecciona fecha"
-                                    inputType="date"
                                 />
 
                                 {/* Boton para eliminar el trayecto que solo se muestra cuando hay mas de un trayect */}
@@ -102,9 +117,7 @@ function SearchCard() {
                         <div className="actions-row">
                             {/* Boton para añadir un nuevo destino que solo se muestra cuando es multi destino */}
                             <button
-                                onClick={() =>
-                                    setMultiDestinations([...multiDestinations, multiDestinations.length])
-                                }
+                                onClick={addDestination}
                                 className="add-trayecto-btn"
                             >
                                 + Añadir trayecto
@@ -129,11 +142,10 @@ function SearchCard() {
                             placeHolder="¿A dónde vas?"
                             inputType="text"
                         />
-                        <InputPill
-                            name="Fecha"
-                            icon={calendarIcon}
-                            placeHolder={tripType === "roundTrip" ? "Ida - Vuelta" : "Ida"}
-                            inputType="date"
+                        <DatePicker
+                            mode={tripType === "roundTrip" ? "range" : "single"}
+                            onDateChange={setTravelDates}
+                            name={tripType === "roundTrip" ? "Ida - Vuelta" : "Ida"}
                         />
                         <PassengerSelector />
                     </div>
