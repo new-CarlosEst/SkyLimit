@@ -2,8 +2,8 @@ import "./SearchCard.css";
 import TripTypePill from "./TripTypePill";
 import CabinTypeSelector from "./CabinTypeSelector";
 import PassengerSelector from "./PassengerSelector";
-import DatePicker from "../../ui/flights/DatePicker";
-import AirportInput from "../../ui/flights/AirportInput";
+import DatePicker from "../../ui/flights/search/DatePicker";
+import AirportInput from "../../ui/flights/search/AirportInput";
 import { useFlightSearch } from "../../../hooks/useFlightSearch";
 
 import locationIcon from "../../../assets/ui/ProiconsLocation.svg";

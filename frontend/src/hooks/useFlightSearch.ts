@@ -2,6 +2,9 @@ import { useState } from "react";
 import type { Airport, Passengers, OneWayData, RoundTripData, MultiTripData } from "../types/airport.types";
 import { searchOneWay, searchRoundTrip, searchMultiTrip } from "../api/flights.api";
 import { sileo } from "sileo";
+import { useFlightSearchStore } from "../store/flightSearchStore";
+import { useSearchParamsStore } from "../store/searchParamsStore";
+import { useNavigate } from "react-router-dom";
 
 //Tippos que hay de viajes y cabinas
 type TripType = "oneWay" | "roundTrip" | "multi";
@@ -9,6 +12,10 @@ type CabinClass = "economy" | "premiumeconomy" | "business" | "first";
 
 //Funcion que te permite hacer la busqueda de vuelos con sus parametros
 export function useFlightSearch() {
+    const navigate = useNavigate();
+
+    const setSearchResults = useFlightSearchStore((state) => state.setSearchResults);
+    const setSearchParams = useSearchParamsStore((state) => state.setSearchParams);
     const [tripType, setTripType] = useState<TripType>("roundTrip");
     const [multiDestinations, setMultiDestinations] = useState<number[]>([0]);
     const [cabinClass, setCabinClass] = useState<CabinClass>("economy");
@@ -72,6 +79,16 @@ export function useFlightSearch() {
             try {
                 const result = await searchOneWay(flightData);
                 console.log(result);
+                setSearchResults(result, "oneWay");
+                setSearchParams({
+                    originIata: originAirport.iata,
+                    destinationIata: destinationAirport.iata,
+                    departureDate: (travelDates as Date).toISOString().split('T')[0],
+                    returnDate: null,
+                    passengers: passengers,
+                    cabinClass: cabinClass,
+                });
+                navigate("/flights");
                 return result;
             } catch (error) {
                 console.error("Error al buscar vuelos:", error);
@@ -107,6 +124,16 @@ export function useFlightSearch() {
             try {
                 const result = await searchRoundTrip(flightData);
                 console.log("Resultado de búsqueda roundTrip:", result);
+                setSearchResults(result, "roundTrip");
+                setSearchParams({
+                    originIata: originAirport.iata,
+                    destinationIata: destinationAirport.iata,
+                    departureDate: departureDate.toISOString().split('T')[0],
+                    returnDate: returnDate.toISOString().split('T')[0],
+                    passengers: passengers,
+                    cabinClass: cabinClass,
+                });
+                navigate("/flights");
                 return result;
             } catch (error) {
                 console.error("Error al buscar vuelos:", error);
@@ -146,6 +173,16 @@ export function useFlightSearch() {
             try {
                 const result = await searchMultiTrip(flightData);
                 console.log("Resultado de búsqueda multi:", result);
+                setSearchResults(result, "multi");
+                setSearchParams({
+                    originIata: legs[0].originSkyId,
+                    destinationIata: legs[legs.length - 1].destinationSkyId,
+                    departureDate: legs[0].date,
+                    returnDate: null,
+                    passengers: passengers,
+                    cabinClass: cabinClass,
+                });
+                navigate("/flights");
                 return result;
             } catch (error) {
                 console.error("Error al buscar vuelos:", error);

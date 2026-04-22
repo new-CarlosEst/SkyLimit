@@ -1,12 +1,12 @@
 import { useState } from "react";
 import DatePickerLib from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import calendarIcon from "../../../assets/ui/IconoirCalendar.svg";
+import calendarIcon from "../../../../assets/ui/IconoirCalendar.svg";
 import "./DatePicker.css";
 
 //Los props para seleccionar fecha , si es ida y vuelta (range) o solo ida (single)
 interface DatePickerProps {
-    mode: "single" | "range"; 
+    mode: "single" | "range";
     onDateChange: (date: Date | [Date, Date] | null) => void; //La fecha
     name: string; //Label
 }
@@ -40,7 +40,7 @@ function DatePicker({ mode, onDateChange, name }: DatePickerProps) {
     return (
         <div className="date-picker-wrapper">
             <label className="text-sm font-semibold text-gray-700">{name}</label>
-            
+
             {/* Modo solo una fecha */}
             {mode === "single" ? (
                 <div className="input-wrapper">

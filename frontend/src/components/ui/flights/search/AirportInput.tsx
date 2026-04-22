@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import type { Airport } from "../../../types/airport.types";
-import { searchAirports } from "../../../api/flights.api";
+import type { Airport } from "../../../../types/airport.types";
+import { searchAirports } from "../../../../api/flights.api";
 
 interface AirportInputProps {
     name: string;
