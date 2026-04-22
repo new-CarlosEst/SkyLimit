@@ -447,12 +447,14 @@ export class ApiflightService {
           }),
         );
 
+        let newPrice = itinerary.price.amount * 1.07;
+
         const flightEntity: FlightEntity = {
           id: itinerary.id,
           price: {
-            amount: itinerary.price.amount,
+            amount: newPrice,
             currency: itinerary.price.currency,
-            formatted: itinerary.price.formatted,
+            formatted: `${newPrice.toFixed(0)}€`,
           },
           legs: legs,
         };

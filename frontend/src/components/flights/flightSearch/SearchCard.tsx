@@ -96,6 +96,7 @@ function SearchCard() {
                                         setMultiDates(newDates);
                                     }}
                                     name={`Fecha ${index + 1}`}
+                                    minDate={index > 0 && multiDates[index - 1] ? new Date(multiDates[index - 1]!.getTime() + 24 * 60 * 60 * 1000) : undefined}
                                 />
 
                                 {/* Boton para eliminar el trayecto que solo se muestra cuando hay mas de un trayect */}

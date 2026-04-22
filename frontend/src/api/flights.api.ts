@@ -37,7 +37,11 @@ export const searchRoundTrip = async (flightData : RoundTripData) => {
 
 export const searchMultiTrip = async (flightData : MultiTripData) => {
     const response = await apiClient.get("apiflight/multi", {
-        params: flightData
+        params: {
+            legs: JSON.stringify(flightData.legs),
+            cabinClass: flightData.cabinClass,
+            adults: flightData.adults,
+        }
     });
     return response.data;
 }

@@ -5,6 +5,7 @@ import AuthModal from "../../auth/AuthModal";
 import { useAuthStore } from "../../../store/authStore";
 import UserButton from "../../ui/header/UserButton";
 import { Link } from "react-router-dom";
+import { sileo } from "sileo";
 
 function Header() {
 
@@ -16,11 +17,11 @@ function Header() {
             <img src={fullLogoWhite} alt="Logo-skylimit" />
             <nav className="navigation">
                 <ul>
-                    {/* TODO: Meter los enlaces en rutas de react-router cuando tenga las paginas */}
+                    {/* TODO: Meter los enlaces en rutas de react-router cuando tenga las paginas y cambiar los onClick por los enlaces */}
                     <li><Link to="/">Inicio</Link></li>
-                    <li>Ofertas</li>
-                    <li><Link to="/blog">Blog</Link></li>
-                    <li>Contacto</li>
+                    <li onClick={() => sileo.info({ title: "Función no disponible" })}>Ofertas</li>
+                    <li onClick={() => sileo.info({ title: "Función no disponible" })}>Blog</li>
+                    <li onClick={() => sileo.info({ title: "Función no disponible" })}>Contacto</li>
                 </ul>
             </nav>
             <div className="session-actions">

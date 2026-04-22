@@ -178,7 +178,7 @@ export function useFlightSearch() {
                     originIata: legs[0].originSkyId,
                     destinationIata: legs[legs.length - 1].destinationSkyId,
                     departureDate: legs[0].date,
-                    returnDate: null,
+                    returnDate: legs[legs.length - 1].date,
                     passengers: passengers,
                     cabinClass: cabinClass,
                 });
