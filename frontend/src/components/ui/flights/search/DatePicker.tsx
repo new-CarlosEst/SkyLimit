@@ -6,7 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import calendarIcon from "../../../../assets/ui/IconoirCalendar.svg";
 
-import { formatDate } from "../../../../utils/formaters";
+// import { formatDate } from "../../../../utils/formaters";
 
 import "./DatePicker.css";
 

@@ -15,13 +15,10 @@ function SearchCard() {
         tripType,
         multiDestinations,
         cabinClass,
-        //----------------------------------------------
-        //  Pone que no estan usandose, pero si lo estan haciendo. Pero en el callback de la funcion
-        travelDates,
-        originAirport,
-        destinationAirport,
-        passengers,
-        //----------------------------------------------
+        travelDates: _travelDates,
+        originAirport: _originAirport,
+        destinationAirport: _destinationAirport,
+        passengers: _passengers,
         multiDates,
         multiAirports,
 
