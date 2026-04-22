@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { sileo } from "sileo";
 import { resetPassword } from "../api/auth.api";
+import { useValidatePasswordToken } from "../hooks/useValidatePasswordToken"; // 👈 importa el hook
 import PasswordInput from "../components/ui/auth/PasswordInput";
 import AuthButton from "../components/ui/auth/AuthButton";
 import logo from "../assets/logo/logo-skylimit-letters-blue-rounded.svg";
@@ -13,6 +14,9 @@ function PasswordRecovery() {
     const navigate = useNavigate();
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState(false);
+
+    // 👇 Usa el hook personalizado
+    const { isValidating, isValid } = useValidatePasswordToken(token);
 
     const enviarDatos = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -50,6 +54,25 @@ function PasswordRecovery() {
             });
     };
 
+    // Mostrar un loader mientras se valida
+    if (isValidating) {
+        return (
+            <div className="password-recovery-container">
+                <div className="form-wrapper">
+                    <img src={logo} alt="Logo-skylimit" className="logo-skylimit" />
+                    <p className="text-gray-600 text-sm font-bold text-center mb-10">
+                        Validando enlace...
+                    </p>
+                </div>
+            </div>
+        );
+    }
+
+    // Si el token no es válido, no renderiza nada (el hook ya redirige)
+    if (!isValid) {
+        return null;
+    }
+
     return (
         <div className="password-recovery-container">
             <div className="form-wrapper">
@@ -65,7 +88,6 @@ function PasswordRecovery() {
                                 Confirmar contraseña
                             </label>
                             <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3 border border-gray-300 rounded-lg px-4 py-3 sm:py-3.5 focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-blue-100 transition-all bg-white group">
-                                {/* Uso un input normal ya que mi componente no permite poner los atributos a placer */}
                                 <input
                                     type="password"
                                     id="confirmPassword"

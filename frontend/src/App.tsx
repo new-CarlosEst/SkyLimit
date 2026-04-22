@@ -8,6 +8,10 @@ import { useToastStore } from "./store/toastStore";
 import { useAuthPersistence } from "./hooks/useAuthPersistence";
 import PasswordRecovery from "./pages/PasswordRecovery";
 import Blog from "./pages/Blog";
+import Flights from "./pages/Flights";
+import loginBackground from "./assets/backgrounds/Login-Avion-azul.jpg";
+import registerBackground from "./assets/backgrounds/Register-Pasaporte-azul.jpg";
+import forgotPasswordBackground from "./assets/backgrounds/aeropuerto-azul.png";
 
 
 function App() {
@@ -21,6 +25,20 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
   const showHeader = location.pathname !== '/reset-password';
+
+  // Precargar imágenes de fondo para el modal de autenticación
+  useEffect(() => {
+    const images = [
+      loginBackground,
+      registerBackground,
+      forgotPasswordBackground
+    ];
+
+    images.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
 
   // Leer parámetro resetToken y navegar
   useEffect(() => {
@@ -42,6 +60,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/reset-password" element={<PasswordRecovery />} />
         <Route path="/blog" element={<Blog />} />
+        <Route path="/flights" element={<Flights />} />
       </Routes>
     </>
   )

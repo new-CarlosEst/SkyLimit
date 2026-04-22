@@ -1,37 +1,43 @@
 import "./SearchCard.css";
-import { useState } from "react";
 import TripTypePill from "./TripTypePill";
-import InputPill from "./InputPill";
 import CabinTypeSelector from "./CabinTypeSelector";
 import PassengerSelector from "./PassengerSelector";
+import DatePicker from "../../ui/flights/search/DatePicker";
+import AirportInput from "../../ui/flights/search/AirportInput";
+import { useFlightSearch } from "../../../hooks/useFlightSearch";
 
 import locationIcon from "../../../assets/ui/ProiconsLocation.svg";
 import planeIcon from "../../../assets/ui/MynauiPlane.svg";
-import calendarIcon from "../../../assets/ui/IconoirCalendar.svg";
-
-//Me creo un tipo para ver el tipo de viaje
-type TripType = "oneWay" | "roundTrip" | "multi";
-
-//Me croe un tipo para ver el tipo de cabina
-type CabinClass = "economy" | "premiumeconomy" | "business" | "first";
 
 function SearchCard() {
-    //Para el cambio entre ida y vuelta, solo ida y multiples destinos
-    const [tripType, setTripType] = useState<TripType>("roundTrip");
+    const {
+        //Estados
+        tripType,
+        multiDestinations,
+        cabinClass,
+        //----------------------------------------------
+        //  Pone que no estan usandose, pero si lo estan haciendo. Pero en el callback de la funcion
+        travelDates,
+        originAirport,
+        destinationAirport,
+        passengers,
+        //----------------------------------------------
+        multiDates,
+        multiAirports,
 
-    //Array para guardar los destinos multiples
-    const [multiDestinations, setMultiDestinations] = useState<number[]>([0]);
-
-    //Estado para guardar el tipo de cabina
-    const [cabinClass, setCabinClass] = useState<CabinClass>("economy");
-
-    //Funcion que recibe el indice del array del destino a borrar y lo saca del array
-    const removeDestination = (indexToRemove: number) => {
-        if (multiDestinations.length > 1) {
-            //En vez de borrar del array hace un filtro y se queda con los indices que no coinciden con el que va a borrar y cambia el valor de array por el del filtro
-            setMultiDestinations(multiDestinations.filter((_, index) => index !== indexToRemove));
-        }
-    };
+        //Funciones para settear el estado
+        setTripType,
+        setCabinClass,
+        setTravelDates,
+        setOriginAirport,
+        setDestinationAirport,
+        setPassengers,
+        setMultiDates,
+        setMultiAirports,
+        removeDestination,
+        addDestination,
+        handleSearch,
+    } = useFlightSearch(); //Igualo los estados y las funciones de mi hook personalizado
 
     return (
         <div className="search-card w-full max-w-5xl mb-6" >
@@ -61,25 +67,36 @@ function SearchCard() {
                     <div className="multi-container">
                         {multiDestinations.map((_, index) => (
                             <div key={index} className="multi-inputs-grid">
-                                <InputPill
+                                <AirportInput
                                     name={`Origen ${index + 1}`}
                                     icon={locationIcon}
                                     placeHolder="¿Desde dónde?"
-                                    inputType="text"
+                                    onAirportSelect={(airport) => {
+                                        const newAirports = [...multiAirports];
+                                        newAirports[index] = { ...newAirports[index], origin: airport };
+                                        setMultiAirports(newAirports);
+                                    }}
                                 />
-                                <InputPill
+                                <AirportInput
                                     name={`Destino ${index + 1}`}
                                     icon={planeIcon}
                                     placeHolder="¿A dónde vas?"
-                                    inputType="text"
+                                    onAirportSelect={(airport) => {
+                                        const newAirports = [...multiAirports];
+                                        newAirports[index] = { ...newAirports[index], destination: airport };
+                                        setMultiAirports(newAirports);
+                                    }}
                                 />
 
-                                {/* TODO: Cambiar esto a un componente que usa la libreria React Datepicker */}
-                                <InputPill
+                                <DatePicker
+                                    mode="single"
+                                    onDateChange={(date) => {
+                                        const newDates = [...multiDates];
+                                        newDates[index] = date as Date | null;
+                                        setMultiDates(newDates);
+                                    }}
                                     name={`Fecha ${index + 1}`}
-                                    icon={calendarIcon}
-                                    placeHolder="Selecciona fecha"
-                                    inputType="date"
+                                    minDate={index > 0 && multiDates[index - 1] ? new Date(multiDates[index - 1]!.getTime() + 24 * 60 * 60 * 1000) : undefined}
                                 />
 
                                 {/* Boton para eliminar el trayecto que solo se muestra cuando hay mas de un trayect */}
@@ -102,40 +119,37 @@ function SearchCard() {
                         <div className="actions-row">
                             {/* Boton para añadir un nuevo destino que solo se muestra cuando es multi destino */}
                             <button
-                                onClick={() =>
-                                    setMultiDestinations([...multiDestinations, multiDestinations.length])
-                                }
+                                onClick={addDestination}
                                 className="add-trayecto-btn"
                             >
                                 + Añadir trayecto
                             </button>
                             <div className="w-1/3">
-                                <PassengerSelector />
+                                <PassengerSelector onPassengersChange={setPassengers} />
                             </div>
                         </div>
                     </div>
                 ) : (
                     // Grid de inputs para ida y vuelta y solo ida
                     <div className="inputs-grid">
-                        <InputPill
+                        <AirportInput
                             name="Origen"
                             icon={locationIcon}
                             placeHolder="¿Desde dónde?"
-                            inputType="text"
+                            onAirportSelect={setOriginAirport}
                         />
-                        <InputPill
+                        <AirportInput
                             name="Destino"
                             icon={planeIcon}
                             placeHolder="¿A dónde vas?"
-                            inputType="text"
+                            onAirportSelect={setDestinationAirport}
                         />
-                        <InputPill
-                            name="Fecha"
-                            icon={calendarIcon}
-                            placeHolder={tripType === "roundTrip" ? "Ida - Vuelta" : "Ida"}
-                            inputType="date"
+                        <DatePicker
+                            mode={tripType === "roundTrip" ? "range" : "single"}
+                            onDateChange={setTravelDates}
+                            name={tripType === "roundTrip" ? "Ida - Vuelta" : "Ida"}
                         />
-                        <PassengerSelector />
+                        <PassengerSelector onPassengersChange={setPassengers} />
                     </div>
                 )
             }
@@ -150,7 +164,7 @@ function SearchCard() {
             </div>
 
             <div className="search-container mt-8">
-                <button type="button" className="search-button w-full flex items-center justify-center gap-3 py-4 bg-[#2c5aa0] text-white rounded-xl font-bold text-lg hover:bg-[#1e3a6f] transition-all transform hover:scale-[1.01] active:scale-[0.99] shadow-lg shadow-blue-900/10 cursor-pointer">
+                <button type="button" onClick={handleSearch} className="search-button w-full flex items-center justify-center gap-3 py-4 bg-[#2c5aa0] text-white rounded-xl font-bold text-lg hover:bg-[#1e3a6f] transition-all transform hover:scale-[1.01] active:scale-[0.99] shadow-lg shadow-blue-900/10 cursor-pointer">
                     <svg
                         viewBox="0 0 24 24"
                         fill="none"

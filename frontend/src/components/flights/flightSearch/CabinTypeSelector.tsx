@@ -1,3 +1,5 @@
+import { formatCabinClass } from "../../../utils/formaters";
+
 function CabinTypeSelector(
     { active, name, onClick }: { active: boolean; name: string; onClick: () => void }
 ) {
@@ -35,7 +37,7 @@ function CabinTypeSelector(
             </div>
 
             <label htmlFor={id} className="text-sm font-semibold text-gray-800 cursor-pointer select-none">
-                {name}
+                {formatCabinClass(name)}
             </label>
         </div>
     );

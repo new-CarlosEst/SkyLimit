@@ -1,0 +1,75 @@
+{
+    "destinations": [
+        {
+            "skyId": "BARC",
+            "entityId": "27542089",
+            "name": "Barcelona",
+            "countryName": "Spain",
+            "price": 35.6,
+            "currency": "EUR",
+            "isDirect": true,
+            "imageUrl": ""
+        },
+        {
+            "skyId": "PARI",
+            "entityId": "27540519",
+            "name": "Paris",
+            "countryName": "France",
+            "price": 37.93,
+            "currency": "EUR",
+            "isDirect": true,
+            "imageUrl": ""
+        },
+        {
+            "skyId": "BERL",
+            "entityId": "27539733",
+            "name": "Berlin",
+            "countryName": "Germany",
+            "price": 59,
+            "currency": "EUR",
+            "isDirect": true,
+            "imageUrl": ""
+        },
+        {
+            "skyId": "ROME",
+            "entityId": "27536545",
+            "name": "Rome",
+            "countryName": "Italy",
+            "price": 64.28,
+            "currency": "EUR",
+            "isDirect": true,
+            "imageUrl": ""
+        },
+        {
+            "skyId": "ATHE",
+            "entityId": "27537499",
+            "name": "Athens",
+            "countryName": "Greece",
+            "price": 68.93,
+            "currency": "EUR",
+            "isDirect": true,
+            "imageUrl": ""
+        },
+        {
+            "skyId": "NYCA",
+            "entityId": "27537542",
+            "name": "New York",
+            "countryName": "United States",
+            "price": 296.39,
+            "currency": "EUR",
+            "isDirect": true,
+            "imageUrl": ""
+        },
+        {
+            "skyId": "BKKT",
+            "entityId": "27539699",
+            "name": "Bangkok",
+            "countryName": "Thailand",
+            "price": 302.96,
+            "currency": "EUR",
+            "isDirect": true,
+            "imageUrl": ""
+        }
+    ],
+    "origin": "LHR"
+}

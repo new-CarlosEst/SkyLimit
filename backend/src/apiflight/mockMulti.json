@@ -1,0 +1,417 @@
+{
+    "sessionToken": "9752e700-c572-4f1b-8cf6-1d76f3866c4d",
+    "status": "RESULT_STATUS_COMPLETE",
+    "itineraries": [
+        {
+            "id": "13554-2608010615--31697-0-10413-2608010840|10413-2608102030--31697-0-12712-2608102240",
+            "price": {
+                "amount": 786.34,
+                "currency": "USD",
+                "formatted": "USD 786.34"
+            },
+            "legs": [
+                {
+                    "origin": "LHR",
+                    "destination": "CDG",
+                    "departure": "2026-08-01T06:15:00",
+                    "arrival": "2026-08-01T08:40:00",
+                    "durationMinutes": 85,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Virgin Atlantic",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/VS.png"
+                        }
+                    ]
+                },
+                {
+                    "origin": "CDG",
+                    "destination": "JFK",
+                    "departure": "2026-08-10T20:30:00",
+                    "arrival": "2026-08-10T22:40:00",
+                    "durationMinutes": 490,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Virgin Atlantic",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/VS.png"
+                        }
+                    ]
+                }
+            ],
+            "score": 0,
+            "tags": [],
+            "bookingUrl": "https://www.skyscanner.net/transport_deeplink/4.0/UK/en-GB/USD/carl/2/13554.10413.2026-08-01,10413.12712.2026-08-10/air/trava/flights?itinerary=flight|-31697|6659|13554|2026-08-01T06:15|10413|2026-08-01T08:40|85|-|-|-,flight|-31697|8702|10413|2026-08-10T20:30|12712|2026-08-10T22:40|490|-|-|-&carriers=-31697&operators=-32677,-32677&passengers=1&channel=website&cabin_class=economy&fps_session_id=9752e700-c572-4f1b-8cf6-1d76f3866c4d&ticket_price=786.34&is_npt=false&is_multipart=false&client_id=skyscanner_website&q_ids=H4sIAAAAAAAA_xPS42JJTizKERLgYub4lCnEzLE2UKLh3ZbLbGCRtYFAkRXJEg0rn1xmk2JSYAQA8y1_hTAAAAA|-7605184163901453940|2&q_sources=JACQUARD&commercial_filters=false&q_datetime_utc=2026-04-20T13:34:05&pqid=false&fare_type=base_fare"
+        },
+        {
+            "id": "13554-2608011945--31697-0-10413-2608012200|10413-2608101440--31697-0-12712-2608101717",
+            "price": {
+                "amount": 778.51,
+                "currency": "USD",
+                "formatted": "USD 778.51"
+            },
+            "legs": [
+                {
+                    "origin": "LHR",
+                    "destination": "CDG",
+                    "departure": "2026-08-01T19:45:00",
+                    "arrival": "2026-08-01T22:00:00",
+                    "durationMinutes": 75,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Virgin Atlantic",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/VS.png"
+                        }
+                    ]
+                },
+                {
+                    "origin": "CDG",
+                    "destination": "JFK",
+                    "departure": "2026-08-10T14:40:00",
+                    "arrival": "2026-08-10T17:17:00",
+                    "durationMinutes": 517,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Virgin Atlantic",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/VS.png"
+                        }
+                    ]
+                }
+            ],
+            "score": 0,
+            "tags": [],
+            "bookingUrl": "https://www.skyscanner.net/transport_deeplink/4.0/UK/en-GB/USD/trup/2/13554.10413.2026-08-01,10413.12712.2026-08-10/air/trava/flights?itinerary=flight|-31697|6655|13554|2026-08-01T19:45|10413|2026-08-01T22:00|75|-|-|-,flight|-31697|3992|10413|2026-08-10T14:40|12712|2026-08-10T17:17|517|-|-|-&carriers=-31697&operators=-32677,-32385&passengers=1&channel=website&cabin_class=economy&fps_session_id=9752e700-c572-4f1b-8cf6-1d76f3866c4d&ticket_price=778.51&is_npt=false&is_multipart=false&client_id=skyscanner_website&q_ids=H4sIAAAAAAAA_xPS42IpKSotEBLgYub4lCnEzLE2UKLh3ZbLbGCRtYFAkRXJEg0rn1xmk2JSYAQAHxHhTzAAAAA|-1196136430034636578|2&q_sources=JACQUARD&commercial_filters=false&q_datetime_utc=2026-04-20T13:34:03&pqid=false&fare_type=base_fare"
+        },
+        {
+            "id": "13554-2608011945--32677-0-10413-2608012200|10413-2608101215--32317-0-12712-2608101430",
+            "price": {
+                "amount": 813.38,
+                "currency": "USD",
+                "formatted": "USD 813.38"
+            },
+            "legs": [
+                {
+                    "origin": "LHR",
+                    "destination": "CDG",
+                    "departure": "2026-08-01T19:45:00",
+                    "arrival": "2026-08-01T22:00:00",
+                    "durationMinutes": 75,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Air France",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/AF.png"
+                        }
+                    ]
+                },
+                {
+                    "origin": "CDG",
+                    "destination": "JFK",
+                    "departure": "2026-08-10T12:15:00",
+                    "arrival": "2026-08-10T14:30:00",
+                    "durationMinutes": 495,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Finnair",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/AY.png"
+                        }
+                    ]
+                }
+            ],
+            "score": 0,
+            "tags": [],
+            "bookingUrl": "https://www.skyscanner.net/transport_deeplink/4.0/UK/en-GB/USD/carl/2/13554.10413.2026-08-01,10413.12712.2026-08-10/air/trava/flights?itinerary=flight|-32677|1181|13554|2026-08-01T19:45|10413|2026-08-01T22:00|75|-|-|-,flight|-32317|3747|10413|2026-08-10T12:15|12712|2026-08-10T14:30|495|-|-|-&carriers=-32677,-32317&operators=-32677,-32573&passengers=1&channel=website&cabin_class=economy&fps_session_id=9752e700-c572-4f1b-8cf6-1d76f3866c4d&ticket_price=813.38&is_npt=false&is_multipart=false&client_id=skyscanner_website&q_ids=H4sIAAAAAAAA_xPS42JJTizKERLgYub4lCnEzLE2UKLh3ZbLbGCRtYFAkRXJEg0rn1xmk2JSYAQA8y1_hTAAAAA|2775647946980747682|2&q_sources=JACQUARD&commercial_filters=false&q_datetime_utc=2026-04-20T13:34:05&pqid=false&fare_type=base_fare"
+        },
+        {
+            "id": "13554-2608011945--32677-0-10413-2608012200|10413-2608102030--31697-0-12712-2608102240",
+            "price": {
+                "amount": 828.24,
+                "currency": "USD",
+                "formatted": "USD 828.24"
+            },
+            "legs": [
+                {
+                    "origin": "LHR",
+                    "destination": "CDG",
+                    "departure": "2026-08-01T19:45:00",
+                    "arrival": "2026-08-01T22:00:00",
+                    "durationMinutes": 75,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Air France",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/AF.png"
+                        }
+                    ]
+                },
+                {
+                    "origin": "CDG",
+                    "destination": "JFK",
+                    "departure": "2026-08-10T20:30:00",
+                    "arrival": "2026-08-10T22:40:00",
+                    "durationMinutes": 490,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Virgin Atlantic",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/VS.png"
+                        }
+                    ]
+                }
+            ],
+            "score": 0,
+            "tags": [],
+            "bookingUrl": "https://www.skyscanner.net/transport_deeplink/4.0/UK/en-GB/USD/carl/2/13554.10413.2026-08-01,10413.12712.2026-08-10/air/trava/flights?itinerary=flight|-32677|1181|13554|2026-08-01T19:45|10413|2026-08-01T22:00|75|-|-|-,flight|-31697|8702|10413|2026-08-10T20:30|12712|2026-08-10T22:40|490|-|-|-&carriers=-32677,-31697&operators=-32677,-32677&passengers=1&channel=website&cabin_class=economy&fps_session_id=9752e700-c572-4f1b-8cf6-1d76f3866c4d&ticket_price=828.24&is_npt=false&is_multipart=false&client_id=skyscanner_website&q_ids=H4sIAAAAAAAA_xPS42JJTizKERLgYub4lCnEzLE2UKLh3ZbLbGCRtYFAkRXJEg0rn1xmk2JSYAQA8y1_hTAAAAA|4440572339323357290|2&q_sources=JACQUARD&commercial_filters=false&q_datetime_utc=2026-04-20T13:34:05&pqid=false&fare_type=base_fare"
+        },
+        {
+            "id": "13554-2608011735--32677-0-10413-2608011955|10413-2608101215--32317-0-12712-2608101430",
+            "price": {
+                "amount": 814.73,
+                "currency": "USD",
+                "formatted": "USD 814.73"
+            },
+            "legs": [
+                {
+                    "origin": "LHR",
+                    "destination": "CDG",
+                    "departure": "2026-08-01T17:35:00",
+                    "arrival": "2026-08-01T19:55:00",
+                    "durationMinutes": 80,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Air France",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/AF.png"
+                        }
+                    ]
+                },
+                {
+                    "origin": "CDG",
+                    "destination": "JFK",
+                    "departure": "2026-08-10T12:15:00",
+                    "arrival": "2026-08-10T14:30:00",
+                    "durationMinutes": 495,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Finnair",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/AY.png"
+                        }
+                    ]
+                }
+            ],
+            "score": 0,
+            "tags": [],
+            "bookingUrl": "https://www.skyscanner.net/transport_deeplink/4.0/UK/en-GB/USD/carl/2/13554.10413.2026-08-01,10413.12712.2026-08-10/air/trava/flights?itinerary=flight|-32677|1281|13554|2026-08-01T17:35|10413|2026-08-01T19:55|80|-|-|-,flight|-32317|3747|10413|2026-08-10T12:15|12712|2026-08-10T14:30|495|-|-|-&carriers=-32677,-32317&operators=-32677,-32573&passengers=1&channel=website&cabin_class=economy&fps_session_id=9752e700-c572-4f1b-8cf6-1d76f3866c4d&ticket_price=814.73&is_npt=false&is_multipart=false&client_id=skyscanner_website&q_ids=H4sIAAAAAAAA_xPS42JJTizKERLgYub4lCnEzLE2UKLh3ZbLbGCRtYFAkRXJEg0rn1xmk2JSYAQA8y1_hTAAAAA|5221545923512050640|2&q_sources=JACQUARD&commercial_filters=false&q_datetime_utc=2026-04-20T13:34:05&pqid=false&fare_type=base_fare"
+        },
+        {
+            "id": "13554-2608011735--31697-0-10413-2608011955|10413-2608101440--31697-0-12712-2608101717",
+            "price": {
+                "amount": 778.51,
+                "currency": "USD",
+                "formatted": "USD 778.51"
+            },
+            "legs": [
+                {
+                    "origin": "LHR",
+                    "destination": "CDG",
+                    "departure": "2026-08-01T17:35:00",
+                    "arrival": "2026-08-01T19:55:00",
+                    "durationMinutes": 80,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Virgin Atlantic",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/VS.png"
+                        }
+                    ]
+                },
+                {
+                    "origin": "CDG",
+                    "destination": "JFK",
+                    "departure": "2026-08-10T14:40:00",
+                    "arrival": "2026-08-10T17:17:00",
+                    "durationMinutes": 517,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Virgin Atlantic",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/VS.png"
+                        }
+                    ]
+                }
+            ],
+            "score": 0,
+            "tags": [],
+            "bookingUrl": "https://www.skyscanner.net/transport_deeplink/4.0/UK/en-GB/USD/trup/2/13554.10413.2026-08-01,10413.12712.2026-08-10/air/trava/flights?itinerary=flight|-31697|6657|13554|2026-08-01T17:35|10413|2026-08-01T19:55|80|-|-|-,flight|-31697|3992|10413|2026-08-10T14:40|12712|2026-08-10T17:17|517|-|-|-&carriers=-31697&operators=-32677,-32385&passengers=1&channel=website&cabin_class=economy&fps_session_id=9752e700-c572-4f1b-8cf6-1d76f3866c4d&ticket_price=778.51&is_npt=false&is_multipart=false&client_id=skyscanner_website&q_ids=H4sIAAAAAAAA_xPS42IpKSotEBLgYub4lCnEzLE2UKLh3ZbLbGCRtYFAkRXJEg0rn1xmk2JSYAQAHxHhTzAAAAA|-2161691454359558166|2&q_sources=JACQUARD&commercial_filters=false&q_datetime_utc=2026-04-20T13:34:03&pqid=false&fare_type=base_fare"
+        },
+        {
+            "id": "13554-2608011735--31697-0-10413-2608011955|10413-2608102030--31697-0-12712-2608102240",
+            "price": {
+                "amount": 786.34,
+                "currency": "USD",
+                "formatted": "USD 786.34"
+            },
+            "legs": [
+                {
+                    "origin": "LHR",
+                    "destination": "CDG",
+                    "departure": "2026-08-01T17:35:00",
+                    "arrival": "2026-08-01T19:55:00",
+                    "durationMinutes": 80,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Virgin Atlantic",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/VS.png"
+                        }
+                    ]
+                },
+                {
+                    "origin": "CDG",
+                    "destination": "JFK",
+                    "departure": "2026-08-10T20:30:00",
+                    "arrival": "2026-08-10T22:40:00",
+                    "durationMinutes": 490,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Virgin Atlantic",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/VS.png"
+                        }
+                    ]
+                }
+            ],
+            "score": 0,
+            "tags": [],
+            "bookingUrl": "https://www.skyscanner.net/transport_deeplink/4.0/UK/en-GB/USD/carl/2/13554.10413.2026-08-01,10413.12712.2026-08-10/air/trava/flights?itinerary=flight|-31697|6657|13554|2026-08-01T17:35|10413|2026-08-01T19:55|80|-|-|-,flight|-31697|8702|10413|2026-08-10T20:30|12712|2026-08-10T22:40|490|-|-|-&carriers=-31697&operators=-32677,-32677&passengers=1&channel=website&cabin_class=economy&fps_session_id=9752e700-c572-4f1b-8cf6-1d76f3866c4d&ticket_price=786.34&is_npt=false&is_multipart=false&client_id=skyscanner_website&q_ids=H4sIAAAAAAAA_xPS42JJTizKERLgYub4lCnEzLE2UKLh3ZbLbGCRtYFAkRXJEg0rn1xmk2JSYAQA8y1_hTAAAAA|-3149848196598807652|2&q_sources=JACQUARD&commercial_filters=false&q_datetime_utc=2026-04-20T13:34:05&pqid=false&fare_type=base_fare"
+        },
+        {
+            "id": "13554-2608011945--32677-0-10413-2608012200|10413-2608102030--32677-0-12712-2608102240",
+            "price": {
+                "amount": 828.24,
+                "currency": "USD",
+                "formatted": "USD 828.24"
+            },
+            "legs": [
+                {
+                    "origin": "LHR",
+                    "destination": "CDG",
+                    "departure": "2026-08-01T19:45:00",
+                    "arrival": "2026-08-01T22:00:00",
+                    "durationMinutes": 75,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Air France",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/AF.png"
+                        }
+                    ]
+                },
+                {
+                    "origin": "CDG",
+                    "destination": "JFK",
+                    "departure": "2026-08-10T20:30:00",
+                    "arrival": "2026-08-10T22:40:00",
+                    "durationMinutes": 490,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Air France",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/AF.png"
+                        }
+                    ]
+                }
+            ],
+            "score": 0,
+            "tags": [],
+            "bookingUrl": "https://www.skyscanner.net/transport_deeplink/4.0/UK/en-GB/USD/carl/2/13554.10413.2026-08-01,10413.12712.2026-08-10/air/trava/flights?itinerary=flight|-32677|1181|13554|2026-08-01T19:45|10413|2026-08-01T22:00|75|-|-|-,flight|-32677|12|10413|2026-08-10T20:30|12712|2026-08-10T22:40|490|-|-|-&carriers=-32677&operators=-32677,-32677&passengers=1&channel=website&cabin_class=economy&fps_session_id=9752e700-c572-4f1b-8cf6-1d76f3866c4d&ticket_price=828.24&is_npt=false&is_multipart=false&client_id=skyscanner_website&q_ids=H4sIAAAAAAAA_xPS42JJTizKERLgYub4lCnEzLE2UKLh3ZbLbGCRtYFAkRXJEg0rn1xmk2JSYAQA8y1_hTAAAAA|-1859956835778324319|2&q_sources=JACQUARD&commercial_filters=false&q_datetime_utc=2026-04-20T13:34:05&pqid=false&fare_type=base_fare"
+        },
+        {
+            "id": "13554-2608012035--32480-0-10413-2608012245|10413-2608101215--32317-0-12712-2608101430",
+            "price": {
+                "amount": 829.18,
+                "currency": "USD",
+                "formatted": "USD 829.18"
+            },
+            "legs": [
+                {
+                    "origin": "LHR",
+                    "destination": "CDG",
+                    "departure": "2026-08-01T20:35:00",
+                    "arrival": "2026-08-01T22:45:00",
+                    "durationMinutes": 70,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "British Airways",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/BA.png"
+                        }
+                    ]
+                },
+                {
+                    "origin": "CDG",
+                    "destination": "JFK",
+                    "departure": "2026-08-10T12:15:00",
+                    "arrival": "2026-08-10T14:30:00",
+                    "durationMinutes": 495,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Finnair",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/AY.png"
+                        }
+                    ]
+                }
+            ],
+            "score": 0,
+            "tags": [],
+            "bookingUrl": "https://www.skyscanner.net/transport_deeplink/4.0/UK/en-GB/USD/carl/2/13554.10413.2026-08-01,10413.12712.2026-08-10/air/trava/flights?itinerary=flight|-32480|314|13554|2026-08-01T20:35|10413|2026-08-01T22:45|70|-|-|-,flight|-32317|3747|10413|2026-08-10T12:15|12712|2026-08-10T14:30|495|-|-|-&carriers=-32480,-32317&operators=-32480,-32573&passengers=1&channel=website&cabin_class=economy&fps_session_id=9752e700-c572-4f1b-8cf6-1d76f3866c4d&ticket_price=829.18&is_npt=false&is_multipart=false&client_id=skyscanner_website&q_ids=H4sIAAAAAAAA_xPS42JJTizKERLgYub4lCnEzLE2UKLh3ZbLbGCRtYFAkRXJEg0rn1xmk2JSYAQA8y1_hTAAAAA|-4120187812670861474|2&q_sources=JACQUARD&commercial_filters=false&q_datetime_utc=2026-04-20T13:34:05&pqid=false&fare_type=base_fare"
+        },
+        {
+            "id": "13554-2608011945--31697-0-10413-2608012200|10413-2608102030--31697-0-12712-2608102240",
+            "price": {
+                "amount": 786.34,
+                "currency": "USD",
+                "formatted": "USD 786.34"
+            },
+            "legs": [
+                {
+                    "origin": "LHR",
+                    "destination": "CDG",
+                    "departure": "2026-08-01T19:45:00",
+                    "arrival": "2026-08-01T22:00:00",
+                    "durationMinutes": 75,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Virgin Atlantic",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/VS.png"
+                        }
+                    ]
+                },
+                {
+                    "origin": "CDG",
+                    "destination": "JFK",
+                    "departure": "2026-08-10T20:30:00",
+                    "arrival": "2026-08-10T22:40:00",
+                    "durationMinutes": 490,
+                    "stopCount": 0,
+                    "carriers": [
+                        {
+                            "name": "Virgin Atlantic",
+                            "logoUrl": "https://logos.skyscnr.com/images/airlines/favicon/VS.png"
+                        }
+                    ]
+                }
+            ],
+            "score": 0,
+            "tags": [],
+            "bookingUrl": "https://www.skyscanner.net/transport_deeplink/4.0/UK/en-GB/USD/carl/2/13554.10413.2026-08-01,10413.12712.2026-08-10/air/trava/flights?itinerary=flight|-31697|6655|13554|2026-08-01T19:45|10413|2026-08-01T22:00|75|-|-|-,flight|-31697|8702|10413|2026-08-10T20:30|12712|2026-08-10T22:40|490|-|-|-&carriers=-31697&operators=-32677,-32677&passengers=1&channel=website&cabin_class=economy&fps_session_id=9752e700-c572-4f1b-8cf6-1d76f3866c4d&ticket_price=786.34&is_npt=false&is_multipart=false&client_id=skyscanner_website&q_ids=H4sIAAAAAAAA_xPS42JJTizKERLgYub4lCnEzLE2UKLh3ZbLbGCRtYFAkRXJEg0rn1xmk2JSYAQA8y1_hTAAAAA|9092718985662247696|2&q_sources=JACQUARD&commercial_filters=false&q_datetime_utc=2026-04-20T13:34:05&pqid=false&fare_type=base_fare"
+        }
+    ],
+    "total": 10
+}

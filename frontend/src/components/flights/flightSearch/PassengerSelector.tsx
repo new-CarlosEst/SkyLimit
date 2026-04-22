@@ -11,8 +11,11 @@ interface Passengers {
     infants: number;
 }
 
+interface PassengerSelectorProps {
+    onPassengersChange?: (passengers: Passengers) => void;
+}
 
-function PassengerSelector() {
+function PassengerSelector({ onPassengersChange }: PassengerSelectorProps) {
 
     //Estado para abrir y cerrar el dropdown
     const [open, setOpen] = useState(false);
@@ -37,6 +40,11 @@ function PassengerSelector() {
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
+
+    // Notificar al padre cuando cambian los pasajeros
+    useEffect(() => {
+        onPassengersChange?.(passengers);
+    }, [passengers, onPassengersChange]);
 
     //Función que se encarga de cambiar el numero de pasajeros, cada vez que se hace click en el boton de sumar o restar
     function change(type: PassengerType, delta: number) {

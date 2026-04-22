@@ -25,7 +25,7 @@ export class LegEntity {
     name: string;
     logoUrl: string;
   }[];
-  stopovers: StopoverEntity[];
+  stopovers?: StopoverEntity[];
 }
 
 export class FlightEntity {
@@ -36,5 +36,5 @@ export class FlightEntity {
     formatted: string;
   };
   legs: LegEntity[];
-  bookingUrl: string;
+  bookingUrl?: string;
 }
