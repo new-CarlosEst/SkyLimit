@@ -1,7 +1,11 @@
+import HeroBlog from "../components/layouts/hero/HeroBlog";
+import MainBlog from "../components/layouts/Main/MainBlog";
+
 function Blog() {
     return (
         <div>
-            <h1 className="text-black mt-16">Esta sera la pagina del Blog de skylimit</h1>
+            <HeroBlog />
+            <MainBlog />
         </div>
     );
 }

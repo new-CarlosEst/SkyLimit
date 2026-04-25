@@ -1,9 +1,9 @@
-import Hero from "../components/layouts/hero/Hero";
+import HeroLanding from "../components/layouts/hero/HeroLanding";
 
 function Landing() {
     return (
         <>
-            <Hero />
+            <HeroLanding />
         </>
     )
 }

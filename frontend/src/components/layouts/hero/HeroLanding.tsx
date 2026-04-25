@@ -1,7 +1,7 @@
-import "./Hero.css";
+import "./HeroLanding.css";
 import SearchCard from "../../flights/flightSearch/SearchCard";
 
-function Hero() {
+function HeroLanding() {
     return (
         <div className="hero bg-linear-to-br from-[#2c5aa0] to-[#1e3a6f]">
             <h1 className="text-white text-6xl font-bold mb-4">Vuela con Nosotros</h1>
@@ -15,4 +15,4 @@ function Hero() {
     )
 }
 
-export default Hero;
+export default HeroLanding;

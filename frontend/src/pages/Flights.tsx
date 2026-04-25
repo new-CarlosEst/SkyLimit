@@ -35,6 +35,7 @@ function Flights() {
                     <FilterSidebar />
                     <div className="ml-16 results flex-3 transition-all duration-500 ease-in-out w-full">
                         <div className="results-container flex flex-col gap-4">
+                            {/* todo: En caso de que sea multiples destinos, en la card mostrar las 2 primeras trips y en los demas mostrar un boton de "ver mas" para que la card no sea enorme */}
                             {results && results.map((flight) => (
                                 <FlightCard key={flight.id} flight={flight} cabinClass={cabinClass} />
                             ))}

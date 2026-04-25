@@ -20,7 +20,7 @@ function Header() {
                     {/* TODO: Meter los enlaces en rutas de react-router cuando tenga las paginas y cambiar los onClick por los enlaces */}
                     <li><Link to="/">Inicio</Link></li>
                     <li onClick={() => sileo.info({ title: "Función no disponible" })}>Ofertas</li>
-                    <li onClick={() => sileo.info({ title: "Función no disponible" })}>Blog</li>
+                    <li><Link to="/blog">Blog</Link></li>
                     <li onClick={() => sileo.info({ title: "Función no disponible" })}>Contacto</li>
                 </ul>
             </nav>
