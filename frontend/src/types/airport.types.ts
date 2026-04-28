@@ -20,9 +20,9 @@ export interface OneWayData {
     departure: string //Iata de destino
     cabinClass: string //Clase de cabina
     date: string; //Fecha con formado YYYY-MM-DD
-    adults: number;
-    children?: number;
-    infants?: number;
+    adults: string;
+    children?: string;
+    infants?: string;
 }
 
 export interface RoundTripData {
@@ -33,15 +33,15 @@ export interface RoundTripData {
     cabinClass: string //Clase de cabina
     date: string; //Fecha con formado YYYY-MM-DD
     returnDate: string; //Fecha con formado YYYY-MM-DD
-    adults: number;
-    children?: number;
-    infants?: number;
+    adults: string;
+    children?: string;
+    infants?: string;
 }
 
 export interface MultiTripData {
     legs: leg[];
     cabinClass: string;
-    adults: number;
+    adults: string;
 }
 
 interface leg {

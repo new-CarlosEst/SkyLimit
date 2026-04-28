@@ -2,6 +2,7 @@ import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Landing from './pages/Landing';
 import Header from "./components/layouts/Header/Header";
+import Footer from "./components/layouts/Footer/Footer";
 import { Toaster } from "sileo";
 import "sileo/styles.css"; // Hay que traerse este css para ver los toast de sileo
 import { useToastStore } from "./store/toastStore";
@@ -44,7 +45,7 @@ function App() {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const resetToken = params.get('token');
-    
+
     // Si hay token, navegar a la pagina de recuperacion de contraseña para que funcione la paginacion de react-router en produccion
     if (resetToken) {
       navigate(`/reset-password?token=${resetToken}`);
@@ -62,6 +63,7 @@ function App() {
         <Route path="/blog" element={<Blog />} />
         <Route path="/flights" element={<Flights />} />
       </Routes>
+      {showHeader && <Footer />}
     </>
   )
 }

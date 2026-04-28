@@ -74,7 +74,7 @@ export class ApiflightService {
         returnDate: returnDate,
         cabinClass: cabinClassVerified,
         adults: adults,
-        childrens: children || '0', //Tanto children como infants en caso de que no se pase o se pase undefine tendran valor 0
+        children: children || '0', //Tanto children como infants en caso de que no se pase o se pase undefine tendran valor 0
         infants: infants || '0',
         currency: 'EUR',
         countryCode: 'ES',
@@ -82,7 +82,7 @@ export class ApiflightService {
       },
       headers: {
         //todo: una vez hecho ya el testing o quedarse sin peticiones en esta usar la variable de entorno RAPID_API
-        'x-rapidapi-key': this.configService.get<string>('RAPID_API_TEST'),
+        'x-rapidapi-key': this.configService.get<string>('RAPID_API'),
         'x-rapidapi-host': 'skyscanner-flights-travel-api.p.rapidapi.com',
         'Content-Type': 'application/json',
       },
@@ -90,7 +90,7 @@ export class ApiflightService {
 
     try {
       const response = await axios.request(options);
-      return response.data;
+      return this.mapToFlightEntity(response.data);
     } catch (error) {
       console.error(error);
       throw error;
@@ -146,7 +146,7 @@ export class ApiflightService {
         date: departureDate,
         cabinClass: cabinClassVerified,
         adults: adults,
-        childrens: children || '0',
+        children: children || '0',
         infants: infants || '0',
         currency: 'EUR',
         countryCode: 'ES',
@@ -154,7 +154,7 @@ export class ApiflightService {
       },
       headers: {
         //todo: una vez hecho ya el testing o quedarse sin peticiones en esta usar la variable de entorno RAPID_API
-        'x-rapidapi-key': this.configService.get<string>('RAPID_API_TEST'),
+        'x-rapidapi-key': this.configService.get<string>('RAPID_API'),
         'x-rapidapi-host': 'skyscanner-flights-travel-api.p.rapidapi.com',
         'Content-Type': 'application/json',
       },
@@ -162,7 +162,7 @@ export class ApiflightService {
 
     try {
       const response = await axios.request(options);
-      return response.data;
+      return this.mapToFlightEntity(response.data);
     } catch (error) {
       console.error(error);
       throw error;
@@ -199,7 +199,7 @@ export class ApiflightService {
         legs: legsForApi
       },
       headers: {
-        'x-rapidapi-key': this.configService.get<string>('RAPID_API_TEST'),
+        'x-rapidapi-key': this.configService.get<string>('RAPID_API'),
         'x-rapidapi-host': 'skyscanner-flights-travel-api.p.rapidapi.com',
         'Content-Type': 'application/json'
       }
@@ -251,7 +251,7 @@ export class ApiflightService {
       },
       headers: {
         //todo: una vez hecho ya el testing o quedarse sin peticiones en esta usar la variable de entorno RAPID_API
-        'x-rapidapi-key': this.configService.get<string>('RAPID_API_TEST'),
+        'x-rapidapi-key': this.configService.get<string>('RAPID_API'),
         'x-rapidapi-host': 'skyscanner-flights-travel-api.p.rapidapi.com',
         'Content-Type': 'application/json',
       },
@@ -287,7 +287,7 @@ export class ApiflightService {
         currency: 'EUR'
       },
       headers: {
-        'x-rapidapi-key': this.configService.get<string>('RAPID_API_TEST') || '',
+        'x-rapidapi-key': this.configService.get<string>('RAPID_API') || '',
         'x-rapidapi-host': 'skyscanner-flights-travel-api.p.rapidapi.com',
         'Content-Type': 'application/json'
       }
@@ -348,7 +348,7 @@ export class ApiflightService {
       params: { query: name },
       headers: {
         //TODO: Una vez termiando el testing usar RAPID_API_TEST
-        'x-rapidapi-key': this.configService.get<string>('RAPID_API_TEST'),
+        'x-rapidapi-key': this.configService.get<string>('RAPID_API'),
         'x-rapidapi-host': 'skyscanner-flights-travel-api.p.rapidapi.com',
         'Content-Type': 'application/json',
       },

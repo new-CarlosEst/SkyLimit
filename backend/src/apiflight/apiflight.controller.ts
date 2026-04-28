@@ -50,6 +50,7 @@ export class ApiflightController {
     @Query('cabinClass') cabinClass: string,
     @Query('adults') adults: string,
   ) {
+
     //Parseo el string JSON de legs a array de objetos
     const legsArray = JSON.parse(legs);
 

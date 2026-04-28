@@ -9,7 +9,7 @@ import paperPlane from "../assets/ui/FaPaperPlane.svg";
 //Pagina que contendra los vuelos buscado y sus datos
 function Flights() {
     const { results, tripType } = useFlightSearchStore();
-    const { cabinClass } = useSearchParamsStore();
+    const { cabinClass, passengers } = useSearchParamsStore();
 
     const numVuelos = results?.length ?? 0;
     return (
@@ -37,7 +37,7 @@ function Flights() {
                         <div className="results-container flex flex-col gap-4">
                             {/* todo: En caso de que sea multiples destinos, en la card mostrar las 2 primeras trips y en los demas mostrar un boton de "ver mas" para que la card no sea enorme */}
                             {results && results.map((flight) => (
-                                <FlightCard key={flight.id} flight={flight} cabinClass={cabinClass} />
+                                <FlightCard key={flight.id} flight={flight} cabinClass={cabinClass} passengers={passengers} />
                             ))}
                         </div>
                     </div>

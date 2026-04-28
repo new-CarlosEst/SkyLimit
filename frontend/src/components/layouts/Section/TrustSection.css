@@ -1,0 +1,114 @@
+/* ===================== TrustSection ===================== */
+.trust-section-container {
+    background-color: #F5F7FA;
+    padding: 4rem 2rem;
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 0;
+}
+
+/* Badge "Compromiso de Transparencia" */
+.trust-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #1e3a5f;
+    padding: 0.7rem 1.4rem;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 1.75rem;
+}
+
+.trust-badge img {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(1);
+}
+
+/* Título principal */
+.trust-section-container>h3 {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #111827;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+}
+
+/* Subtítulo */
+.trust-section-container>p {
+    font-size: 1rem;
+    color: #6b7280;
+    max-width: 520px;
+    margin: 0 auto 2.5rem auto;
+    line-height: 1.6;
+}
+
+/* Contenedor de las tarjetas */
+.trust-card {
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+/* ===================== TrustCard ===================== */
+
+/* Fila de las dos tarjetas info */
+.cards-info {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cards-info>div {
+    flex: 1;
+    min-width: 260px;
+}
+
+/* Iconos coloreados según su card */
+.icon-green {
+    filter: invert(55%) sepia(60%) saturate(500%) hue-rotate(95deg) brightness(95%) contrast(90%);
+}
+
+.icon-blue {
+    filter: invert(44%) sepia(69%) saturate(600%) hue-rotate(195deg) brightness(100%) contrast(95%);
+}
+
+/* Sección "Nuestra promesa" — dentro del wrapper blanco */
+.promise-info {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 1.5rem;
+    margin-top: 0.5rem;
+    text-align: left;
+}
+
+.promise-info h4 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 0.6rem 0;
+}
+
+.promise-info p {
+    font-size: 0.92rem;
+    color: #6b7280;
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .trust-section-container h3 {
+        font-size: 1.75rem;
+    }
+
+    .cards-info {
+        flex-direction: column;
+    }
+
+    .cards-info>div {
+        min-width: unset;
+        width: 100%;
+    }
+}

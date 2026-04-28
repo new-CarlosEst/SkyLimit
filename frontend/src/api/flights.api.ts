@@ -23,14 +23,20 @@ export const searchAirports = async (name: string): Promise<Airport[]> => {
 
 export const searchOneWay = async (flightData : OneWayData) => {
     const response = await apiClient.get("apiflight/oneWay", {
-        params: flightData
+        params: {
+            ...flightData,
+            cabinClass: flightData.cabinClass.replace(/\s+/g, '') // Eliminar espacios del cabinClass
+        }
     });
     return response.data;
 }
 
 export const searchRoundTrip = async (flightData : RoundTripData) => {
     const response = await apiClient.get("apiflight/roundTrip", {
-        params: flightData
+        params: {
+            ...flightData,
+            cabinClass: flightData.cabinClass.replace(/\s+/g, '') // Eliminar espacios del cabinClass
+        }
     });
     return response.data;
 }
