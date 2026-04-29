@@ -27,6 +27,15 @@ enum Role {
   SUPERADMIN
 }
 
+//Estado de la transacion
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+  CANCELLED
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   name      String
@@ -45,32 +54,52 @@ model User {
 
 // -------------------- Payment Method ------------------
 model PaymentMethod {
-  id             Int      @id @default(autoincrement())
-  holderName     String
-  brand          String
-  expirationDate DateTime
-  cvv            String
-  last4Digits    String
+  id                    Int      @id @default(autoincrement())
+  holderName            String
+  brand                 String   // Visa, Mastercard, Amex, etc
+  expirationDate        DateTime
+  last4Digits           String   // Últimos 4 dígitos de la tarjeta
+  
+  // Stripe Integration
+  stripeCustomerId      String   // ID del cliente en Stripe
+  stripePaymentMethodId String   // ID del método de pago en Stripe (para futuras compras)
+  
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
 
   // Relations
   userId       Int
-  user         User          @relation(fields: [userId], references: [id])
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   transactions Transaction[]
+
+  @@index([userId])
+  @@index([stripePaymentMethodId])
+  @@index([stripeCustomerId])
 }
 
 // -------------------- Transaction ---------------------
 model Transaction {
-  id              Int      @id @default(autoincrement())
-  paymentDate     DateTime
-  amount          Float
-  status          String
-  paymentIntentId String?
+  id                    Int                @id @default(autoincrement())
+  amount                Float
+  currency              String             @default("EUR")
+  status                TransactionStatus  @default(PENDING)
+  
+  // Stripe Integration
+  stripePaymentIntentId String?            // ID único de Stripe para este intento de pago
+  
+  createdAt             DateTime           @default(now())
+  updatedAt             DateTime           @updatedAt
 
   // Relations
   reservationId   Int?
-  reservation     Reservation?   @relation(fields: [reservationId], references: [id])
+  reservation     Reservation?   @relation(fields: [reservationId], references: [id], onDelete: SetNull)
   paymentMethodId Int?
-  paymentMethod   PaymentMethod? @relation(fields: [paymentMethodId], references: [id])
+  paymentMethod   PaymentMethod? @relation(fields: [paymentMethodId], references: [id], onDelete: SetNull)
+
+  @@index([reservationId])
+  @@index([paymentMethodId])
+  @@index([stripePaymentIntentId])
+  @@index([status])
 }
 
 // -------------------- Reservation ---------------------

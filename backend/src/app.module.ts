@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { ApiflightModule } from './apiflight/apiflight.module';
 import { AirportModule } from './airport/airport.module';
 import { MailModule } from './mail/mail.module';
+import { PaymentModule } from './payment/payment.module';
 @Module({
   //Aqui en el modulo de app solo importo los modulos necesarios, nada de controllers ni services (solo los propios de app)
   imports: [
@@ -18,6 +19,7 @@ import { MailModule } from './mail/mail.module';
     ApiflightModule,
     AirportModule,
     MailModule,
+    PaymentModule,
   ],
   controllers: [AppController],
   providers: [AppService],
