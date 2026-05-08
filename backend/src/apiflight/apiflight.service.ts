@@ -77,8 +77,8 @@ export class ApiflightService {
         children: children || '0', //Tanto children como infants en caso de que no se pase o se pase undefine tendran valor 0
         infants: infants || '0',
         currency: 'EUR',
-        countryCode: 'ES',
-        market: 'ES',
+        countryCode: 'US',
+        market: 'US',
       },
       headers: {
         //todo: una vez hecho ya el testing o quedarse sin peticiones en esta usar la variable de entorno RAPID_API
@@ -149,8 +149,8 @@ export class ApiflightService {
         children: children || '0',
         infants: infants || '0',
         currency: 'EUR',
-        countryCode: 'ES',
-        market: 'ES',
+        countryCode: 'US',
+        market: 'US',
       },
       headers: {
         //todo: una vez hecho ya el testing o quedarse sin peticiones en esta usar la variable de entorno RAPID_API
@@ -195,7 +195,7 @@ export class ApiflightService {
       params: {
         adults: adults,
         cabinClass: cabinClassVerified,
-        currency: 'USD',
+        currency: 'EUR',
         legs: legsForApi
       },
       headers: {
@@ -247,7 +247,7 @@ export class ApiflightService {
         cabinClass: cabinClassVerified,
         adults: adults,
         currency: 'EUR',
-        market: 'ES',
+        market: 'US',
       },
       headers: {
         //todo: una vez hecho ya el testing o quedarse sin peticiones en esta usar la variable de entorno RAPID_API
@@ -287,7 +287,7 @@ export class ApiflightService {
         currency: 'EUR'
       },
       headers: {
-        'x-rapidapi-key': this.configService.get<string>('RAPID_API') || '',
+        'x-rapidapi-key': this.configService.get<string>('RAPID_API'),
         'x-rapidapi-host': 'skyscanner-flights-travel-api.p.rapidapi.com',
         'Content-Type': 'application/json'
       }

@@ -8,6 +8,7 @@ import { UserEntity } from '../users/entities/user.entity';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { MailService } from '../mail/mail.service';
+import { UpdateDataDto } from './dto/update-data.dto';
 
 //Aqui usare bcrypt par encriptar las contraseñas, para generar el token de validacion y comprare la contraseña que me devuelve el recurso de users
 @Injectable()
@@ -153,6 +154,81 @@ export class AuthService {
       };
     } catch (error) {
       throw new UnauthorizedException('Token inválido o expirado');
+    }
+  }
+
+  /**
+   * Metodo que actualiza el perfil de usuario
+   * @param token Token del usuario
+   * @param updateDataDto Datos del usuario a actualizar
+   * @returns Devuelve un mensaje de confirmacion
+   */
+  public async updateData(token: string, updateDataDto: UpdateDataDto): Promise<object> {
+    try {
+      // Verifico el token y obtengo el email del payload
+      const payload = await this.jwtService.verifyAsync(token);
+      const email = payload.email;
+
+      // Me busco el usuario
+      const user = await this.userService.getUserByEmail(email);
+
+      // Si no existe lanzo el error
+      if (!user) {
+        throw new UnauthorizedException('Usuario no encontrado');
+      }
+
+      // Actualizo los datos del usuario
+      await this.userService.updateUser(user.id, updateDataDto);
+
+      //User
+      const userUpdated = await this.userService.getUserByEmail(email);
+
+      //Genero un nuevo token para devolverlo
+      const newPayload = { sub: userUpdated.id, email: userUpdated.email };
+      const newToken = await this.jwtService.signAsync(newPayload);
+
+      return {
+        access_token: newToken,
+        user: userUpdated,
+      };
+    } catch (error) {
+      throw new UnauthorizedException('Error al actualizar los datos');
+    }
+  }
+
+
+  /**
+   * Metodo que da de alta a un nuevo administrador
+   * @param token Token con los datos del usuario
+   * @returns Devuelve un mensaje de confirmacion
+   */
+  public async registerAdmin(token: string): Promise<object> {
+    try {
+      // Verifico el token y obtengo el email del payload
+      const payload = await this.jwtService.verifyAsync(token);
+      const email = payload.email;
+
+      // Me busco el usuario
+      const user = await this.userService.getUserByEmail(email);
+
+      // Si no existe lanzo el error
+      if (!user) {
+        throw new UnauthorizedException('Usuario no encontrado');
+      }
+
+      // Actualizo los datos del usuario
+      await this.userService.updateUserRole(user.id, 'ADMIN');
+
+      //Genero un nuevo token para devolverlo
+      const newPayload = { sub: user.id, email: user.email };
+      const newToken = await this.jwtService.signAsync(newPayload);
+
+      return {
+        access_token: newToken,
+        user: user,
+      };
+    } catch (error) {
+      throw new UnauthorizedException('Error al registrar el administrador');
     }
   }
 }

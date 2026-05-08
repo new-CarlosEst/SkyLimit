@@ -4,6 +4,7 @@ import { RegisterDto } from './dto/register-auth.dto';
 import { LoginDto } from './dto/login-auth.dto';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
+import { UpdateDataDto } from './dto/update-data.dto';
 
 //Aqui me encargare de recibir las rutas de login o registro
 @Controller('auth') //Ruta "auth"
@@ -47,5 +48,19 @@ export class AuthController {
   @HttpCode(200)
   async resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
     return this.authService.resetPassword(resetPasswordDto);
+  }
+
+  //Ruta para actualizar el perfil de usuario, pasando  o nombre, o apellido/s o actualizar el aeropuerto favorito
+  @Post('update-data')
+  @HttpCode(200)
+  async updateData(@Body() token: string, @Body() updateDataDto: UpdateDataDto) {
+    return this.authService.updateData(token, updateDataDto);
+  }
+
+  //Ruta para dar de alta a un nuevo administrador
+  @Post('register-admin')
+  @HttpCode(201)
+  async registerAdmin(@Body() token: string) {
+    return this.authService.registerAdmin(token);
   }
 }
