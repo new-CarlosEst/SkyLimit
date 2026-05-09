@@ -4,5 +4,5 @@ export interface User {
     surname: string;
     email: string;
     role: string;
-    favoriteAirport: number | null;
+    favoriteAirportId: number | null;
 }

@@ -1,10 +1,12 @@
-import { Body, Controller, Post, HttpCode, Get, Headers } from '@nestjs/common';
+import { Body, Controller, Post, HttpCode, Get, Headers, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register-auth.dto';
 import { LoginDto } from './dto/login-auth.dto';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
-import { UpdateDataDto } from './dto/update-data.dto';
+import { UpdateDataRequestDto } from './dto/update-data-request.dto';
+import { RegisterAdminDto } from './dto/register-admin.dto';
+import { SuperAdminGuard } from './guards/super-admin.guard';
 
 //Aqui me encargare de recibir las rutas de login o registro
 @Controller('auth') //Ruta "auth"
@@ -53,15 +55,16 @@ export class AuthController {
   //Ruta para actualizar el perfil de usuario, pasando  o nombre, o apellido/s o actualizar el aeropuerto favorito
   @Post('update-data')
   @HttpCode(200)
-  async updateData(@Body() token: string, @Body() updateDataDto: UpdateDataDto) {
-    return this.authService.updateData(token, updateDataDto);
+  async updateData(@Body() updateDataRequest: UpdateDataRequestDto) {
+    return this.authService.updateData(updateDataRequest.token, updateDataRequest.updateDataDto || {});
   }
 
   //Ruta para dar de alta a un nuevo administrador
   @Post('register-admin')
+  @UseGuards(SuperAdminGuard)
   @HttpCode(201)
-  async registerAdmin(@Body() email: string) {
-    return this.authService.registerAdmin(email);
+  async registerAdmin(@Body() registerAdminDto: RegisterAdminDto) {
+    return this.authService.registerAdmin(registerAdminDto.email);
   }
 
   //Ruta para el contacto

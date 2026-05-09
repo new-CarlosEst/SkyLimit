@@ -5,6 +5,7 @@ import { UsersModule } from '../users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { MailModule } from '../mail/mail.module';
+import { SuperAdminGuard } from './guards/super-admin.guard';
 
 @Module({
   imports: [
@@ -18,6 +19,6 @@ import { MailModule } from '../mail/mail.module';
     MailModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, SuperAdminGuard],
 })
 export class AuthModule {}

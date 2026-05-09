@@ -20,6 +20,19 @@ export const searchAirports = async (name: string): Promise<Airport[]> => {
     return response.data;
 };
 
+/**
+ * Obtiene un aeropuerto por su ID
+ * @param id - ID del aeropuerto
+ * @returns Datos del aeropuerto o null si no existe
+ */
+export const getAirportById = async (id: number): Promise<Airport | null> => {
+    const response = await apiClient.get<Airport>(`/airport/airportById`, {
+        params: { id }
+    });
+    
+    return response.data;
+};
+
 
 export const searchOneWay = async (flightData : OneWayData) => {
     const response = await apiClient.get("apiflight/oneWay", {
@@ -50,5 +63,25 @@ export const searchMultiTrip = async (flightData : MultiTripData) => {
         }
     });
     return response.data;
+}
+
+/**
+ * Crea un nuevo vuelo
+ * @param flightData - Datos del vuelo a crear
+ * @returns Respuesta del servidor con el vuelo creado
+ */
+export const createFlight = async (flightData: {
+    flightNumber: string;
+    departureDateTime: string;
+    arrivalDateTime: string;
+    airline: string;
+    price: number;
+    airportDepartureId: number;
+    airportArrivalId: number;
+    stopoverCount?: number;
+    flightDuration?: number;
+    source?: string;
+}) => {
+    return apiClient.post("/flight/create", flightData);
 }
     

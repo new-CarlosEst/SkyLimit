@@ -34,14 +34,7 @@ function RegisterForm(
         register(datos)
             .then(res => {
                 const token = res.data.access_token;
-                useAuthStore.getState().login(res.data.user, token);
-
-                // Guardamos la sesión en el sessionStorage
-                sessionStorage.setItem("auth-storage", JSON.stringify({
-                    state: {
-                        token: token
-                    },
-                }));
+                useAuthStore.getState().login(res.data.user, token, false); // Register never remembers
 
                 sileo.success({ title: "Registro completado con éxito" });
                 setIsOpen(false);

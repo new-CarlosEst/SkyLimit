@@ -6,23 +6,32 @@ import { validateJWT } from '../api/auth.api';
 export const useAuthPersistence = () => {
     useEffect(() => {
         const checkAuth = async () => {
-            // Intento recuperar local, y si no, del session
-            const storedAuth = localStorage.getItem("auth-storage") || sessionStorage.getItem("auth-storage");
+            // Obtener token del almacenamiento (localStorage o sessionStorage)
+            const token = localStorage.getItem("auth-token") || sessionStorage.getItem("auth-token");
 
-            if (!storedAuth) return;
+            if (!token) return;
 
             try {
-                const parsedAuth = JSON.parse(storedAuth);
-                const token = parsedAuth.state?.token;
-
-                if (token) {
-                    const res = await validateJWT(token);
-                    useAuthStore.getState().login(res.data.user, res.data.access_token);
+                // Validar token con backend y obtener datos de usuario
+                const res = await validateJWT(token);
+                
+                if (res.data.user && res.data.access_token) {
+                    // Actualizar store con datos del usuario
+                    useAuthStore.getState().setUser(res.data.user);
+                    
+                    // Actualizar token si ha cambiado
+                    if (res.data.access_token !== token) {
+                        localStorage.setItem('auth-token', res.data.access_token);
+                        sessionStorage.setItem('auth-token', res.data.access_token);
+                        useAuthStore.getState().setUser(res.data.user);
+                    }
                 }
             } catch (error) {
-                console.error("Error recuperando sesión:", error);
-                localStorage.removeItem("auth-storage");
-                sessionStorage.removeItem("auth-storage");
+                console.error("Error validando sesión:", error);
+                // Token inválido, limpiar almacenamiento
+                localStorage.removeItem("auth-token");
+                sessionStorage.removeItem("auth-token");
+                useAuthStore.getState().logout();
             }
         };
 

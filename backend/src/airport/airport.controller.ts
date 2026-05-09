@@ -1,4 +1,4 @@
-import { Query, Controller, Get, HttpCode } from '@nestjs/common';
+import { Query, Controller, Get, HttpCode, Param } from '@nestjs/common';
 import { AirportService } from './airport.service';
 
 @Controller('airport') // ruta /airport
@@ -16,5 +16,11 @@ export class AirportController {
   @HttpCode(200)
   async searchAiportsByIATA(@Query('IATA') IATA: string) {
     return this.airportService.getAirportByIATA(IATA);
+  }
+
+  @Get('airportById')
+  @HttpCode(200)
+  async getAirportById(@Query('id') id: number) {
+    return this.airportService.getAirportById(id);
   }
 }

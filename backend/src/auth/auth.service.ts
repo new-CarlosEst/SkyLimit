@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, NotFoundException } from '@nestjs/common';
 import { RegisterDto } from './dto/register-auth.dto';
 import { LoginDto } from './dto/login-auth.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
@@ -199,7 +199,6 @@ export class AuthService {
 
   /**
    * Metodo que da de alta a un nuevo administrador
-   * @param token Token con los datos del usuario
    * @param email Email del usuario
    * @returns Devuelve un mensaje de confirmacion
    */
@@ -210,7 +209,12 @@ export class AuthService {
 
       // Si no existe lanzo el error
       if (!user) {
-        throw new UnauthorizedException('Usuario no encontrado');
+        throw new UnauthorizedException('Este usuario no existe');
+      }
+
+      // Verifico si el usuario ya es admin o superadmin
+      if (user.role === 'ADMIN' || user.role === 'SUPERADMIN') {
+        throw new UnauthorizedException('Este usuario ya es administrador');
       }
 
       // Actualizo los datos del usuario
@@ -220,6 +224,9 @@ export class AuthService {
         message: "Administrador registrado correctamente"
       };
     } catch (error) {
+      if (error instanceof UnauthorizedException || error instanceof NotFoundException) {
+        throw error;
+      }
       throw new UnauthorizedException('Error al registrar el administrador');
     }
   }
