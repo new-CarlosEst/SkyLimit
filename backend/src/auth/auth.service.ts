@@ -200,14 +200,11 @@ export class AuthService {
   /**
    * Metodo que da de alta a un nuevo administrador
    * @param token Token con los datos del usuario
+   * @param email Email del usuario
    * @returns Devuelve un mensaje de confirmacion
    */
-  public async registerAdmin(token: string): Promise<object> {
+  public async registerAdmin(email: string): Promise<object> {
     try {
-      // Verifico el token y obtengo el email del payload
-      const payload = await this.jwtService.verifyAsync(token);
-      const email = payload.email;
-
       // Me busco el usuario
       const user = await this.userService.getUserByEmail(email);
 
@@ -219,13 +216,8 @@ export class AuthService {
       // Actualizo los datos del usuario
       await this.userService.updateUserRole(user.id, 'ADMIN');
 
-      //Genero un nuevo token para devolverlo
-      const newPayload = { sub: user.id, email: user.email };
-      const newToken = await this.jwtService.signAsync(newPayload);
-
       return {
-        access_token: newToken,
-        user: user,
+        message: "Administrador registrado correctamente"
       };
     } catch (error) {
       throw new UnauthorizedException('Error al registrar el administrador');

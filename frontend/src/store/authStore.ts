@@ -10,15 +10,15 @@ interface AuthState {
 }
 
 //Meto en la store de zustand (que no en el localStorage) los datos de usuario y el token
-    export const useAuthStore = create<AuthState>()(
-        (set) => ({
-            user: null,
-            token: null,
-            login: (user, token) => set({ user, token }),
-            logout: () => {
-                localStorage.removeItem("auth-storage");
-                sessionStorage.removeItem("auth-storage");
-                set({ user: null, token: null });
-            },
-        })
-    );
+export const useAuthStore = create<AuthState>()(
+    (set) => ({
+        user: null,
+        token: null,
+        login: (user, token) => set({ user, token }),
+        logout: () => {
+            localStorage.removeItem("auth-storage");
+            sessionStorage.removeItem("auth-storage");
+            set({ user: null, token: null });
+        },
+    })
+);

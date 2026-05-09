@@ -1,15 +1,41 @@
 import { useState, useMemo } from "react";
 import pointRightArrow from "../../../assets/ui/pointRightArrow.svg";
 import { useFlightSearchStore } from "../../../store/flightSearchStore";
+import { useFilterStore } from "../../../store/filterStore";
 import usePriceSlider from "../../../hooks/usePriceSlider";
+import { useDurationFilters } from "../../../hooks/useDurationFilters";
+import { DurationFilterSection } from "./DurationFilterSection";
 import "./FilterSidebar.css";
 
-function FilterSidebar() {
-    const [isOpen, setIsOpen] = useState(false);
+function FilterSidebar({ tripType }: { tripType: "oneWay" | "roundTrip" | "multi" | null }) {
+    const [isOpen, setIsOpen] = useState(true);
     const { priceRange, sliderValue, handlePriceChange } = usePriceSlider(20000);
-    const [selectedDuration, setSelectedDuration] = useState("");
-    const [selectedStop, setSelectedStop] = useState("");
-    const [selectedAirlines, setSelectedAirlines] = useState<string[]>([]);
+    
+    // Estado local para los filtros (no se aplican hasta hacer clic en "Aplicar")
+    const [localStops, setLocalStops] = useState("");
+    const [localAirlines, setLocalAirlines] = useState<string[]>([]);
+    const [localPriceRange, setLocalPriceRange] = useState({ min: 0, max: 20000 });
+    
+    // Usar hook personalizado para filtros de duración
+    const {
+        localDurationFilters,
+        setLocalDurationFilters,
+        expandedSections,
+        durationOptions,
+        toggleSection,
+        updateDurationFilter,
+        getChevronIcon
+    } = useDurationFilters({ tripType });
+    
+    const { 
+        duration, 
+        stops, 
+        airlines, 
+        setDuration, 
+        setStops, 
+        setAirlines, 
+        setPriceRange
+    } = useFilterStore();
     const { results } = useFlightSearchStore();
 
     const toggleFilter = () => {
@@ -26,18 +52,29 @@ function FilterSidebar() {
                 });
             });
         });
-        return Array.from(airlines);
+        return Array.from(airlines).sort();
     }, [results]);
 
-    // Calcular número de filtros aplicados
+    // Contador de filtros activos
     const activeFiltersCount = useMemo(() => {
         let count = 0;
-        if (selectedDuration) count++;
-        if (selectedStop) count++;
-        if (priceRange.max < 20000) count++;
-        if (selectedAirlines.length > 0) count++;
+        
+        // Contar filtros de duración
+        if (typeof localDurationFilters === 'object') {
+            count += Object.values(localDurationFilters).filter(filter => filter !== "").length;
+        }
+        
+        // Contar filtro de escalas
+        if (localStops !== "") count++;
+        
+        // Contar aerolíneas seleccionadas
+        count += localAirlines.length;
+        
+        // Contar filtro de precio (si no está en el rango por defecto)
+        if (localPriceRange.min !== 0 || localPriceRange.max !== 20000) count++;
+        
         return count;
-    }, [selectedDuration, selectedStop, priceRange, selectedAirlines]);
+    }, [localDurationFilters, localStops, localAirlines, localPriceRange]);
 
     return (
         <div className={`filter-wrapper ${isOpen ? "open" : "closed"}`}>
@@ -66,45 +103,38 @@ function FilterSidebar() {
                                 max="100"
                                 value={sliderValue}
                                 step="1"
-                                onChange={(e) => handlePriceChange(parseInt(e.target.value))}
+                                onChange={(e) => {
+                    const newValue = parseInt(e.target.value);
+                    handlePriceChange(newValue);
+                    setLocalPriceRange({ min: 0, max: priceRange.max });
+                }}
                                 className="price-slider"
                             />
                         </div>
                     </div>
-                    <div className="filter-section">
-                        <label className="filter-label">Duración</label>
-                        <div className="filter-options">
-                            <label className="filter-option">
-                                <input type="checkbox" checked={selectedDuration === "short"} onChange={() => setSelectedDuration(selectedDuration === "short" ? "" : "short")} />
-                                <span>Menos de 2 horas</span>
-                            </label>
-                            <label className="filter-option">
-                                <input type="checkbox" checked={selectedDuration === "medium"} onChange={() => setSelectedDuration(selectedDuration === "medium" ? "" : "medium")} />
-                                <span>2 - 4 horas</span>
-                            </label>
-                            <label className="filter-option">
-                                <input type="checkbox" checked={selectedDuration === "long"} onChange={() => setSelectedDuration(selectedDuration === "long" ? "" : "long")} />
-                                <span>4 - 6 horas</span>
-                            </label>
-                            <label className="filter-option">
-                                <input type="checkbox" checked={selectedDuration === "very-long"} onChange={() => setSelectedDuration(selectedDuration === "very-long" ? "" : "very-long")} />
-                                <span>Más de 6 horas</span>
-                            </label>
-                        </div>
-                    </div>
+                    <DurationFilterSection 
+                        tripType={tripType}
+                        localDurationFilters={localDurationFilters}
+                        setLocalDurationFilters={setLocalDurationFilters}
+                        expandedSections={expandedSections}
+                        durationOptions={durationOptions}
+                        toggleSection={toggleSection}
+                        updateDurationFilter={updateDurationFilter}
+                        getChevronIcon={getChevronIcon}
+                    />
                     <div className="filter-section">
                         <label className="filter-label">Escalas</label>
                         <div className="filter-options">
                             <label className="filter-option">
-                                <input type="checkbox" checked={selectedStop === "direct"} onChange={() => setSelectedStop(selectedStop === "direct" ? "" : "direct")} />
+                                <input type="checkbox" checked={localStops === "direct"} onChange={() => setLocalStops(localStops === "direct" ? "" : "direct")} />
                                 <span>Directo</span>
                             </label>
                             <label className="filter-option">
-                                <input type="checkbox" checked={selectedStop === "one-stop"} onChange={() => setSelectedStop(selectedStop === "one-stop" ? "" : "one-stop")} />
+                                <input type="checkbox" checked={localStops === "one-stop"} onChange={() => setLocalStops(localStops === "one-stop" ? "" : "one-stop")} />
                                 <span>1 escala</span>
                             </label>
                             <label className="filter-option">
-                                <input type="checkbox" checked={selectedStop === "multi-stop"} onChange={() => setSelectedStop(selectedStop === "multi-stop" ? "" : "multi-stop")} />
+                                <input type="checkbox" checked={localStops === "multi-stop"} onChange={() => setLocalStops(localStops === "multi-stop" ? "" : "multi-stop")} />
                                 <span>2 o más escalas</span>
                             </label>
                         </div>
@@ -114,11 +144,11 @@ function FilterSidebar() {
                         <div className="filter-options">
                             {uniqueAirlines.map((airline) => (
                                 <label key={airline} className="filter-option">
-                                    <input type="checkbox" checked={selectedAirlines.includes(airline)} onChange={(e) => {
+                                    <input type="checkbox" checked={localAirlines.includes(airline)} onChange={(e) => {
                                         if (e.target.checked) {
-                                            setSelectedAirlines([...selectedAirlines, airline]);
+                                            setLocalAirlines([...localAirlines, airline]);
                                         } else {
-                                            setSelectedAirlines(selectedAirlines.filter(a => a !== airline));
+                                            setLocalAirlines(localAirlines.filter((a: string) => a !== airline));
                                         }
                                     }} />
                                     <span>{airline}</span>
@@ -126,7 +156,22 @@ function FilterSidebar() {
                             ))}
                         </div>
                     </div>
-                    <button className="apply-filters-button">
+
+                    <button 
+                        className="apply-filters-button"
+                        onClick={() => {
+                            console.log('Applying filters:', {
+                                durationFilters: localDurationFilters,
+                                stops: localStops,
+                                airlines: localAirlines,
+                                priceRange: localPriceRange
+                            });
+                            setDuration(localDurationFilters as any);
+                            setStops(localStops as any);
+                            setAirlines(localAirlines);
+                            setPriceRange(localPriceRange);
+                        }}
+                    >
                         Aplicar filtros
                     </button>
                 </div>

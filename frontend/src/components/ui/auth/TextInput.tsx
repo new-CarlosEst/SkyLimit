@@ -23,6 +23,7 @@ function TextInput({ label, name, placeholder, icon = userIcon, type = "text" }:
                     id={name}
                     name={name}
                     placeholder={placeholder}
+                    autoComplete="off"
                     className="flex-1 min-w-0 outline-none bg-transparent text-gray-700 text-sm font-medium placeholder-gray-400"
                 />
             </div>

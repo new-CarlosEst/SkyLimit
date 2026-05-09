@@ -54,18 +54,18 @@ model User {
 
 // -------------------- Payment Method ------------------
 model PaymentMethod {
-  id                    Int      @id @default(autoincrement())
-  holderName            String
-  brand                 String   // Visa, Mastercard, Amex, etc
-  expirationDate        DateTime
-  last4Digits           String   // Últimos 4 dígitos de la tarjeta
-  
+  id             Int      @id @default(autoincrement())
+  holderName     String
+  brand          String // Visa, Mastercard, Amex, etc
+  expirationDate DateTime
+  last4Digits    String // Últimos 4 dígitos de la tarjeta
+
   // Stripe Integration
-  stripeCustomerId      String   // ID del cliente en Stripe
-  stripePaymentMethodId String   // ID del método de pago en Stripe (para futuras compras)
-  
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
+  stripeCustomerId      String // ID del cliente en Stripe
+  stripePaymentMethodId String // ID del método de pago en Stripe (para futuras compras)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   // Relations
   userId       Int
@@ -79,16 +79,16 @@ model PaymentMethod {
 
 // -------------------- Transaction ---------------------
 model Transaction {
-  id                    Int                @id @default(autoincrement())
-  amount                Float
-  currency              String             @default("EUR")
-  status                TransactionStatus  @default(PENDING)
-  
+  id       Int               @id @default(autoincrement())
+  amount   Float
+  currency String            @default("EUR")
+  status   TransactionStatus @default(PENDING)
+
   // Stripe Integration
-  stripePaymentIntentId String?            // ID único de Stripe para este intento de pago
-  
-  createdAt             DateTime           @default(now())
-  updatedAt             DateTime           @updatedAt
+  stripePaymentIntentId String? // ID único de Stripe para este intento de pago
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   // Relations
   reservationId   Int?
@@ -168,12 +168,13 @@ model Airport {
 model Flight {
   id                Int      @id @default(autoincrement())
   flightNumber      String
-  gate              String?
   departureDateTime DateTime
   arrivalDateTime   DateTime
   stopoverCount     Int?
   airline           String
   price             Float
+  flightDuration    Int? // duración total en minutos
+  source            String   @default("Created") // "Api" | "Created"
 
   // Relations
   reservations Reservation[]

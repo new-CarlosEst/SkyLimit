@@ -15,6 +15,7 @@ function MailInput({ name = "Correo Electrónico" }: { name?: string }) {
                     id="email"
                     name="email"
                     placeholder="example@email.com"
+                    autoComplete="off"
                     className="w-full outline-none bg-transparent text-gray-700 text-sm font-medium"
                 />
             </div>

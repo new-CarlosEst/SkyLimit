@@ -23,6 +23,14 @@ function UserButton({ user }: { user: User }) {
                     <button className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">
                         Datos personales
                     </button>
+
+                    {/* Muestro el panel de administrador si es admin o superadmin */}
+                    {(user?.role.toLowerCase() === "admin" || user?.role.toLowerCase() === "superadmin") && (
+                        <button className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 border-t border-gray-200">
+                            Panel Administración
+                        </button>
+                    )}
+
                     <button
                         onClick={logout}
                         className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"

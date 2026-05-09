@@ -3,7 +3,7 @@ import { ApiflightService } from './apiflight.service';
 
 @Controller('apiflight')
 export class ApiflightController {
-  constructor(private readonly apiflightService: ApiflightService) {}
+  constructor(private readonly apiflightService: ApiflightService) { }
 
   @Get('roundTrip')
   async getFlights(

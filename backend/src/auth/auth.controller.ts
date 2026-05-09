@@ -60,7 +60,17 @@ export class AuthController {
   //Ruta para dar de alta a un nuevo administrador
   @Post('register-admin')
   @HttpCode(201)
-  async registerAdmin(@Body() token: string) {
-    return this.authService.registerAdmin(token);
+  async registerAdmin(@Body() email: string) {
+    return this.authService.registerAdmin(email);
+  }
+
+  //Ruta para el contacto
+  @Post('contact')
+  @HttpCode(200)
+  async contact(@Body() contactDto: any) {
+    //return this.authService.contact(contactDto);
+    return  {
+      message: "Mensaje enviado correctamente"
+    }
   }
 }

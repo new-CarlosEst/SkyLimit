@@ -35,6 +35,11 @@ export const resetPassword = async (token: string, password: string) => {
     return apiClient.post("/auth/reset-password", { token, password })
 }
 
+//Peticion con axios para el contact
+export const contact = async (data: any) => {
+    return apiClient.post("/auth/contact", data)
+}
+
 
 
 

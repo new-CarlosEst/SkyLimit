@@ -3,12 +3,13 @@ import { useEffect } from "react";
 import Landing from './pages/Landing';
 import Header from "./components/layouts/Header/Header";
 import Footer from "./components/layouts/Footer/Footer";
+import Contact from "./pages/Contact";
+import Blog from "./pages/Blog";
 import { Toaster } from "sileo";
 import "sileo/styles.css"; // Hay que traerse este css para ver los toast de sileo
 import { useToastStore } from "./store/toastStore";
 import { useAuthPersistence } from "./hooks/useAuthPersistence";
 import PasswordRecovery from "./pages/PasswordRecovery";
-import Blog from "./pages/Blog";
 import Flights from "./pages/Flights";
 import loginBackground from "./assets/backgrounds/Login-Avion-azul.jpg";
 import registerBackground from "./assets/backgrounds/Register-Pasaporte-azul.jpg";
@@ -62,6 +63,7 @@ function App() {
         <Route path="/reset-password" element={<PasswordRecovery />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/flights" element={<Flights />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
       {showHeader && <Footer />}
     </>
