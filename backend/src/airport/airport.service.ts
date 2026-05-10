@@ -9,7 +9,7 @@ import { Airport } from './entities/airport.entity';
 
 @Injectable()
 export class AirportService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   /**
    * Metodo que devuelve los aeropuertos que coinciden con el nombre de forma parcial
@@ -124,6 +124,41 @@ export class AirportService {
       // Error de base de datos o conexión
       throw new Error(
         `DATABASE_ERROR: Error al buscar aeropuerto por IATA: ${error instanceof Error ? error.message : 'Error desconocido'}`,
+      );
+    }
+  }
+
+  public async getAirportById(id: number): Promise<Airport | null> {
+    try {
+      //si el id esta vacio
+      if (!id) {
+        throw new BadRequestException(
+          'El id del aeropuerto no puede estar vacío',
+        );
+      }
+
+      const airport = await this.prisma.airport.findFirst({
+        where: {
+          id: id,
+        },
+      });
+
+      //si no se encontro el aeropuerto
+      if (!airport) {
+        throw new NotFoundException(
+          'No se encontró ningún aeropuerto con ese id',
+        );
+      }
+
+      return airport;
+    } catch (error) {
+      if (error instanceof BadRequestException) {
+        throw error; // Re-lanzar error de validación (400)
+      }
+
+      // Error de base de datos o conexión
+      throw new Error(
+        `DATABASE_ERROR: Error al buscar aeropuerto por id: ${error instanceof Error ? error.message : 'Error desconocido'}`,
       );
     }
   }

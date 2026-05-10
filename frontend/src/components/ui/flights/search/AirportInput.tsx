@@ -8,7 +8,7 @@ interface AirportInputProps {
     placeHolder: string;
     onAirportSelect?: (airport: Airport | null) => void;
 }
-//TODO: Ver como funciona y entenderlo
+
 function AirportInput({ name, icon, placeHolder, onAirportSelect }: AirportInputProps) {
     // Texto que escribe el usuario
     const [query, setQuery] = useState("");

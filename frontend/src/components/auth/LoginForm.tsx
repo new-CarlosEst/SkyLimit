@@ -33,24 +33,7 @@ function LoginForm(
             .then(res => {
 
                 //Siempre guardo los datos en zustand
-                useAuthStore.getState().login(res.data.user, res.data.access_token);
-
-                //Si el remember esta marcado guardo el token en localstorage
-                if (doRemember) {
-                    localStorage.setItem("auth-storage", JSON.stringify({
-                        state: {
-                            token: res.data.access_token
-                        },
-                    }))
-                }
-                //Si no esta marcado, guardo el token en el sessionStorage en vez de borrar el del local, asi sobrevive a un f5
-                else {
-                    sessionStorage.setItem("auth-storage", JSON.stringify({
-                        state: {
-                            token: res.data.access_token
-                        },
-                    }));
-                }
+                useAuthStore.getState().login(res.data.user, res.data.access_token, doRemember);
 
                 sileo.success({ title: "Sesión iniciada con éxito" });
                 setIsOpen(false);

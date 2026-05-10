@@ -5,12 +5,17 @@ import LegData from "../../ui/flights/data/LegData";
 interface FlightCardProps {
     flight: FlightResult;
     cabinClass: 'economy' | 'premiumeconomy' | 'business' | 'first' | null;
+    passengers: {
+        adults: number;
+        children: number;
+        infants: number;
+    } | null;
 }
 
-function FlightCard({ flight, cabinClass }: FlightCardProps) {
+function FlightCard({ flight, cabinClass, passengers }: FlightCardProps) {
     return (
         <div className="flex p-4 border border-gray-100 rounded-lg shadow-lg hover:shadow-xl hover:border-blue-300 transition-all duration-500">
-            <div className="flex flex-col gap-4 flex-4">
+            <div className="flex flex-col gap-4 flex-4 justify-center">
                 {flight.legs.map((leg, index) => (
                     <LegData
                         key={index}
@@ -29,9 +34,14 @@ function FlightCard({ flight, cabinClass }: FlightCardProps) {
                 ))}
             </div>
 
-            <div className="flex flex-col border-l border-gray-200 flex-1 justify-center items-center">
+            <div className="flex flex-col border-l border-gray-200 flex-1 justify-center items-center gap-4 mb-4">
                 <p className="text-4xl font-bold text-[#2c5aa0]">{flight.price.formatted}</p>
-                <p className="text-gray-700 text-md">por persona</p>
+                <p className="text-gray-700 text-md flex flex-col justify-center items-center pt-4 border-t border-gray-200">
+                    <span className="text-2xl font-bold text-[#2c5aa0] p-0 m-0">
+                        {passengers ? (flight.price.amount/(passengers.adults + passengers.children + passengers.infants)).toFixed(0) : flight.price.amount}€
+                    </span>
+                    por persona
+                </p>
                 <button className="text-md mt-4 bg-[#2c5aa0] text-white px-8 py-3 rounded-lg hover:bg-[#1a3d7a] hover:scale-105 transition-all duration-200">Seleccionar</button>
             </div>
         </div>

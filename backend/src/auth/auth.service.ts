@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, NotFoundException } from '@nestjs/common';
 import { RegisterDto } from './dto/register-auth.dto';
 import { LoginDto } from './dto/login-auth.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
@@ -8,6 +8,7 @@ import { UserEntity } from '../users/entities/user.entity';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { MailService } from '../mail/mail.service';
+import { UpdateDataDto } from './dto/update-data.dto';
 
 //Aqui usare bcrypt par encriptar las contraseñas, para generar el token de validacion y comprare la contraseña que me devuelve el recurso de users
 @Injectable()
@@ -153,6 +154,80 @@ export class AuthService {
       };
     } catch (error) {
       throw new UnauthorizedException('Token inválido o expirado');
+    }
+  }
+
+  /**
+   * Metodo que actualiza el perfil de usuario
+   * @param token Token del usuario
+   * @param updateDataDto Datos del usuario a actualizar
+   * @returns Devuelve un mensaje de confirmacion
+   */
+  public async updateData(token: string, updateDataDto: UpdateDataDto): Promise<object> {
+    try {
+      // Verifico el token y obtengo el email del payload
+      const payload = await this.jwtService.verifyAsync(token);
+      const email = payload.email;
+
+      // Me busco el usuario
+      const user = await this.userService.getUserByEmail(email);
+
+      // Si no existe lanzo el error
+      if (!user) {
+        throw new UnauthorizedException('Usuario no encontrado');
+      }
+
+      // Actualizo los datos del usuario
+      await this.userService.updateUser(user.id, updateDataDto);
+
+      //User
+      const userUpdated = await this.userService.getUserByEmail(email);
+
+      //Genero un nuevo token para devolverlo
+      const newPayload = { sub: userUpdated.id, email: userUpdated.email };
+      const newToken = await this.jwtService.signAsync(newPayload);
+
+      return {
+        access_token: newToken,
+        user: userUpdated,
+      };
+    } catch (error) {
+      throw new UnauthorizedException('Error al actualizar los datos');
+    }
+  }
+
+
+  /**
+   * Metodo que da de alta a un nuevo administrador
+   * @param email Email del usuario
+   * @returns Devuelve un mensaje de confirmacion
+   */
+  public async registerAdmin(email: string): Promise<object> {
+    try {
+      // Me busco el usuario
+      const user = await this.userService.getUserByEmail(email);
+
+      // Si no existe lanzo el error
+      if (!user) {
+        throw new UnauthorizedException('Este usuario no existe');
+      }
+
+      // Verifico si el usuario ya es admin o superadmin
+      if (user.role === 'ADMIN' || user.role === 'SUPERADMIN') {
+        throw new UnauthorizedException('Este usuario ya es administrador');
+      }
+
+      // Actualizo los datos del usuario
+      await this.userService.updateUserRole(user.id, 'ADMIN');
+
+      return {
+        message: "Administrador registrado correctamente"
+      };
+    } catch (error) {
+      if (error instanceof UnauthorizedException || error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new UnauthorizedException('Error al registrar el administrador');
     }
   }
 }

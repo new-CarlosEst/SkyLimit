@@ -9,6 +9,7 @@ import calendarIcon from "../../../../assets/ui/IconoirCalendar.svg";
 // import { formatDate } from "../../../../utils/formaters";
 
 import "./DatePicker.css";
+import "../../DatePickerShared.css";
 
 
 //Los props para seleccionar fecha , si es ida y vuelta (range) o solo ida (single)
@@ -113,6 +114,7 @@ function DatePicker({ mode, onDateChange, name, minDate }: DatePickerProps) {
                             placeholderText="Selecciona fecha"
                             minDate={minDate || new Date()}
                             className="date-input"
+                            calendarClassName="sky-datepicker"
                         />
                     </div>
                 </div>
@@ -141,6 +143,8 @@ function DatePicker({ mode, onDateChange, name, minDate }: DatePickerProps) {
 
                             className="date-input"
 
+                            calendarClassName="sky-datepicker"
+
                         />
 
                     </div>
@@ -164,6 +168,8 @@ function DatePicker({ mode, onDateChange, name, minDate }: DatePickerProps) {
                             minDate={startDate ? new Date(startDate.getTime() + 24 * 60 * 60 * 1000) : new Date()}
 
                             className="date-input"
+
+                            calendarClassName="sky-datepicker"
 
                         />
 

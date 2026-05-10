@@ -1,0 +1,289 @@
+/* =========================================
+    ESTILOS DE LA PARTE DEL PROBLEMA
+   ========================================= */
+.main-problem {
+    display: flex;
+    gap: 3rem;
+    padding: 3rem 2rem;
+    align-items: stretch;
+    background-color: #F5F7FA;
+    width: 100%;
+}
+
+.main-problem>* {
+    flex: 1;
+}
+
+.info-problema {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.info-problema-content {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #fee2e2;
+    color: #ef4444;
+    padding: 0.35rem 0.85rem;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.info-problema-content img {
+    width: 18px;
+    filter: invert(36%) sepia(82%) saturate(2883%) hue-rotate(338deg) brightness(98%) contrast(93%);
+}
+
+.info-problema h3 {
+    font-size: 2.25rem;
+    font-weight: 600;
+    color: #0f172a;
+    line-height: 1.2;
+    margin: 0;
+}
+
+.info-problema p {
+    color: #475569;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.problema-list {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.problema-list li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: #475569;
+    font-size: 1rem;
+}
+
+.cross-icon-container {
+    background-color: #fee2e2;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.cross-icon-container img {
+    width: 18px;
+    height: 18px;
+    filter: invert(36%) sepia(82%) saturate(2883%) hue-rotate(338deg) brightness(98%) contrast(93%);
+}
+
+.visit-prices {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.price-card {
+    background: white;
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    transition: all 0.3s ease;
+    border: 1px solid #e5e7eb;
+    gap: 0.5rem;
+}
+
+.price-card .price-card-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: #64748b;
+}
+
+.price-card .price-card-price {
+    font-size: 1.5rem;
+    font-weight: normal;
+    text-align: left;
+}
+
+.price-card .price-card-price p,
+.price-card .price-card-title p {
+    margin: 0;
+}
+
+.neutral-price {
+    border: 1px solid #e5e7eb;
+}
+
+.neutral-price .price-card-title {
+    color: #64748b;
+}
+
+.neutral-price .price-card-price {
+    color: #334155;
+}
+
+.neutral-price img {
+    filter: invert(49%) sepia(13%) saturate(543%) hue-rotate(178deg) brightness(96%) contrast(87%);
+    width: 20px;
+}
+
+.warning-price {
+    background-color: #fffbeb;
+    border: 2px solid #f59e0b;
+}
+
+.warning-price .price-card-title {
+    color: #64748b;
+}
+
+.warning-price .price-card-price {
+    color: #ea580c;
+}
+
+.warning-price img {
+    filter: invert(56%) sepia(87%) saturate(2250%) hue-rotate(3deg) brightness(99%) contrast(95%);
+    width: 20px;
+}
+
+.danger-price {
+    background-color: #fef2f2;
+    border: 2px solid #ef4444;
+}
+
+.danger-price .price-card-title {
+    color: #64748b;
+}
+
+.danger-price .price-card-price {
+    color: #dc2626;
+}
+
+.danger-price img {
+    filter: invert(27%) sepia(91%) saturate(3015%) hue-rotate(345deg) brightness(93%) contrast(92%);
+    width: 20px;
+}
+
+/* =========================================
+    ESTILOS DE LA PARTE DE LA SOLUCIÓN
+   ========================================= */
+.main-solution {
+    display: flex;
+    gap: 3rem;
+    padding: 3rem 2rem;
+    align-items: stretch;
+    background-color: #ffffff;
+    width: 100%;
+}
+
+.main-solution>* {
+    flex: 1;
+}
+
+.info-solution {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.info-solution-content {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #dcfce7;
+    color: #16a34a;
+    padding: 0.35rem 0.85rem;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.info-solution-content img {
+    width: 18px;
+    filter: invert(47%) sepia(87%) saturate(395%) hue-rotate(86deg) brightness(93%) contrast(93%);
+}
+
+.info-solution h3 {
+    font-size: 2.25rem;
+    font-weight: 600;
+    color: #0f172a;
+    line-height: 1.2;
+    margin: 0;
+}
+
+.info-solution p {
+    color: #475569;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.solution-list {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.solution-list li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: #475569;
+    font-size: 1rem;
+}
+
+.tick-icon-container {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.tick-icon-container img {
+    width: 22px;
+    height: 22px;
+    filter: invert(47%) sepia(87%) saturate(395%) hue-rotate(86deg) brightness(93%) contrast(93%);
+}
+
+.success-price {
+    background-color: #f0fdf4;
+    border: 1px solid #bbf7d0;
+}
+
+.success-price .price-card-title {
+    color: #64748b;
+}
+
+.success-price .price-card-price {
+    color: #1e293b;
+}
+
+.success-price img {
+    filter: invert(47%) sepia(87%) saturate(395%) hue-rotate(86deg) brightness(93%) contrast(93%);
+    width: 20px;
+}

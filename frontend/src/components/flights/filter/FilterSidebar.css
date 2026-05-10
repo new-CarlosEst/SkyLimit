@@ -1,9 +1,12 @@
 .filter-wrapper {
-    position: relative;
+    position: sticky;
+    top: 100px;
+    align-self: flex-start;
     display: flex;
     align-items: flex-start;
     gap: 0;
     overflow: visible;
+    z-index: 10;
 }
 
 .filter-sidebar {
@@ -247,6 +250,8 @@
     cursor: pointer;
     transition: background-color 0.2s ease, transform 0.1s ease;
     margin-top: 16px;
+    display: block !important;
+    visibility: visible !important;
 }
 
 .apply-filters-button:hover {
@@ -255,4 +260,36 @@
 
 .apply-filters-button:active {
     transform: scale(0.98);
+}
+
+.duration-leg-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 8px 12px;
+    background-color: #f3f4f6;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.duration-leg-header:hover {
+    background-color: #e5e7eb;
+}
+
+.leg-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.dropdown-chevron {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.2s ease;
+}
+
+.inline-chevron {
+    margin-left: 8px;
 }

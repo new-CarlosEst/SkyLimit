@@ -1,9 +1,13 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { ApiflightService } from './apiflight.service';
+import { FlightService } from '../flight/flight.service';
 
 @Controller('apiflight')
 export class ApiflightController {
-  constructor(private readonly apiflightService: ApiflightService) {}
+  constructor(
+    private readonly apiflightService: ApiflightService,
+    private readonly flightService: FlightService
+  ) { }
 
   @Get('roundTrip')
   async getFlights(
@@ -18,11 +22,24 @@ export class ApiflightController {
     @Query('children') children?: string,
     @Query('infants') infants?: string,
   ) {
-    //TODO: Devolver este metodo para devolver resultados reales
-    //return this.apiflightService.getFlightsRoundTrip(originName, destinationName, origin, departure, cabinClass, date, returnDate, adults, children, infants);
+    // TODO: CAMBIAR A LA API REAL ANTES DE SUBIR A PRODUCCION
+    //const apiFlights = await this.apiflightService.getFlightsRoundTripMock();
+    const apiFlights = await this.apiflightService.getFlightsRoundTrip(originName, destinationName, origin, departure, cabinClass, date, returnDate, adults, children, infants);
 
-    //LLamo a un metodo con datos de mock de una peticion exitosa que realize para no gastar tokens en proximas pruebas
-    return this.apiflightService.getFlightsRoundTripMock();
+    // Obtener vuelos de la base de datos interna
+    const dbFlights = await this.flightService.searchRoundTripFlights({
+      originIATA: origin,
+      destinationIATA: departure,
+      departureDate: date,
+      returnDate: returnDate,
+      cabinClass: cabinClass,
+      adults: adults,
+      children: children,
+      infants: infants,
+    });
+
+    // Devolver ambos combinados (los de la BD primero)
+    return [...dbFlights, ...apiFlights];
   }
 
   @Get('oneWay')
@@ -37,11 +54,22 @@ export class ApiflightController {
     @Query('children') children?: string,
     @Query('infants') infants?: string,
   ) {
-    //TODO: Devolver este metodo para devolver resultados reales
-    //return this.apiflightService.getFlightsOneWay(originName, destinationName, origin, departure, cabinClass, date, adults, children, infants);
+    // TODO: CAMBIAR A LA API REAL ANTES DE SUBIR A PRODUCCION
+    //const apiFlights = await this.apiflightService.getFlightsOneWayMock();
+    const apiFlights = await this.apiflightService.getFlightsOneWay(originName, destinationName, origin, departure, cabinClass, date, adults, children, infants);
 
-    //LLamo a un metodo con datos de mock de una peticion exitosa que realize para no gastar tokens en proximas pruebas
-    return this.apiflightService.getFlightsOneWayMock();
+    // Obtener vuelos de la base de datos interna
+    const dbFlights = await this.flightService.searchOneWayFlights({
+      originIATA: origin,
+      destinationIATA: departure,
+      departureDate: date,
+      cabinClass: cabinClass,
+      adults: adults,
+      children: children,
+      infants: infants,
+    });
+
+    return [...dbFlights, ...apiFlights];
   }
 
   @Get('multi')
@@ -50,14 +78,20 @@ export class ApiflightController {
     @Query('cabinClass') cabinClass: string,
     @Query('adults') adults: string,
   ) {
-    //Parseo el string JSON de legs a array de objetos
     const legsArray = JSON.parse(legs);
 
-    //TODO: Devolver este metodo para devolver resultados reales
-    //return this.apiflightService.getFlightsMulti(legsArray, cabinClass, adults);
+    // TODO: CAMBIAR A LA API REAL ANTES DE SUBIR A PRODUCCION
+    //const apiFlights = await this.apiflightService.getFlightsMultiMock();
+    const apiFlights = await this.apiflightService.getFlightsMulti(legsArray, cabinClass, adults);
 
-    //LLamo a un metodo con datos de mock de una peticion exitosa que realize para no gastar tokens en proximas pruebas
-    return this.apiflightService.getFlightsMultiMock();
+    // Obtener vuelos de la base de datos interna
+    const dbFlights = await this.flightService.searchMultiFlights({
+      legs: legsArray,
+      cabinClass: cabinClass,
+      adults: adults,
+    });
+
+    return [...dbFlights, ...apiFlights];
   }
 
   @Get('offers')
@@ -67,10 +101,8 @@ export class ApiflightController {
     @Query('cabinClass') cabinClass: string,
     @Query('adults') adults: string,
   ) {
-    //TODO: Devolver este metodo para devolver resultados reales
-    //return this.apiflightService.getBestOffers(originName, originIATA, cabinClass, adults);
-
-    //LLamo a un metodo con datos de mock de una peticion exitosa que realize para no gastar tokens en proximas pruebas
+    // TODO: CAMBIAR A LA API REAL ANTES DE SUBIR A PRODUCCION Y HACER EL METODO BIEN (Usar el endpoint de la api de getPriceCalendar)
+    // A este se le pasa iatas, cabin class, n adultos, y la fecha cogere del mes, dia y año actual a 3-4 meses vista.
     return this.apiflightService.getFlightsOffersMock();
   }
 }

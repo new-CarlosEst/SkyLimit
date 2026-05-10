@@ -2,13 +2,17 @@ import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Landing from './pages/Landing';
 import Header from "./components/layouts/Header/Header";
+import Footer from "./components/layouts/Footer/Footer";
+import Contact from "./pages/Contact";
+import Blog from "./pages/Blog";
 import { Toaster } from "sileo";
 import "sileo/styles.css"; // Hay que traerse este css para ver los toast de sileo
 import { useToastStore } from "./store/toastStore";
 import { useAuthPersistence } from "./hooks/useAuthPersistence";
 import PasswordRecovery from "./pages/PasswordRecovery";
-import Blog from "./pages/Blog";
 import Flights from "./pages/Flights";
+import PersonalData from "./pages/PersonalData";
+import AdminPanel from "./pages/AdminPanel";
 import loginBackground from "./assets/backgrounds/Login-Avion-azul.jpg";
 import registerBackground from "./assets/backgrounds/Register-Pasaporte-azul.jpg";
 import forgotPasswordBackground from "./assets/backgrounds/aeropuerto-azul.png";
@@ -24,7 +28,8 @@ function App() {
   // Obtener la ruta actual
   const location = useLocation();
   const navigate = useNavigate();
-  const showHeader = location.pathname !== '/reset-password';
+  const noHeaderFooterRoutes = ['/reset-password', '/personalData', '/adminPanel'];
+  const showHeader = !noHeaderFooterRoutes.includes(location.pathname);
 
   // Precargar imágenes de fondo para el modal de autenticación
   useEffect(() => {
@@ -44,7 +49,7 @@ function App() {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const resetToken = params.get('token');
-    
+
     // Si hay token, navegar a la pagina de recuperacion de contraseña para que funcione la paginacion de react-router en produccion
     if (resetToken) {
       navigate(`/reset-password?token=${resetToken}`);
@@ -61,7 +66,11 @@ function App() {
         <Route path="/reset-password" element={<PasswordRecovery />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/flights" element={<Flights />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/personalData" element={<PersonalData />} />
+        <Route path="/adminPanel" element={<AdminPanel />} />
       </Routes>
+      {showHeader && <Footer />}
     </>
   )
 }

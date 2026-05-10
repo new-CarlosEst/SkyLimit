@@ -19,6 +19,7 @@ function PasswordInput() {
                     id="password"
                     name="password"
                     placeholder="Introduce tu contraseña..."
+                    autoComplete="off"
                     className="outline-none text-gray-700 text-sm bg-transparent placeholder-gray-500 font-medium text-left w-full h-full"
                 />
                 <button
