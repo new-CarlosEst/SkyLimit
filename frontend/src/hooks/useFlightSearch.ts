@@ -94,6 +94,10 @@ export function useFlightSearch() {
                 return result;
             } catch (error) {
                 console.error("Error al buscar vuelos:", error);
+                sileo.error({
+                    title: "Ha ocurrido un error buscando vuelos",
+                    description: "Inténtalo otra vez en unos minutos",
+                });
                 throw error;
             }
         } 
@@ -153,6 +157,10 @@ export function useFlightSearch() {
                 return result;
             } catch (error) {
                 console.error("Error al buscar vuelos:", error);
+                sileo.error({
+                    title: "Ha ocurrido un error buscando vuelos",
+                    description: "Inténtalo otra vez en unos minutos",
+                });
                 throw error;
             }
         } 
@@ -204,6 +212,10 @@ export function useFlightSearch() {
                 return result;
             } catch (error) {
                 console.error("Error al buscar vuelos:", error);
+                sileo.error({
+                    title: "Ha ocurrido un error buscando vuelos",
+                    description: "Inténtalo otra vez en unos minutos",
+                });
                 throw error;
             }
         }
