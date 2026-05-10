@@ -3,8 +3,7 @@ import { sileo } from "sileo";
 import { createFlight } from "../../../api/flights.api";
 import type { Airport } from "../../../types/airport.types";
 import AirportAutocompleteInput from "../personal/AirportAutocompleteInput";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import TwoStepDatePicker from "./TwoStepDatePicker";
 import "../../../pages/AdminPanel.css";
 
 import MynauiPlane from "../../../assets/ui/MynauiPlane.svg";
@@ -51,6 +50,15 @@ function FlightCreationForm() {
                 sileo.error({
                     title: "Error de validación",
                     description: "Debes seleccionar ambas fechas y horas"
+                });
+                return;
+            }
+
+            // Validar que la fecha de llegada sea posterior a la de salida
+            if (formData.arrivalDateTime <= formData.departureDateTime) {
+                sileo.error({
+                    title: "Error de validación",
+                    description: "La fecha y hora de llegada debe ser posterior a la de salida"
                 });
                 return;
             }
@@ -161,44 +169,25 @@ function FlightCreationForm() {
                         <label className="form-label">
                             Fecha y Hora de Salida
                         </label>
-                        <div className="flex items-center border border-gray-300 rounded-md">
-                            <div className="p-2 border-r border-gray-300">
-                                <img src={IconoirCalendar} alt="Calendar" className="w-5 h-5" />
-                            </div>
-                            <DatePicker
-                                selected={formData.departureDateTime}
-                                onChange={(date: Date | null) => setFormData(prev => ({ ...prev, departureDateTime: date }))}
-                                showTimeSelect
-                                dateFormat="dd/MM/yyyy HH:mm"
-                                timeFormat="HH:mm"
-                                timeIntervals={15}
-                                placeholderText="Seleccionar fecha y hora de salida"
-                                className="flex-1 px-3 py-2 focus:outline-none"
-                                required
-                            />
-                        </div>
+                        <TwoStepDatePicker
+                            selected={formData.departureDateTime}
+                            onChange={(date: Date | null) => setFormData(prev => ({ ...prev, departureDateTime: date }))}
+                            placeholderText="Seleccionar fecha y hora de salida"
+                            required
+                        />
                     </div>
                     
                     <div className="form-group">
                         <label className="form-label">
                             Fecha y Hora de Llegada
                         </label>
-                        <div className="flex items-center border border-gray-300 rounded-md">
-                            <div className="p-2 border-r border-gray-300">
-                                <img src={IconoirCalendar} alt="Calendar" className="w-5 h-5" />
-                            </div>
-                            <DatePicker
-                                selected={formData.arrivalDateTime}
-                                onChange={(date: Date | null) => setFormData(prev => ({ ...prev, arrivalDateTime: date }))}
-                                showTimeSelect
-                                dateFormat="dd/MM/yyyy HH:mm"
-                                timeFormat="HH:mm"
-                                timeIntervals={15}
-                                placeholderText="Seleccionar fecha y hora de llegada"
-                                className="flex-1 px-3 py-2 focus:outline-none"
-                                required
-                            />
-                        </div>
+                        <TwoStepDatePicker
+                            selected={formData.arrivalDateTime}
+                            onChange={(date: Date | null) => setFormData(prev => ({ ...prev, arrivalDateTime: date }))}
+                            placeholderText="Seleccionar fecha y hora de llegada"
+                            minDate={formData.departureDateTime || undefined}
+                            required
+                        />
                     </div>
                 </div>
 

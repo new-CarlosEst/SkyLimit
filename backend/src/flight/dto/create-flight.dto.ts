@@ -1,4 +1,4 @@
-import { IsEnum, IsInt, IsNumber, IsOptional, IsPositive, IsString, Matches } from 'class-validator';
+import { IsEnum, IsInt, IsNumber, IsOptional, IsPositive, IsString, Matches, Min } from 'class-validator';
 
 export class CreateFlightDto {
   @IsString()
@@ -12,7 +12,7 @@ export class CreateFlightDto {
 
   @IsOptional()
   @IsInt()
-  @IsPositive()
+  @Min(0)
   stopoverCount?: number;
 
   @IsString()

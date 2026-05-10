@@ -5,6 +5,9 @@ import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 
 async function bootstrap() {
+  // Configurar zona horaria a Europe/Madrid (España)
+  process.env.TZ = 'Europe/Madrid';
+  
   const app = await NestFactory.create(AppModule);
 
   //Permito cors para no tener problema con peticiones

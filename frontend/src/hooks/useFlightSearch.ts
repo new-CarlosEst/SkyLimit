@@ -62,17 +62,19 @@ export function useFlightSearch() {
                 return;
             }
 
-            //Datos de busqueda de ida
+            const singleDate = Array.isArray(travelDates) ? travelDates[0] : travelDates;
+            // Ajustar fecha sumando 2 horas para compensar zona horaria UTC+2
+            const adjustedDate = new Date((singleDate as Date).getTime() + 2 * 60 * 60 * 1000);
             const flightData: OneWayData = {
                 originName: originAirport.name,
                 destinationName: destinationAirport.name,
                 origin: originAirport.iata,
                 departure: destinationAirport.iata,
                 cabinClass: cabinClass,
-                date: (travelDates as Date).toISOString().split('T')[0],
-                adults: passengers.adults,
-                children: passengers.children,
-                infants: passengers.infants,
+                date: adjustedDate.toISOString().split('T')[0],
+                adults: passengers.adults.toString(),
+                children: passengers.children.toString(),
+                infants: passengers.infants.toString(),
             };
 
             //Busqueda de vuelo de ida
@@ -83,7 +85,7 @@ export function useFlightSearch() {
                 setSearchParams({
                     originIata: originAirport.iata,
                     destinationIata: destinationAirport.iata,
-                    departureDate: (travelDates as Date).toISOString().split('T')[0],
+                    departureDate: adjustedDate.toISOString().split('T')[0],
                     returnDate: null,
                     passengers: passengers,
                     cabinClass: cabinClass,
@@ -107,18 +109,32 @@ export function useFlightSearch() {
             }
 
             //Datos de busqueda de ida y vuelta
-            const [departureDate, returnDate] = travelDates as [Date, Date];
+            const departureDate = Array.isArray(travelDates) ? travelDates[0] : travelDates;
+            const returnDate = Array.isArray(travelDates) ? travelDates[1] : travelDates;
+            
+            if (!departureDate || !returnDate) {
+                sileo.error({
+                    title: "Faltan fechas",
+                    description: "Por favor selecciona un rango de fechas válido",
+                });
+                return;
+            }
+
+            // Ajustar fechas sumando 2 horas para compensar zona horaria UTC+2
+            const adjustedDepartureDate = new Date((departureDate as Date).getTime() + 2 * 60 * 60 * 1000);
+            const adjustedReturnDate = new Date((returnDate as Date).getTime() + 2 * 60 * 60 * 1000);
+
             const flightData: RoundTripData = {
                 originName: originAirport.name,
                 destinationName: destinationAirport.name,
                 origin: originAirport.iata,
                 departure: destinationAirport.iata,
                 cabinClass: cabinClass,
-                date: departureDate.toISOString().split('T')[0],
-                returnDate: returnDate.toISOString().split('T')[0],
-                adults: passengers.adults,
-                children: passengers.children,
-                infants: passengers.infants,
+                date: adjustedDepartureDate.toISOString().split('T')[0],
+                returnDate: adjustedReturnDate.toISOString().split('T')[0],
+                adults: passengers.adults.toString(),
+                children: passengers.children.toString(),
+                infants: passengers.infants.toString(),
             };
 
             try {
@@ -128,8 +144,8 @@ export function useFlightSearch() {
                 setSearchParams({
                     originIata: originAirport.iata,
                     destinationIata: destinationAirport.iata,
-                    departureDate: departureDate.toISOString().split('T')[0],
-                    returnDate: returnDate.toISOString().split('T')[0],
+                    departureDate: adjustedDepartureDate.toISOString().split('T')[0],
+                    returnDate: adjustedReturnDate.toISOString().split('T')[0],
                     passengers: passengers,
                     cabinClass: cabinClass,
                 });
@@ -149,10 +165,12 @@ export function useFlightSearch() {
                 if (!airport.origin || !airport.destination || !date) {
                     return null;
                 }
+                // Ajustar fecha sumando 2 horas para compensar zona horaria UTC+2
+                const adjustedDate = new Date(date.getTime() + 2 * 60 * 60 * 1000);
                 return {
                     originSkyId: airport.origin.iata,
                     destinationSkyId: airport.destination.iata,
-                    date: date.toISOString().split('T')[0],
+                    date: adjustedDate.toISOString().split('T')[0],
                 };
             }).filter((leg): leg is NonNullable<typeof leg> => leg !== null);
 
@@ -167,7 +185,7 @@ export function useFlightSearch() {
             const flightData: MultiTripData = {
                 legs: legs,
                 cabinClass: cabinClass,
-                adults: passengers.adults,
+                adults: passengers.adults.toString(),
             };
 
             try {

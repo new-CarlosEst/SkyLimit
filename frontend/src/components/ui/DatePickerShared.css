@@ -1,0 +1,173 @@
+/* Custom Premium Theme for React DatePicker */
+
+.sky-datepicker.react-datepicker {
+    font-family: inherit !important;
+    border: none !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+    overflow: hidden !important;
+    background-color: white !important;
+}
+
+.sky-datepicker .react-datepicker__header {
+    background-color: #3169b1 !important;
+    border-bottom: none !important;
+    border-radius: 12px 12px 0 0 !important;
+    padding-top: 15px !important;
+    padding-bottom: 10px !important;
+}
+
+.sky-datepicker .react-datepicker__current-month {
+    color: white !important;
+    font-weight: 600 !important;
+    font-size: 1.05rem !important;
+    margin-bottom: 8px !important;
+}
+
+.sky-datepicker .react-datepicker__day-names {
+    background-color: white !important;
+    margin-bottom: -8px !important;
+    display: flex !important;
+    justify-content: space-around !important;
+    padding: 0 10px !important;
+}
+
+.sky-datepicker .react-datepicker__day-name {
+    color: #6b7280 !important;
+    font-weight: 500 !important;
+    width: 2.5rem !important;
+    line-height: 2.5rem !important;
+    margin: 0.1rem !important;
+}
+
+.sky-datepicker .react-datepicker__month {
+    margin: 0.5rem !important;
+    background-color: white !important;
+}
+
+.sky-datepicker .react-datepicker__day {
+    color: #374151 !important;
+    width: 2.5rem !important;
+    line-height: 2.5rem !important;
+    margin: 0.1rem !important;
+    border-radius: 8px !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    font-weight: 400 !important;
+}
+
+.sky-datepicker .react-datepicker__day:hover {
+    background-color: #f3f4f6 !important;
+    color: #111827 !important;
+}
+
+.sky-datepicker .react-datepicker__day--selected,
+.sky-datepicker .react-datepicker__day--in-range,
+.sky-datepicker .react-datepicker__day--in-selecting-range {
+    background-color: #3b82f6 !important;
+    color: white !important;
+    font-weight: 600 !important;
+}
+
+.sky-datepicker .react-datepicker__day--keyboard-selected {
+    background-color: rgba(59, 130, 246, 0.15) !important;
+    color: #3b82f6 !important;
+}
+
+.sky-datepicker .react-datepicker__day--outside-month {
+    color: #d1d5db !important;
+    pointer-events: none !important;
+}
+
+.sky-datepicker .react-datepicker__day--today {
+    font-weight: 700 !important;
+    color: #3b82f6 !important;
+}
+
+.sky-datepicker .react-datepicker__day--disabled {
+    color: #e5e7eb !important;
+}
+
+/* Navigation Arrows */
+.sky-datepicker .react-datepicker__navigation {
+    top: 18px !important;
+}
+
+.sky-datepicker .react-datepicker__navigation-icon::before {
+    border-color: white !important;
+    border-width: 2px 2px 0 0 !important;
+    height: 8px !important;
+    width: 8px !important;
+}
+
+.sky-datepicker .react-datepicker__navigation:hover *::before {
+    border-color: #e5e7eb !important;
+}
+
+/* Popper Arrow */
+.sky-datepicker .react-datepicker__triangle {
+    display: none !important;
+}
+
+/* Time selection (for TwoStepDatePicker) */
+.sky-datepicker .react-datepicker__time-container {
+    border-left: none !important;
+    width: 340px !important;
+}
+
+.sky-datepicker .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box {
+    width: 100% !important;
+    border-radius: 12px !important;
+}
+
+.sky-datepicker .react-datepicker__time-list {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 8px !important;
+    padding: 15px !important;
+    height: auto !important;
+    max-height: 200px !important;
+}
+
+.sky-datepicker .react-datepicker__time-list-item {
+    height: 36px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 6px !important;
+    border: 1px solid #f3f4f6 !important;
+    padding: 0 !important;
+    font-size: 0.875rem !important;
+    transition: all 0.2s ease !important;
+}
+
+.sky-datepicker .react-datepicker__time-list-item:hover {
+    background-color: #f3f4f6 !important;
+    border-color: #d1d5db !important;
+}
+
+.sky-datepicker .react-datepicker__time-list-item--selected {
+    background-color: #3b82f6 !important;
+    color: white !important;
+    border-color: #2563eb !important;
+    font-weight: 600 !important;
+}
+
+/* Style the "Time" header to match the date header */
+.sky-datepicker .react-datepicker__header--time {
+    background-color: #3169b1 !important;
+    color: white !important;
+    border-bottom: none !important;
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+}
+
+.sky-datepicker .react-datepicker-time__header {
+    color: white !important;
+    font-weight: 600 !important;
+    font-size: 1.05rem !important;
+}
+
+.sky-datepicker.react-datepicker--inline {
+    border: 1px solid #e5e7eb !important;
+    display: inline-block !important;
+}
