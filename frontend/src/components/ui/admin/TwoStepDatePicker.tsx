@@ -20,7 +20,7 @@ function TwoStepDatePicker({
   placeholderText, 
   minDate, 
   maxDate, 
-  required 
+  required: _required 
 }: TwoStepDatePickerProps) {
   const [step, setStep] = useState<'date' | 'time'>('date');
   const [tempDate, setTempDate] = useState<Date | null>(null);

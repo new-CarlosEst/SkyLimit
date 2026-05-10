@@ -9,7 +9,7 @@ import paperPlane from "../assets/ui/FaPaperPlane.svg";
 
 //Pagina que contendra los vuelos buscado y sus datos
 function Flights() {
-    const { results, tripType, getSortedResults } = useFlightSearchStore();
+    const { results: _results, tripType, getSortedResults } = useFlightSearchStore();
     const { cabinClass, passengers } = useSearchParamsStore();
     const { getFilteredResults } = useFilterStore();
 

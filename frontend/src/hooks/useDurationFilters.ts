@@ -11,7 +11,7 @@ interface UseDurationFiltersProps {
     tripType: "oneWay" | "roundTrip" | "multi" | null;
 }
 
-export function useDurationFilters({ tripType }: UseDurationFiltersProps) {
+export function useDurationFilters({ tripType: _tripType }: UseDurationFiltersProps) {
     const [localDurationFilters, setLocalDurationFilters] = useState<DurationFilters>({});
     const [expandedSections, setExpandedSections] = useState<{[key: string]: boolean}>({});
 

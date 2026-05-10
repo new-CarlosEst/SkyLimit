@@ -2,7 +2,6 @@ import personIcon from '../assets/ui/ProiconsPerson.svg';
 import emailIcon from '../assets/ui/mail.svg';
 import speechBubble from '../assets/ui/speechBubble.svg';
 import textIcon from '../assets/ui/text.svg';
-import { contact } from '../api/auth.api';
 
 function Contact() {
 

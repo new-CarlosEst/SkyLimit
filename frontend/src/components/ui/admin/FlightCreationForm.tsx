@@ -7,8 +7,6 @@ import TwoStepDatePicker from "./TwoStepDatePicker";
 import "../../../pages/AdminPanel.css";
 
 import MynauiPlane from "../../../assets/ui/MynauiPlane.svg";
-import HugeiconsAirport from "../../../assets/ui/HugeiconsAirport.svg";
-import IconoirCalendar from "../../../assets/ui/IconoirCalendar.svg";
 import text from "../../../assets/ui/text.svg";
 
 function FlightCreationForm() {

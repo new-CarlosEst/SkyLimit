@@ -28,9 +28,9 @@ function FilterSidebar({ tripType }: { tripType: "oneWay" | "roundTrip" | "multi
     } = useDurationFilters({ tripType });
     
     const { 
-        duration, 
-        stops, 
-        airlines, 
+        duration: _duration, 
+        stops: _stops, 
+        airlines: _airlines, 
         setDuration, 
         setStops, 
         setAirlines, 

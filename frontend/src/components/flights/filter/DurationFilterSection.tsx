@@ -15,7 +15,7 @@ interface DurationFilterSectionProps {
 export function DurationFilterSection({
     tripType,
     localDurationFilters,
-    setLocalDurationFilters,
+    setLocalDurationFilters: _setLocalDurationFilters,
     expandedSections,
     durationOptions,
     toggleSection,
