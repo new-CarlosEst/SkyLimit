@@ -6,3 +6,11 @@ export interface User {
     role: string;
     favoriteAirportId: number | null;
 }
+
+export interface Contact {
+    name: string;
+    surname: string;
+    email: string;
+    theme: string;
+    message: string;
+}
