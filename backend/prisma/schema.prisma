@@ -85,7 +85,9 @@ model Transaction {
   status   TransactionStatus @default(PENDING)
 
   // Stripe Integration
-  stripePaymentIntentId String? // ID único de Stripe para este intento de pago
+  stripePaymentIntentId String? 
+  cardBrand             String?  // ← AGREGAR ESTO (Visa, Mastercard, etc)
+  cardLast4             String?  // ← AGREGAR ESTO (últimos 4 dígitos)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
