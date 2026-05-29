@@ -98,3 +98,72 @@
     gap: 0.75rem;
     flex-wrap: wrap;
 }
+
+/* Loading Overlay */
+.flight-loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.85);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(4px);
+}
+
+.flight-loading-icon {
+    width: 120px;
+    height: 120px;
+    background-color: #2c5aa0;
+    -webkit-mask: url("../../../assets/ui/plane-ticket.svg") no-repeat center;
+    mask: url("../../../assets/ui/plane-ticket.svg") no-repeat center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    margin-bottom: 1.5rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+.flight-loading-text {
+    font-size: 1.75rem;
+    font-weight: bold;
+    color: #2c5aa0;
+    display: flex;
+    align-items: flex-end;
+}
+
+.flight-loading-text .dots span {
+    display: inline-block;
+    animation: bounce 1.4s infinite ease-in-out both;
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.flight-loading-text .dots span:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.flight-loading-text .dots span:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes bounce {
+    0%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}

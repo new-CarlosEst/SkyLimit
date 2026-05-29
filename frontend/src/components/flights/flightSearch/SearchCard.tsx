@@ -34,10 +34,25 @@ function SearchCard() {
         removeDestination,
         addDestination,
         handleSearch,
+        isLoading,
     } = useFlightSearch(); //Igualo los estados y las funciones de mi hook personalizado
 
     return (
         <div className="search-card w-full max-w-5xl mb-6" >
+            {isLoading && (
+                <div className="flight-loading-overlay">
+                    <div className="flight-loading-icon"></div>
+                    <div className="flight-loading-text">
+                        Buscando vuelos
+                        <span className="dots">
+                            <span>.</span>
+                            <span>.</span>
+                            <span>.</span>
+                        </span>
+                    </div>
+                </div>
+            )}
+
             {/* Contenedor para seleccionar entre ida, ida y vuelta y multi */}
             <div className="trip-type">
                 <TripTypePill

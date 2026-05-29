@@ -6,7 +6,7 @@
 }
 
 .login-form-container .image-side {
-    background-image: url("../../assets/backgrounds/Login-Avion-azul.jpg");
+    background-image: url("../../assets/backgrounds/Login-Avion-azul.webp");
     background-size: cover;
     background-position: center;
     display: flex;
