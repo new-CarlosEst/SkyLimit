@@ -1,5 +1,6 @@
 import React from 'react';
 import type { FlightResult } from '../../../types/flight.types';
+import { useNavigate } from 'react-router-dom';
 
 interface FlightSummaryCardProps {
     flight: FlightResult;
@@ -9,6 +10,7 @@ interface FlightSummaryCardProps {
 }
 
 const FlightSummaryCard: React.FC<FlightSummaryCardProps> = ({ flight, cabinClass, passengersCount, extraBaggagePrice }) => {
+    const navigate = useNavigate();
     const displayClass = cabinClass === 'economy' ? 'Turista' 
                        : cabinClass === 'premiumeconomy' ? 'Turista Premium' 
                        : cabinClass === 'business' ? 'Business' 
@@ -48,7 +50,10 @@ const FlightSummaryCard: React.FC<FlightSummaryCardProps> = ({ flight, cabinClas
                 <div className="text-sm text-slate-500 mb-4">
                     {Math.round(pricePerPerson)}{currencySymbol} por persona
                 </div>
-                <button className="bg-[#2b5aa0] hover:bg-[#1a3c79] text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                <button 
+                    onClick={() => navigate('/passengers')}
+                    className="bg-[#2b5aa0] hover:bg-[#1a3c79] text-white px-6 py-3 rounded-lg font-medium transition-colors"
+                >
                     Continuar con la reserva
                 </button>
             </div>

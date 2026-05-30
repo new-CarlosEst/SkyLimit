@@ -17,6 +17,7 @@ import loginBackground from "./assets/backgrounds/Login-Avion-azul.webp";
 import registerBackground from "./assets/backgrounds/Register-Pasaporte-azul.webp";
 import forgotPasswordBackground from "./assets/backgrounds/aeropuerto-azul.webp";
 import FlightSelector from "./pages/FlightSelector";
+import PassengerData from "./pages/PassengerData";
 
 
 function App() {
@@ -71,6 +72,7 @@ function App() {
         <Route path="/personalData" element={<PersonalData />} />
         <Route path="/adminPanel" element={<AdminPanel />} />
         <Route path="/flightSelector" element={<FlightSelector />} />
+        <Route path="/passengers" element={<PassengerData />} />
       </Routes>
       {showHeader && <Footer />}
     </>
