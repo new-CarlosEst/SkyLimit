@@ -156,4 +156,43 @@ export class ReservationService {
       .map((value) => Number(value))
       .filter((value) => Number.isInteger(value) && value > 0);
   }
+
+  public async getUserReservations(userId: number) {
+    const reservations = await this.prisma.reservation.findMany({
+      where: {
+        userId,
+      },
+      include: {
+        reservationFlights: {
+          include: {
+            flight: {
+              include: {
+                airportDeparture: true,
+                airportArrival: true,
+              },
+            },
+          },
+          orderBy: {
+            order: 'asc',
+          },
+        },
+        passengers: {
+          include: {
+            documents: true,
+            seat: true,
+          },
+        },
+        transactions: {
+          orderBy: {
+            createdAt: 'desc',
+          },
+        },
+      },
+      orderBy: {
+        reservationDate: 'desc',
+      },
+    });
+
+    return reservations;
+  }
 }

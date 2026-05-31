@@ -69,15 +69,45 @@ export const useCheckoutStore = create<CheckoutState>()((set, get) => ({
             state.passengers.length * state.baggagePricePerPassenger +
             state.passengers.reduce((sum, passenger) => sum + passenger.seat.price, 0);
 
-        return {
+        console.log("buildReservationPayload - state.selectedFlight.price.amount:", state.selectedFlight.price.amount);
+        console.log("buildReservationPayload - totalPrice:", totalPrice);
+
+        // Simplificar selectedFlight para enviar solo los datos necesarios
+        const simplifiedSelectedFlight = {
+            id: state.selectedFlight.id,
+            source: state.selectedFlight.source,
+            price: {
+                amount: state.selectedFlight.price.amount,
+            },
+            legs: state.selectedFlight.legs.map(leg => ({
+                origin: {
+                    iata: leg.origin.iata,
+                },
+                destination: {
+                    iata: leg.destination.iata,
+                },
+                departure: leg.departure,
+                arrival: leg.arrival,
+                durationMinutes: leg.durationMinutes,
+                stopCount: leg.stopCount,
+                carriers: leg.carriers.map(carrier => ({
+                    name: carrier.name,
+                })),
+            })),
+        };
+
+        const payload = {
             travelClass: state.travelClass,
             fareType: state.fareType,
             checkedBag: state.checkedBag,
             baggagePricePerPassenger: state.baggagePricePerPassenger,
-            selectedFlight: state.selectedFlight,
+            selectedFlight: simplifiedSelectedFlight,
             totalPrice,
             passengers: state.passengers,
         };
+
+        console.log("buildReservationPayload - payload:", payload);
+        return payload;
     },
     clearCheckout: () => set({ ...initialState }),
 }));

@@ -1,6 +1,7 @@
 import {
   Controller,
   Post,
+  Get,
   Body,
   Headers,
   HttpCode,
@@ -55,5 +56,19 @@ export class ReservationController {
       createReservationDto,
       validated.user.id,
     );
+  }
+
+  @Get('user')
+  @HttpCode(200)
+  public async getUserReservations(
+    @Headers('Authorization') authHeader: string,
+  ) {
+    if (!authHeader) {
+      throw new UnauthorizedException('No autorizado');
+    }
+
+    const token = authHeader.split(' ')[1];
+    const validated = (await this.authService.validateJWT(token)) as any;
+    return this.reservationService.getUserReservations(validated.user.id);
   }
 }

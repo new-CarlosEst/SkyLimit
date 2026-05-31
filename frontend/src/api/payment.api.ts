@@ -4,8 +4,7 @@ export interface VerifyPaymentPayload {
     amount: number;
     paymentMethodId: string;
     reservationId: string;
-    userId: string;
-    cardholderName: string;
+    email: string;
 }
 
 export interface VerifyPaymentResponse {

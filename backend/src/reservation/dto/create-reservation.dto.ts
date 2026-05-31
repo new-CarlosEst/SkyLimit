@@ -1,4 +1,4 @@
-import { Type } from 'class-transformer';
+import { Type, Transform } from 'class-transformer';
 import {
   IsArray,
   IsBoolean,
@@ -35,10 +35,12 @@ class SelectedFlightLegDto {
   @IsString()
   arrival: string;
 
+  @Type(() => Number)
   @IsNumber()
   @Min(1)
   durationMinutes: number;
 
+  @Type(() => Number)
   @IsNumber()
   @Min(0)
   stopCount: number;
@@ -50,6 +52,7 @@ class SelectedFlightLegDto {
 }
 
 class SelectedFlightPriceDto {
+  @Transform(({ value }) => Number(value))
   @IsNumber()
   @Min(0)
   amount: number;
@@ -95,6 +98,7 @@ class PassengerSeatDto {
   @IsString()
   cabin: string;
 
+  @Type(() => Number)
   @IsNumber()
   @Min(0)
   price: number;
@@ -146,6 +150,7 @@ export class CreateReservationDto {
   @IsBoolean()
   checkedBag: boolean;
 
+  @Type(() => Number)
   @IsNumber()
   @Min(0)
   baggagePricePerPassenger: number;
@@ -154,6 +159,7 @@ export class CreateReservationDto {
   @Type(() => SelectedFlightDto)
   selectedFlight: SelectedFlightDto;
 
+  @Type(() => Number)
   @IsNumber()
   @Min(0)
   totalPrice: number;

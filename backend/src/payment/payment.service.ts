@@ -21,13 +21,12 @@ export class PaymentService {
     }
 
     async verifyPayment(createPaymentDto: CreatePaymentDto) {
-        const { amount, paymentMethodId, reservationId, userId, cardholderName } = createPaymentDto;
+        const { amount, paymentMethodId, reservationId, email } = createPaymentDto;
 
         try {
-            const reservation = await this.prisma.reservation.findFirst({
+            const reservation = await this.prisma.reservation.findUnique({
                 where: {
                     id: parseInt(reservationId),
-                    userId: parseInt(userId),
                 },
                 include: {
                     user: true,
@@ -52,7 +51,7 @@ export class PaymentService {
 
             if (!reservation) {
                 throw new HttpException(
-                    'No se encontró la reserva para el usuario indicado',
+                    'No se encontró la reserva',
                     HttpStatus.NOT_FOUND,
                 );
             }
@@ -62,9 +61,12 @@ export class PaymentService {
                 currency: 'eur',
                 payment_method: paymentMethodId,
                 confirm: true,
+                automatic_payment_methods: {
+                    enabled: true,
+                    allow_redirects: 'never',
+                },
                 metadata: {
                     reservationId,
-                    userId,
                 },
             });
 
@@ -100,7 +102,7 @@ export class PaymentService {
             reservation.status = 'CONFIRMED';
 
             await this.mailService.sendPurchaseDocumentsEmail({
-                customerEmail: reservation.user.email,
+                customerEmail: email,
                 customerName: `${reservation.user.name} ${reservation.user.surname}`,
                 reservation,
                 transaction: {
@@ -111,7 +113,7 @@ export class PaymentService {
                     stripePaymentIntentId: paymentIntent.id,
                     cardBrand: paymentMethod.card?.brand || 'unknown',
                     cardLast4: paymentMethod.card?.last4 || '',
-                    cardholderName,
+                    cardholderName: email,
                 },
             });
 

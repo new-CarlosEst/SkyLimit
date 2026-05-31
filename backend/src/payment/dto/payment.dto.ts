@@ -1,36 +1,18 @@
-import { IsString, IsNumber, IsPositive } from 'class-validator';
+import { Transform } from 'class-transformer';
+import { IsString, IsNumber, IsPositive, IsEmail } from 'class-validator';
 
 export class CreatePaymentDto {
+    @Transform(({ value }) => Math.round(Number(value) * 100) / 100)
     @IsNumber({ maxDecimalPlaces: 2 })
     @IsPositive()
-    amount: number; // en euros (99.99)
+    amount: number;
 
     @IsString()
-    paymentMethodId: string; //Id generado en el frontend
+    paymentMethodId: string;
 
     @IsString()
     reservationId: string;
 
-    @IsString()
-    userId: string;
-
-    @IsString()
-    cardholderName: string;
-}
-
-
-export class GetPaymentByIdDto {
-    @IsString()
-    paymentId: string;
-}
-
-
-export class RefundPaymentDto {
-    @IsString()
-    paymentId: string;
-}
-
-export class GetUserPaymentsDto {
-    @IsString()
-    userId: string;
+    @IsEmail()
+    email: string;
 }

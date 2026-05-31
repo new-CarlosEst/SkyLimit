@@ -1,5 +1,3 @@
-import type { FlightResult } from "./flight.types";
-
 export type FareType = "BASIC" | "CLASSIC";
 
 export interface PassengerDocumentData {
@@ -40,12 +38,38 @@ export interface CheckoutSavedPaymentCard extends CheckoutPaymentCard {
     cardholderName: string;
 }
 
+// Tipo simplificado para enviar al backend (solo datos necesarios)
+export interface SimplifiedFlightLeg {
+    origin: {
+        iata: string;
+    };
+    destination: {
+        iata: string;
+    };
+    departure: string;
+    arrival: string;
+    durationMinutes: number;
+    stopCount: number;
+    carriers: {
+        name: string;
+    }[];
+}
+
+export interface SimplifiedFlight {
+    id: string;
+    source?: 'Api' | 'Created';
+    price: {
+        amount: number;
+    };
+    legs: SimplifiedFlightLeg[];
+}
+
 export interface CheckoutReservationPayload {
     travelClass: string;
     fareType: FareType;
     checkedBag: boolean;
     baggagePricePerPassenger: number;
-    selectedFlight: FlightResult;
+    selectedFlight: SimplifiedFlight;
     totalPrice: number;
     passengers: PassengerCheckoutData[];
 }

@@ -70,8 +70,7 @@ function Payment() {
                     amount: reservationPayload.totalPrice,
                     paymentMethodId: selectedCard.paymentMethodId,
                     reservationId: String(reservationResponse.reservationId),
-                    userId: String(user.id),
-                    cardholderName,
+                    email: user?.email || cardholderName,
                 });
 
                 setPaymentResult(reservationResponse.reservationId, paymentResponse.stripePaymentIntentId);
