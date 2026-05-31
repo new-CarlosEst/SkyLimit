@@ -1,5 +1,5 @@
 import { useAuthStore } from "../../../store/authStore";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ProiconsPerson from "../../../assets/ui/ProiconsPerson.svg";
 import FamiconsCard from "../../../assets/ui/FamiconsCard.svg";
 import IconoirCalendar from "../../../assets/ui/IconoirCalendar.svg";
@@ -14,6 +14,7 @@ interface SidebarProps {
 
 function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
     const { user } = useAuthStore();
+    const navigate = useNavigate();
 
     const menuItems = [
         {
@@ -27,19 +28,28 @@ function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
             id: "profile",
             label: "Perfil",
             icon: ProiconsPerson,
-            onClick: () => setActiveTab("profile")
+            onClick: () => {
+                navigate("/personalData?tab=profile");
+                setActiveTab("profile");
+            }
         },
         {
             id: "payment",
             label: "Métodos de Pago",
             icon: FamiconsCard,
-            onClick: () => setActiveTab("payment")
+            onClick: () => {
+                navigate("/personalData?tab=payment");
+                setActiveTab("payment");
+            }
         },
         {
             id: "reservations",
             label: "Mis Reservas",
             icon: IconoirCalendar,
-            onClick: () => setActiveTab("reservations")
+            onClick: () => {
+                navigate("/personalData?tab=reservations");
+                setActiveTab("reservations");
+            }
         }
     ];
 
@@ -47,7 +57,6 @@ function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
         id: "admin",
         label: "Panel de Administración",
         icon: PajamasAdmin,
-        onClick: () => setActiveTab("admin")
     };
 
     return (

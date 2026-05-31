@@ -1,33 +1,19 @@
 import { useState } from "react";
 import CardSelector, { type Card } from "./CardSelector";
+import { cards as stripeCards } from "../../../utils/cards";
 import "./PaymentMethods.css";
 
-const testCards: Card[] = [
-    {
-        id: "1",
-        brand: "Visa",
-        last4: "4242",
-        expiry: "12/25",
-        name: "Test Visa Card"
-    },
-    {
-        id: "2",
-        brand: "Mastercard",
-        last4: "5555",
-        expiry: "08/26",
-        name: "Test Mastercard"
-    },
-    {
-        id: "3",
-        brand: "American Express",
-        last4: "3782",
-        expiry: "03/27",
-        name: "Test Amex Card"
-    }
-];
+const testCards: Card[] = stripeCards.map((card, index) => ({
+    id: index.toString(),
+    brand: card.brand,
+    last4: card.number.slice(-4),
+    expiry: `${card.expMonth}/${card.expYear.slice(-2)}`,
+    name: `${card.brand} ${card.type === 'debit' ? 'Débito' : 'Crédito'}`
+}));
 
 function PaymentMethods() {
     const [selectedTestCard, setSelectedTestCard] = useState<string>("");
+    const [showCardSelection, setShowCardSelection] = useState(false);
     const [showCustomForm, setShowCustomForm] = useState(false);
     const [cardNumber, setCardNumber] = useState("");
     const [cardName, setCardName] = useState("");
@@ -36,12 +22,13 @@ function PaymentMethods() {
 
     const handleCardSelect = (cardId: string) => {
         setSelectedTestCard(cardId);
+        setShowCardSelection(false);
         setShowCustomForm(false);
     };
 
-    const handleCustomForm = () => {
-        setSelectedTestCard("");
-        setShowCustomForm(true);
+    const handleAddCard = () => {
+        setShowCardSelection(true);
+        setShowCustomForm(false);
     };
 
     const formatCardNumber = (value: string) => {
@@ -74,25 +61,23 @@ function PaymentMethods() {
             <h2 className="card-title">Métodos de Pago</h2>
             
             <div className="payment-section">
-                <h3 className="section-title">Tarjetas de Prueba Disponibles</h3>
-                <CardSelector
-                    cards={testCards}
-                    selectedCardId={selectedTestCard}
-                    onCardSelect={handleCardSelect}
-                />
-            </div>
-
-            <div className="payment-divider">
-                <span>o</span>
-            </div>
-
-            <div className="payment-section">
                 <button
                     className="custom-card-button"
-                    onClick={handleCustomForm}
+                    onClick={handleAddCard}
                 >
                     + Agregar Nueva Tarjeta
                 </button>
+
+                {showCardSelection && (
+                    <div className="card-selection-container">
+                        <h3 className="section-title">Selecciona una tarjeta de prueba</h3>
+                        <CardSelector
+                            cards={testCards}
+                            selectedCardId={selectedTestCard}
+                            onCardSelect={handleCardSelect}
+                        />
+                    </div>
+                )}
 
                 {showCustomForm && (
                     <div className="custom-card-form">
