@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import searchIcon from '../../assets/ui/text.svg'; // generic search icon placeholder
 
 export interface SelectOption {
     value: string;
