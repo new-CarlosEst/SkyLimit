@@ -17,7 +17,6 @@ function Contact() {
 
     //TODO: ver pq no saltan los toast
     const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState("");
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { id, value } = e.target;
@@ -64,14 +63,6 @@ function Contact() {
 
             {/* Tarjeta del Formulario */}
             <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-2xl p-8 md:p-12">
-                {message && (
-                    <div className={`p-4 rounded-lg mb-6 text-center font-semibold ${
-                        message.includes('✅') ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
-                    }`}>
-                        {message}
-                    </div>
-                )}
-
                 <form className="space-y-6" onSubmit={handleSubmit}>
                     
                     {/* Nombre y Apellidos */}

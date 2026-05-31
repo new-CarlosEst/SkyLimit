@@ -16,7 +16,7 @@ interface UsePaymentReturn {
 }
 
 export function usePayment(
-    showCardModal: boolean,
+    _showCardModal: boolean,
     setShowCardModal: (show: boolean) => void
 ): UsePaymentReturn {
     const [selectedCard, setSelectedCard] = useState<CheckoutPaymentCard | null>(null);
