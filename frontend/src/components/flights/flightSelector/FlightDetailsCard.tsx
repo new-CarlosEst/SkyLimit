@@ -36,19 +36,15 @@ const FlightDetailsCard: React.FC<FlightDetailsCardProps> = ({ flight, cabinClas
         <div className="card">
             <div className="flex justify-between items-center pb-6 border-b border-slate-100">
                 <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded flex items-center justify-center overflow-hidden bg-slate-100">
-                        {flight.legs[0]?.carriers[0]?.logoUrl ? (
+                    {flight.legs[0]?.carriers[0]?.logoUrl && flight.legs[0]?.carriers[0]?.logoUrl !== '' ? (
+                        <div className="w-8 h-8 rounded flex items-center justify-center overflow-hidden bg-slate-100">
                             <img 
                                 src={flight.legs[0].carriers[0].logoUrl} 
                                 alt={flight.legs[0]?.carriers[0]?.name} 
                                 className="w-full h-full object-contain"
                             />
-                        ) : (
-                            <div className="w-full h-full bg-red-600 text-white font-bold flex items-center justify-center text-xs">
-                                {flight.legs[0]?.carriers[0]?.name?.charAt(0) || 'I'}
-                            </div>
-                        )}
-                    </div>
+                        </div>
+                    ) : null}
                     <span className="font-medium text-slate-800">{flight.legs[0]?.carriers[0]?.name || 'Iberia'}</span>
                     <span className="bg-slate-100 text-slate-600 text-xs px-3 py-1 rounded-full ml-2">{displayClass}</span>
                 </div>

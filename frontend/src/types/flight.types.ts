@@ -2,6 +2,7 @@
 //Formato de los datos de la respuesta
 export interface FlightResult {
     id: string;
+    source?: 'Api' | 'Created';
     price: {
         amount: number;
         currency: string;
@@ -26,7 +27,7 @@ export interface FlightResult {
         stopCount: number;
         carriers: {
             name: string;
-            logoUrl: string;
+            logoUrl?: string;
         }[];
     }[];
 }

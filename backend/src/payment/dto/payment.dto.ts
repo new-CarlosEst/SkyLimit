@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsUUID, Min, IsPositive } from 'class-validator';
+import { IsString, IsNumber, IsPositive } from 'class-validator';
 
 export class CreatePaymentDto {
     @IsNumber({ maxDecimalPlaces: 2 })
@@ -9,10 +9,13 @@ export class CreatePaymentDto {
     paymentMethodId: string; //Id generado en el frontend
 
     @IsString()
-    flightId: string;
+    reservationId: string;
 
     @IsString()
     userId: string;
+
+    @IsString()
+    cardholderName: string;
 }
 
 

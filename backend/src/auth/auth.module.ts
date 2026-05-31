@@ -20,5 +20,6 @@ import { SuperAdminGuard } from './guards/super-admin.guard';
   ],
   controllers: [AuthController],
   providers: [AuthService, SuperAdminGuard],
+  exports: [AuthService],
 })
 export class AuthModule {}

@@ -32,7 +32,9 @@ function LegData(
     return (
         <div className="flex flex-col gap-4 mx-20">
             <div className="flex items-center gap-3">
-                <img src={props.airlineLogo} alt={props.airline} className="w-6 h-6" />
+                {props.airlineLogo && props.airlineLogo !== '' && (
+                    <img src={props.airlineLogo} alt={props.airline} className="w-6 h-6" />
+                )}
                 <p className="text-sm text-gray-600">{props.airline}</p>
                 <span className="px-3 py-1 bg-gray-200 text-gray-700 text-xs font-medium rounded-full">
                     {formatCabinClass(props.cabinClass)}

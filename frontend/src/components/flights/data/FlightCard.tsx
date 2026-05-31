@@ -41,7 +41,7 @@ function FlightCard({ flight, cabinClass, passengers }: FlightCardProps) {
                     <LegData
                         key={index}
                         airline={leg.carriers[0].name}
-                        airlineLogo={leg.carriers[0].logoUrl}
+                        airlineLogo={leg.carriers[0].logoUrl || ''}
                         duration ={leg.durationMinutes}
                         stops={leg.stopCount}
                         originCity={leg.origin.city}

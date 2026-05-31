@@ -4,11 +4,14 @@ import { useSearchParamsStore } from "../store/searchParamsStore";
 import { registerLocale } from "react-datepicker";
 import { es } from "date-fns/locale/es";
 import { useState } from "react";
+import { sileo } from "sileo";
 import "./PassengerData.css";
 import SearchableSelect from "../components/ui/personal/SearchableSelect";
 import CustomInput from "../components/ui/personal/CustomInput";
 import DateInput from "../components/ui/personal/DateInput";
 import SeatSelector from "../components/ui/personal/SeatSelector";
+import { useCheckoutStore } from "../store/checkoutStore";
+import type { PassengerCheckoutData } from "../types/checkout.types";
 
 // Register Spanish locale
 registerLocale("es", es);
@@ -25,6 +28,7 @@ function PassengerData() {
     const navigate = useNavigate();
     const { passengerList, dates, setPassengerDate, handleSubmit } = usePassengerForm();
     const { cabinClass } = useSearchParamsStore();
+    const { travelClass, setPassengers } = useCheckoutStore();
     const [selectedSeats, setSelectedSeats] = useState<Record<number, { seat: string | null; price: number }>>({});
     const [showSeatSelector, setShowSeatSelector] = useState(false);
 
@@ -64,9 +68,65 @@ function PassengerData() {
     };
 
     const handleContinueToPayment = () => {
-        // TODO: Navigate to payment page with seat selections
-        console.log("Selected seats:", selectedSeats);
-        console.log("Passenger data:", dates);
+        console.log("handleContinueToPayment llamado");
+        const formEl = document.querySelector("form") as HTMLFormElement | null;
+        if (!formEl) {
+            console.log("No se encontró el formulario");
+            return;
+        }
+
+        const formData = new FormData(formEl);
+        const passengersPayload: PassengerCheckoutData[] = passengerList.map((passenger, pIdx) => {
+            const seatData = selectedSeats[pIdx] || { seat: null, price: 0 };
+            return {
+                type: passenger.type as "Adulto" | "Niño" | "Bebé",
+                name: String(formData.get(`p${pIdx}_name`) || ""),
+                surname: String(formData.get(`p${pIdx}_surname`) || ""),
+                gender: dates[pIdx]?.gender || "",
+                birthDate: dates[pIdx]?.birthDate ? new Date(dates[pIdx].birthDate as Date).toISOString() : "",
+                nationality: dates[pIdx]?.nationality || "",
+                email: String(formData.get(`p${pIdx}_email`) || ""),
+                phone: String(formData.get(`p${pIdx}_phone`) || ""),
+                document: {
+                    type: dates[pIdx]?.docType || "",
+                    number: String(formData.get(`p${pIdx}_doc_number`) || ""),
+                    country: dates[pIdx]?.docCountry || "",
+                    expirationDate: dates[pIdx]?.docExpiration ? new Date(dates[pIdx].docExpiration as Date).toISOString() : "",
+                },
+                seat: {
+                    seatNumber: seatData.seat,
+                    price: seatData.price || 0,
+                    cabin: travelClass || getTravelClass(),
+                },
+            };
+        });
+
+        console.log("passengersPayload:", passengersPayload);
+
+        const hasIncompletePassengers = passengersPayload.some((passenger) =>
+            !passenger.name ||
+            !passenger.surname ||
+            !passenger.gender ||
+            !passenger.birthDate ||
+            !passenger.nationality ||
+            !passenger.document.type ||
+            !passenger.document.number ||
+            !passenger.document.country ||
+            !passenger.document.expirationDate,
+        );
+
+        console.log("hasIncompletePassengers:", hasIncompletePassengers);
+
+        if (hasIncompletePassengers) {
+            sileo.error({
+                title: "Faltan datos de pasajeros o documentos",
+            });
+            return;
+        }
+
+        console.log("Seteando pasajeros y navegando a /payment");
+        setPassengers(passengersPayload);
+        navigate('/payment');
     };
 
     return (

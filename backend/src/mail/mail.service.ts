@@ -2,6 +2,21 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
 import { ConfigService } from '@nestjs/config';
 import { ContactDataDto } from './dto/contact-data.dto';
+interface PurchaseMailPayload {
+    customerEmail: string;
+    customerName: string;
+    reservation: any;
+    transaction: {
+        id: number;
+        amount: number;
+        currency: string;
+        status: string;
+        stripePaymentIntentId: string;
+        cardBrand: string;
+        cardLast4: string;
+        cardholderName: string;
+    };
+}
 
 @Injectable()
 export class MailService {
@@ -133,5 +148,137 @@ export class MailService {
                 </div>
             </div>
         `;
+    }
+
+    public async sendPurchaseDocumentsEmail(payload: PurchaseMailPayload) {
+        try {
+            const transactionPdf = this.generateSimplePdf([
+                'SKYLIMIT - COMPROBANTE DE TRANSACCION',
+                `Reserva ID: ${payload.reservation.id}`,
+                `Transaccion ID: ${payload.transaction.id}`,
+                `Stripe Payment Intent ID: ${payload.transaction.stripePaymentIntentId}`,
+                `Estado: ${payload.transaction.status}`,
+                `Importe: ${payload.transaction.amount} ${payload.transaction.currency.toUpperCase()}`,
+                `Titular: ${payload.transaction.cardholderName}`,
+                `Tarjeta: ${payload.transaction.cardBrand.toUpperCase()} ****${payload.transaction.cardLast4}`,
+                `Fecha: ${new Date().toISOString()}`,
+                '',
+                'AVISO IMPORTANTE:',
+                'Este comprobante es para fines de testing/desarrollo.',
+                'No tiene validez legal ni comercial y no sirve para viajar.',
+            ]);
+
+            const ticketPdf = this.generateSimplePdf([
+                'SKYLIMIT - DOCUMENTO DE RESERVA / BILLETE DE PRUEBA',
+                `Reserva ID: ${payload.reservation.id}`,
+                `Clase de viaje: ${payload.reservation.travelClass}`,
+                `Estado reserva: ${payload.reservation.status}`,
+                `Precio total: ${payload.reservation.price} EUR`,
+                '',
+                'Tramos:',
+                ...payload.reservation.reservationFlights.map((reservationFlight: any, index: number) =>
+                    `${index + 1}. ${reservationFlight.flight.airportDeparture.iata} -> ${reservationFlight.flight.airportArrival.iata} | ${reservationFlight.flight.departureDateTime.toISOString()} | ${reservationFlight.flight.airline}`,
+                ),
+                '',
+                `Pasajeros: ${payload.reservation.passengers.length}`,
+                ...payload.reservation.passengers.map((passenger: any, index: number) =>
+                    `${index + 1}. ${passenger.name} ${passenger.surname}`,
+                ),
+                '',
+                'AVISO IMPORTANTE:',
+                'Este billete/reserva es falso y solo valido para pruebas internas.',
+                'No permite embarque ni uso comercial.',
+            ]);
+
+            await this.mailerService.sendMail({
+                to: payload.customerEmail,
+                subject: `Confirmacion de reserva #${payload.reservation.id} - Skylimit`,
+                html: this.purchaseEmailBody(payload),
+                attachments: [
+                    {
+                        filename: `transaccion-${payload.transaction.id}.pdf`,
+                        content: transactionPdf,
+                        contentType: 'application/pdf',
+                    },
+                    {
+                        filename: `billete-reserva-${payload.reservation.id}.pdf`,
+                        content: ticketPdf,
+                        contentType: 'application/pdf',
+                    },
+                ],
+            });
+        } catch (error) {
+            console.log('error enviando email de compra: ', error);
+            throw new InternalServerErrorException(
+                'Error al enviar la documentación de la compra por email',
+            );
+        }
+    }
+
+    private purchaseEmailBody(payload: PurchaseMailPayload): string {
+        return `
+            <div style="font-family: Arial, sans-serif; max-width: 680px; margin: 0 auto; color: #1f2937;">
+                <h2 style="margin-bottom: 8px;">Confirmación de compra - Skylimit</h2>
+                <p>Hola ${payload.customerName},</p>
+                <p>Tu compra se ha procesado correctamente y te adjuntamos:</p>
+                <ul>
+                    <li>PDF con los datos de la transacción.</li>
+                    <li>PDF con los datos del vuelo y de la reserva (billete de prueba).</li>
+                </ul>
+                <p><strong>Reserva:</strong> #${payload.reservation.id}</p>
+                <p><strong>Transacción:</strong> #${payload.transaction.id}</p>
+                <p><strong>Importe:</strong> ${payload.transaction.amount} ${payload.transaction.currency.toUpperCase()}</p>
+                <div style="margin-top: 24px; border: 1px solid #f59e0b; background: #fffbeb; padding: 12px; border-radius: 8px;">
+                    <p style="margin: 0; font-weight: 700; color: #92400e;">Aviso legal importante</p>
+                    <p style="margin: 8px 0 0 0; color: #78350f;">
+                        Este correo y los documentos adjuntos son material de pruebas internas. Las transacciones, billetes y reservas aquí reflejados no son válidos para viaje, uso comercial ni efectos legales.
+                    </p>
+                </div>
+                <p style="margin-top: 24px;">Gracias por usar Skylimit.</p>
+            </div>
+        `;
+    }
+
+    private generateSimplePdf(lines: string[]): Buffer {
+        const safeLines = lines.map((line) =>
+            line.replace(/[^\x20-\x7E]/g, '').replace(/\\/g, '\\\\').replace(/\(/g, '\\(').replace(/\)/g, '\\)'),
+        );
+
+        let yPosition = 790;
+        const commands = safeLines
+            .map((line) => {
+                const cmd = `BT /F1 11 Tf 40 ${yPosition} Td (${line}) Tj ET`;
+                yPosition -= 18;
+                return cmd;
+            })
+            .join('\n');
+
+        const contentStream = `${commands}\n`;
+        const streamLength = Buffer.byteLength(contentStream, 'latin1');
+        const header = '%PDF-1.4\n';
+        const obj1 = '1 0 obj << /Type /Catalog /Pages 2 0 R >> endobj\n';
+        const obj2 = '2 0 obj << /Type /Pages /Kids [3 0 R] /Count 1 >> endobj\n';
+        const obj3 =
+            '3 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 842] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >> endobj\n';
+        const obj4 = '4 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> endobj\n';
+        const obj5 = `5 0 obj << /Length ${streamLength} >> stream\n${contentStream}endstream endobj\n`;
+
+        const offsets: number[] = [];
+        let cursor = header.length;
+        const objects = [obj1, obj2, obj3, obj4, obj5];
+        for (const objectDef of objects) {
+            offsets.push(cursor);
+            cursor += objectDef.length;
+        }
+
+        const xrefStart = cursor;
+        const xref =
+            `xref\n0 6\n0000000000 65535 f \n` +
+            offsets
+                .map((offset) => `${offset.toString().padStart(10, '0')} 00000 n \n`)
+                .join('') +
+            `trailer << /Size 6 /Root 1 0 R >>\nstartxref\n${xrefStart}\n%%EOF`;
+
+        return Buffer.from(header + objects.join('') + xref, 'latin1');
     }
 }

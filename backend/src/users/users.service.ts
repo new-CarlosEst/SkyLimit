@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { UserEntity } from './entities/user.entity';
-import { User } from '@prisma/client';
+import { User, Role } from '@prisma/client';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateDataDto } from '../auth/dto/update-data.dto';
 
@@ -100,7 +100,7 @@ export class UsersService {
    * @param role Nuevo rol del usuario
    * @returns Devuelve el usuario actualizado
    */
-  public async updateUserRole(id: number, role: string): Promise<UserEntity> {
+  public async updateUserRole(id: number, role: Role): Promise<UserEntity> {
     const user = await this.prisma.user.update({
       where: { id },
       data: { role },

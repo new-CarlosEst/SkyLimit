@@ -3,6 +3,7 @@ import { useFlightSelector } from "../hooks/useFlightSelector";
 import FlightDetailsCard from "../components/flights/flightSelector/FlightDetailsCard";
 import BaggageInfoCard from "../components/flights/flightSelector/BaggageInfoCard";
 import FlightSummaryCard from "../components/flights/flightSelector/FlightSummaryCard";
+import { useCheckoutStore } from "../store/checkoutStore";
 import "./FlightSelector.css";
 
 function FlightSelector() {
@@ -17,6 +18,29 @@ function FlightSelector() {
         handleToggleClassic,
         handleToggleCheckedBag,
     } = useFlightSelector();
+    const { setFlightConfig } = useCheckoutStore();
+
+    const handleContinue = () => {
+        const travelClass = cabinClass === 'economy'
+            ? 'TURISTA'
+            : cabinClass === 'premiumeconomy'
+                ? 'TURISTA PREMIUM'
+                : cabinClass === 'business'
+                    ? 'EJECUTIVA'
+                    : cabinClass === 'first'
+                        ? 'PRIMERA CLASE'
+                        : 'TURISTA';
+
+        setFlightConfig({
+            travelClass,
+            selectedFlight: flightToDisplay,
+            fareType: isClassic ? 'CLASSIC' : 'BASIC',
+            checkedBag: addCheckedBag,
+            baggagePricePerPassenger: extraBaggagePrice,
+        });
+
+        navigate('/passengers');
+    };
 
     return (
         <div className="flight-selector-container">
@@ -51,6 +75,7 @@ function FlightSelector() {
                     cabinClass={cabinClass} 
                     passengersCount={passengersCount} 
                     extraBaggagePrice={extraBaggagePrice}
+                    onContinue={handleContinue}
                 />
             </div>
         </div>

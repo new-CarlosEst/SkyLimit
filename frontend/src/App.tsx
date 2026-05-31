@@ -18,6 +18,7 @@ import registerBackground from "./assets/backgrounds/Register-Pasaporte-azul.web
 import forgotPasswordBackground from "./assets/backgrounds/aeropuerto-azul.webp";
 import FlightSelector from "./pages/FlightSelector";
 import PassengerData from "./pages/PassengerData";
+import Payment from "./pages/Payment";
 
 
 function App() {
@@ -73,6 +74,7 @@ function App() {
         <Route path="/adminPanel" element={<AdminPanel />} />
         <Route path="/flightSelector" element={<FlightSelector />} />
         <Route path="/passengers" element={<PassengerData />} />
+        <Route path="/payment" element={<Payment />} />
       </Routes>
       {showHeader && <Footer />}
     </>

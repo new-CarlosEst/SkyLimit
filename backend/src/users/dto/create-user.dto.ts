@@ -5,6 +5,7 @@ import {
   IsOptional,
   IsEnum,
 } from 'class-validator';
+import { Role } from '@prisma/client';
 
 /**
  * Clase que añade restricciones a como vienen datos, si no vienen en el formato correctos devuelve un error.
@@ -25,8 +26,8 @@ export class CreateUserDto {
   surname: string;
 
   @IsOptional()
-  @IsEnum(['USER', 'ADMIN', 'SUPERADMIN'], {
+  @IsEnum(Role, {
     message: 'El rol debe ser USER, ADMIN o SUPERADMIN',
   })
-  role?: string = 'USER';
+  role?: Role = Role.USER;
 }

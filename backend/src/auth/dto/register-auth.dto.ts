@@ -5,6 +5,7 @@ import {
   IsOptional,
   IsEnum,
 } from 'class-validator';
+import { Role } from '@prisma/client';
 
 /**
  * Clase dto para verificar que el formato de los campos es correcto
@@ -24,8 +25,8 @@ export class RegisterDto {
   surname: string;
 
   @IsOptional()
-  @IsEnum(['USER', 'ADMIN', 'SUPERADMIN'], {
+  @IsEnum(Role, {
     message: 'El rol debe ser USER, ADMIN o SUPERADMIN',
   })
-  role?: string = 'USER';
+  role?: Role = Role.USER;
 }

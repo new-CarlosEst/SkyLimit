@@ -8,7 +8,8 @@ export const cards = [
         type: 'debit',
         expMonth: '12',
         expYear: '2027',
-        cvc: '123'
+        cvc: '123',
+        paymentMethodId: 'pm_card_visa_debit',
     },
     
     // Mastercard
@@ -18,7 +19,8 @@ export const cards = [
         type: 'debit',
         expMonth: '12',
         expYear: '2027',
-        cvc: '123'
+        cvc: '123',
+        paymentMethodId: 'pm_card_mastercard',
     },
     
     // CRÉDITO
@@ -29,7 +31,8 @@ export const cards = [
         type: 'credit',
         expMonth: '12',
         expYear: '2027',
-        cvc: '123'
+        cvc: '123',
+        paymentMethodId: 'pm_card_visa',
     },
     // Mastercard
     {
@@ -38,6 +41,7 @@ export const cards = [
         type: 'credit',
         expMonth: '12',
         expYear: '2027',
-        cvc: '123'
+        cvc: '123',
+        paymentMethodId: 'pm_card_mastercard',
     }
 ];

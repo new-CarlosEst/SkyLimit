@@ -1,18 +1,19 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { ConfigService } from '@nestjs/config';
-import Stripe from 'stripe';
-import type { Stripe as StripeType } from 'stripe';
-import { CreatePaymentDto, GetUserPaymentsDto } from './dto/payment.dto';
+const Stripe = require('stripe');
+import { CreatePaymentDto } from './dto/payment.dto';
 import { TransactionStatus } from '@prisma/client';
+import { MailService } from '../mail/mail.service';
 
 @Injectable()
 export class PaymentService {
-    private stripe: StripeType;
+    private stripe: any;
 
     constructor(
         private readonly prisma: PrismaService,
         private readonly configService: ConfigService,
+        private readonly mailService: MailService,
     ) {
         this.stripe = new Stripe(this.configService.get<string>('SECRET_STRIPE_KEY')!, {
             apiVersion: '2026-04-22.dahlia',
@@ -20,9 +21,41 @@ export class PaymentService {
     }
 
     async verifyPayment(createPaymentDto: CreatePaymentDto) {
-        const { amount, paymentMethodId, flightId, userId } = createPaymentDto;
+        const { amount, paymentMethodId, reservationId, userId, cardholderName } = createPaymentDto;
 
         try {
+            const reservation = await this.prisma.reservation.findFirst({
+                where: {
+                    id: parseInt(reservationId),
+                    userId: parseInt(userId),
+                },
+                include: {
+                    user: true,
+                    reservationFlights: {
+                        include: {
+                            flight: {
+                                include: {
+                                    airportDeparture: true,
+                                    airportArrival: true,
+                                },
+                            },
+                        },
+                    },
+                    passengers: {
+                        include: {
+                            documents: true,
+                        },
+                    },
+                    seats: true,
+                },
+            });
+
+            if (!reservation) {
+                throw new HttpException(
+                    'No se encontró la reserva para el usuario indicado',
+                    HttpStatus.NOT_FOUND,
+                );
+            }
             // Crear PaymentIntent en Stripe
             const paymentIntent = await this.stripe.paymentIntents.create({
                 amount: Math.round(amount * 100), // Convertir a centimos
@@ -30,7 +63,7 @@ export class PaymentService {
                 payment_method: paymentMethodId,
                 confirm: true,
                 metadata: {
-                    flightId,
+                    reservationId,
                     userId,
                 },
             });
@@ -43,13 +76,6 @@ export class PaymentService {
                 );
             }
 
-            // Obtener la reserva
-            const reservation = await this.prisma.reservation.findFirst({
-                where: {
-                    flightId: parseInt(flightId),
-                    userId: parseInt(userId),
-                },
-            });
 
             // Obtengo los pagos
             const paymentMethod = await this.stripe.paymentMethods.retrieve(paymentMethodId);
@@ -63,7 +89,29 @@ export class PaymentService {
                     stripePaymentIntentId: paymentIntent.id,
                     cardBrand: paymentMethod.card?.brand || 'unknown',
                     cardLast4: paymentMethod.card?.last4 || '',
-                    reservationId: reservation?.id,
+                    reservationId: reservation.id,
+                },
+            });
+
+            await this.prisma.reservation.update({
+                where: { id: reservation.id },
+                data: { status: 'CONFIRMED' },
+            });
+            reservation.status = 'CONFIRMED';
+
+            await this.mailService.sendPurchaseDocumentsEmail({
+                customerEmail: reservation.user.email,
+                customerName: `${reservation.user.name} ${reservation.user.surname}`,
+                reservation,
+                transaction: {
+                    id: transaction.id,
+                    amount: transaction.amount,
+                    currency: transaction.currency,
+                    status: transaction.status,
+                    stripePaymentIntentId: paymentIntent.id,
+                    cardBrand: paymentMethod.card?.brand || 'unknown',
+                    cardLast4: paymentMethod.card?.last4 || '',
+                    cardholderName,
                 },
             });
 
@@ -75,7 +123,7 @@ export class PaymentService {
                 status: transaction.status,
                 cardBrand: transaction.cardBrand,
                 cardLast4: transaction.cardLast4,
-                message: 'Pago verificado exitosamente',
+                message: 'Pago verificado exitosamente y documentación enviada por correo',
             };
 
         } catch (error: any) {
@@ -158,7 +206,11 @@ export class PaymentService {
                 include: {
                     reservation: {
                         include: {
-                            flight: true,
+                            reservationFlights: {
+                                include: {
+                                    flight: true,
+                                },
+                            },
                         },
                     },
                 },
