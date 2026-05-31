@@ -51,20 +51,20 @@
 }
 
 /* Reusing some logic from the auth inputs */
-.input-container {
+.passenger-input-container {
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
     width: 100%;
 }
 
-.input-label {
+.passenger-input-label {
     font-size: 0.875rem;
     font-weight: 600;
     color: #374151;
 }
 
-.input-wrapper {
+.passenger-input-wrapper {
     display: grid;
     grid-template-columns: auto 1fr;
     align-items: center;
@@ -76,16 +76,16 @@
     transition: all 0.2s;
 }
 
-.input-wrapper:focus-within {
+.passenger-input-wrapper:focus-within {
     border-color: #3b82f6;
     box-shadow: 0 0 0 4px #dbeafe;
 }
 
-.input-wrapper:hover:not(:focus-within) {
+.passenger-input-wrapper:hover:not(:focus-within) {
     border-color: #9ca3af;
 }
 
-.input-icon-container {
+.passenger-input-icon-container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -95,7 +95,7 @@
     overflow: hidden;
 }
 
-.input-icon {
+.passenger-input-icon {
     width: 1.25rem;
     height: 1.25rem;
     min-width: 1.25rem;
@@ -104,11 +104,11 @@
     display: block;
 }
 
-.input-wrapper:focus-within .input-icon {
+.passenger-input-wrapper:focus-within .passenger-input-icon {
     opacity: 0.8;
 }
 
-.input-field {
+.passenger-input-field {
     flex: 1;
     min-width: 0;
     outline: none;
@@ -118,12 +118,12 @@
     font-weight: 500;
 }
 
-.input-field::placeholder {
+.passenger-input-field::placeholder {
     color: #9ca3af;
 }
 
 /* Custom select styling */
-select.input-field {
+select.passenger-input-field {
     appearance: none;
     cursor: pointer;
     background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%239ca3af%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E');
@@ -271,12 +271,12 @@ select.input-field {
     color: #94a3b8;
 }
 
-/* ── react-datepicker overrides ── */
-.datepicker-wrapper {
+/* ── react-datepicker overrides (scoped to passenger data) ── */
+.passenger-data-container .datepicker-wrapper {
     position: relative;
 }
 
-.datepicker-input {
+.passenger-data-container .datepicker-input {
     width: 100%;
     outline: none;
     background: transparent;
@@ -284,23 +284,36 @@ select.input-field {
     font-size: 0.875rem;
     font-weight: 500;
     cursor: pointer;
+    border: none !important;
 }
 
-.datepicker-input::placeholder {
+.passenger-data-container .datepicker-input::placeholder {
     color: #9ca3af;
 }
 
+/* React-datepicker wrapper and input container - remove borders */
+.passenger-data-container .react-datepicker-wrapper,
+.passenger-data-container .react-datepicker__input-container {
+    width: 100%;
+}
+
+.passenger-data-container .react-datepicker-wrapper input,
+.passenger-data-container .react-datepicker__input-container input {
+    border: none !important;
+    background: transparent !important;
+}
+
 /* Popover calendar container */
-.react-datepicker-popper {
+.passenger-data-container .react-datepicker-popper {
     z-index: 100;
 }
 
 /* Hide the default triangle arrow above the calendar */
-.react-datepicker__triangle {
+.passenger-data-container .react-datepicker__triangle {
     display: none !important;
 }
 
-.react-datepicker {
+.passenger-data-container .react-datepicker {
     font-family: inherit;
     border: none;
     border-radius: 16px;
@@ -310,14 +323,14 @@ select.input-field {
 }
 
 /* ── Blue header ── */
-.react-datepicker__header {
+.passenger-data-container .react-datepicker__header {
     background-color: #2b5aa0;
     border-bottom: none;
     padding: 16px 12px 12px;
     text-align: center;
 }
 
-.react-datepicker__current-month {
+.passenger-data-container .react-datepicker__current-month {
     color: white;
     font-size: 1.1rem;
     font-weight: 700;
@@ -325,13 +338,13 @@ select.input-field {
     margin-bottom: 10px;
 }
 
-.react-datepicker__day-names {
+.passenger-data-container .react-datepicker__day-names {
     margin-top: 4px;
     display: flex;
     justify-content: center;
 }
 
-.react-datepicker__day-name {
+.passenger-data-container .react-datepicker__day-name {
     color: rgba(255, 255, 255, 0.75);
     font-size: 0.8rem;
     font-weight: 500;
@@ -341,23 +354,23 @@ select.input-field {
 }
 
 /* Navigation arrows */
-.react-datepicker__navigation {
+.passenger-data-container .react-datepicker__navigation {
     top: 18px;
 }
 
-.react-datepicker__navigation-icon::before {
+.passenger-data-container .react-datepicker__navigation-icon::before {
     border-color: white;
     border-width: 2px 2px 0 0;
     width: 8px;
     height: 8px;
 }
 
-.react-datepicker__navigation:hover .react-datepicker__navigation-icon::before {
+.passenger-data-container .react-datepicker__navigation:hover .react-datepicker__navigation-icon::before {
     border-color: rgba(255,255,255,0.7);
 }
 
 /* ── White calendar body ── */
-.react-datepicker__month {
+.passenger-data-container .react-datepicker__month {
     background: white;
     margin: 0;
     padding: 12px 12px 16px;
@@ -367,13 +380,13 @@ select.input-field {
 }
 
 /* Fila de semana centrada */
-.react-datepicker__week {
+.passenger-data-container .react-datepicker__week {
     display: flex;
     justify-content: center;
 }
 
 /* Row with month+year selects */
-.react-datepicker__header .react-datepicker__header__dropdown {
+.passenger-data-container .react-datepicker__header .react-datepicker__header__dropdown {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -382,7 +395,7 @@ select.input-field {
     width: 100%;
 }
 
-.react-datepicker__day {
+.passenger-data-container .react-datepicker__day {
     width: 2.4rem;
     line-height: 2.4rem;
     text-align: center;
@@ -393,19 +406,19 @@ select.input-field {
 }
 
 /* Days from other months */
-.react-datepicker__day--outside-month {
+.passenger-data-container .react-datepicker__day--outside-month {
     color: #d1d5db;
 }
 
 /* Today highlight */
-.react-datepicker__day--today {
+.passenger-data-container .react-datepicker__day--today {
     font-weight: 700;
     color: #2b5aa0;
 }
 
 /* Selected day */
-.react-datepicker__day--selected,
-.react-datepicker__day--keyboard-selected {
+.passenger-data-container .react-datepicker__day--selected,
+.passenger-data-container .react-datepicker__day--keyboard-selected {
     background-color: #2b5aa0;
     color: white !important;
     border-radius: 10px;
@@ -413,21 +426,21 @@ select.input-field {
 }
 
 /* Hover */
-.react-datepicker__day:not(.react-datepicker__day--selected):not(.react-datepicker__day--outside-month):hover {
+.passenger-data-container .react-datepicker__day:not(.react-datepicker__day--selected):not(.react-datepicker__day--outside-month):hover {
     background-color: #dbeafe;
     color: #1a3c79;
     border-radius: 10px;
 }
 
 /* Disabled days */
-.react-datepicker__day--disabled {
+.passenger-data-container .react-datepicker__day--disabled {
     color: #e5e7eb !important;
     cursor: not-allowed;
 }
 
 /* Year/month dropdowns */
-.react-datepicker__header .react-datepicker__year-select,
-.react-datepicker__header .react-datepicker__month-select {
+.passenger-data-container .react-datepicker__header .react-datepicker__year-select,
+.passenger-data-container .react-datepicker__header .react-datepicker__month-select {
     appearance: none;
     -webkit-appearance: none;
     border: 1px solid rgba(255, 255, 255, 0.45);
@@ -446,8 +459,8 @@ select.input-field {
     outline: none;
 }
 
-.react-datepicker__year-select,
-.react-datepicker__month-select {
+.passenger-data-container .react-datepicker__year-select,
+.passenger-data-container .react-datepicker__month-select {
     appearance: none;
     -webkit-appearance: none;
     border: 1px solid rgba(255, 255, 255, 0.45);
@@ -466,8 +479,8 @@ select.input-field {
     outline: none;
 }
 
-.react-datepicker__year-select option,
-.react-datepicker__month-select option {
+.passenger-data-container .react-datepicker__year-select option,
+.passenger-data-container .react-datepicker__month-select option {
     color: #374151;
     background-color: white;
     -webkit-text-fill-color: #374151;

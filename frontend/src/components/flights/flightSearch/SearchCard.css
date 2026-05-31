@@ -52,8 +52,8 @@
 
 .remove-leg-btn {
     background: #fff;
-    border: 1.5px solid #fed7d7;
-    color: #e53e3e;
+    border: 1.5px solid #dbeafe;
+    color: #2c5aa0;
     width: 44px;
     height: 44px;
     border-radius: 10px;
@@ -66,15 +66,21 @@
 }
 
 .remove-leg-btn:hover {
-    background-color: #fff5f5;
-    border-color: #f56565;
+    background-color: #eff6ff;
+    border-color: #2c5aa0;
     transform: translateY(-1px);
-    box-shadow: 0 4px 6px -1px rgba(229, 62, 62, 0.1);
+    box-shadow: 0 4px 6px -1px rgba(44, 90, 160, 0.1);
 }
 
-.remove-leg-btn svg {
+.remove-leg-btn img {
     width: 20px;
     height: 20px;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.remove-leg-btn:hover img {
+    opacity: 1;
 }
 
 .actions-row {

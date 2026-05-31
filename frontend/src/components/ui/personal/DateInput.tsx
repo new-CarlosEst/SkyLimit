@@ -1,5 +1,5 @@
 import DatePicker from 'react-datepicker';
-import calendarIcon from '../../assets/ui/IconoirCalendar.svg';
+import calendarIcon from '../../../assets/ui/IconoirCalendar.svg';
 
 interface DateInputProps {
     label: string;
@@ -13,13 +13,13 @@ interface DateInputProps {
 
 function DateInput({ label, value, onChange, maxDate, minDate, required = true }: DateInputProps) {
     return (
-        <div className="input-container">
-            <label className="input-label">
+        <div className="passenger-input-container">
+            <label className="passenger-input-label">
                 {label} {required && <span className="text-red-500">*</span>}
             </label>
-            <div className="input-wrapper group datepicker-wrapper">
-                <div className="input-icon-container">
-                    <img src={calendarIcon} alt={label} className="input-icon" />
+            <div className="passenger-input-wrapper group datepicker-wrapper">
+                <div className="passenger-input-icon-container">
+                    <img src={calendarIcon} alt={label} className="passenger-input-icon" />
                 </div>
                 <DatePicker
                     selected={value}
@@ -33,7 +33,7 @@ function DateInput({ label, value, onChange, maxDate, minDate, required = true }
                     scrollableYearDropdown
                     yearDropdownItemNumber={100}
                     showMonthDropdown
-                    className="input-field datepicker-input sky-datepicker"
+                    className="passenger-input-field datepicker-input sky-datepicker"
                     required={required}
                     popperPlacement="bottom-start"
                 />

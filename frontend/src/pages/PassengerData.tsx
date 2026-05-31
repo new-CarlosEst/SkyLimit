@@ -1,12 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { usePassengerForm } from "../hooks/usePassengerForm";
+import { useSearchParamsStore } from "../store/searchParamsStore";
 import { registerLocale } from "react-datepicker";
 import { es } from "date-fns/locale/es";
-import "react-datepicker/dist/react-datepicker.css";
+import { useState } from "react";
 import "./PassengerData.css";
 import SearchableSelect from "../components/ui/personal/SearchableSelect";
 import CustomInput from "../components/ui/personal/CustomInput";
 import DateInput from "../components/ui/personal/DateInput";
+import SeatSelector from "../components/ui/personal/SeatSelector";
 
 // Register Spanish locale
 registerLocale("es", es);
@@ -22,30 +24,74 @@ import genderIcon from "../assets/ui/men-broken.svg";
 function PassengerData() {
     const navigate = useNavigate();
     const { passengerList, dates, setPassengerDate, handleSubmit } = usePassengerForm();
+    const { cabinClass } = useSearchParamsStore();
+    const [selectedSeats, setSelectedSeats] = useState<Record<number, { seat: string | null; price: number }>>({});
+    const [showSeatSelector, setShowSeatSelector] = useState(false);
 
     const today = new Date();
+
+    const getTravelClass = () => {
+        switch (cabinClass) {
+            case 'economy':
+                return 'TURISTA';
+            case 'premiumeconomy':
+                return 'TURISTA PREMIUM';
+            case 'business':
+                return 'EJECUTIVA';
+            case 'first':
+                return 'PRIMERA CLASE';
+            default:
+                return 'TURISTA';
+        }
+    };
+
+    const handleSeatSelect = (passengerIndex: number, seat: string | null, price: number) => {
+        setSelectedSeats(prev => ({
+            ...prev,
+            [passengerIndex]: { seat, price }
+        }));
+    };
+
+    const handleContinueToSeats = (e: React.FormEvent) => {
+        e.preventDefault();
+        setShowSeatSelector(true);
+        window.scrollTo(0, 0);
+    };
+
+    const handleBackToForm = () => {
+        setShowSeatSelector(false);
+        window.scrollTo(0, 0);
+    };
+
+    const handleContinueToPayment = () => {
+        // TODO: Navigate to payment page with seat selections
+        console.log("Selected seats:", selectedSeats);
+        console.log("Passenger data:", dates);
+    };
 
     return (
         <div className="passenger-data-container">
             <div className="passenger-data-content">
 
-                <div className="mb-6 flex">
-                    <button
-                        type="button"
-                        onClick={() => navigate(-1)}
-                        className="bg-[#2b5aa0] hover:bg-[#1a3c79] text-white px-5 py-2.5 rounded-lg flex items-center gap-2 font-medium transition-colors shadow-sm"
-                    >
-                        <span className="text-xl leading-none mb-0.5">←</span>
-                        <span>Volver a las opciones</span>
-                    </button>
-                </div>
+                {!showSeatSelector ? (
+                    <>
+                        <div className="mb-6 flex">
+                            <button
+                                type="button"
+                                onClick={() => navigate(-1)}
+                                className="bg-[#2b5aa0] hover:bg-[#1a3c79] text-white px-5 py-2.5 rounded-lg flex items-center gap-2 font-medium transition-colors shadow-sm"
+                            >
+                                <span className="text-xl leading-none mb-0.5">←</span>
+                                <span>Volver atrás</span>
+                            </button>
+                        </div>
 
-                <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-slate-800 mb-2">Datos de los pasajeros</h1>
-                    <p className="text-slate-600">Por favor, introduce los datos tal y como aparecen en el documento de identidad oficial.</p>
-                </div>
+                        <div className="mb-8">
+                            <h1 className="text-3xl font-bold text-slate-800 mb-2">Datos de los pasajeros</h1>
+                            <p className="text-slate-600">Por favor, introduce los datos tal y como aparecen en el documento de identidad oficial.</p>
+                        </div>
 
-                <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit}>
                     {passengerList.map((passenger, pIdx) => (
                         <div key={pIdx} className="passenger-card">
                             <div className="passenger-card-header">
@@ -139,12 +185,54 @@ function PassengerData() {
                     <div className="flex justify-end mt-8 mb-12">
                         <button
                             type="submit"
+                            onClick={handleContinueToSeats}
                             className="bg-[#2b5aa0] hover:bg-[#1a3c79] text-white px-8 py-4 rounded-xl font-bold text-lg shadow-md transition-colors"
                         >
-                            Confirmar y Continuar al Pago
+                            Continuar a Selección de Asientos
                         </button>
                     </div>
                 </form>
+                    </>
+                ) : (
+                    <>
+                        <div className="mb-6 flex">
+                            <button
+                                type="button"
+                                onClick={handleBackToForm}
+                                className="bg-[#2b5aa0] hover:bg-[#1a3c79] text-white px-5 py-2.5 rounded-lg flex items-center gap-2 font-medium transition-colors shadow-sm"
+                            >
+                                <span className="text-xl leading-none mb-0.5">←</span>
+                                <span>Volver a Datos del Pasajero</span>
+                            </button>
+                        </div>
+
+                        <div className="mb-8">
+                            <h1 className="text-3xl font-bold text-slate-800 mb-2">Selección de Asientos</h1>
+                            <p className="text-slate-600">Selecciona tus asientos para cada pasajero.</p>
+                        </div>
+
+                        {passengerList.map((passenger, pIdx) => (
+                            <div key={pIdx} className="mb-8">
+                                <h3 className="text-lg font-medium text-slate-700 mb-4">
+                                    Pasajero {pIdx + 1} ({passenger.type})
+                                </h3>
+                                <SeatSelector
+                                    travelClass={getTravelClass()}
+                                    onSeatSelect={(seat, price) => handleSeatSelect(pIdx, seat, price)}
+                                />
+                            </div>
+                        ))}
+                        <div className="flex justify-end mt-8 mb-12">
+                            <button
+                                type="button"
+                                onClick={handleContinueToPayment}
+                                className="bg-[#2b5aa0] hover:bg-[#1a3c79] text-white px-8 py-4 rounded-xl font-bold text-lg shadow-md transition-colors"
+                            >
+                                Confirmar y Continuar al Pago
+                            </button>
+                        </div>
+                    </>
+                )}
 
             </div>
         </div>
