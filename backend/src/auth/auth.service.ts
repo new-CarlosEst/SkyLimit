@@ -9,6 +9,7 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { MailService } from '../mail/mail.service';
 import { UpdateDataDto } from './dto/update-data.dto';
+import { Role } from '@prisma/client';
 
 //Aqui usare bcrypt par encriptar las contraseñas, para generar el token de validacion y comprare la contraseña que me devuelve el recurso de users
 @Injectable()
@@ -70,7 +71,7 @@ export class AuthService {
       surname: registerDto.surname,
       email: registerDto.email,
       password: pwdEncriptada, //sobrescribimos la contraseña con la contraseña encriptada
-      role: registerDto.role || 'USER', //asignamos el rol o el valor por defecto
+      role: registerDto.role || Role.USER, //asignamos el rol o el valor por defecto
     };
 
     //Me guardo el usuario

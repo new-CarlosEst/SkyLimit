@@ -1,5 +1,9 @@
 import type { FlightResult } from "../../../types/flight.types";
 import LegData from "../../ui/flights/data/LegData";
+import { useAuthStore } from '../../../store/authStore';
+import { useFlightSelectedStore } from "../../../store/flightSelectedStore";
+import { sileo } from 'sileo';
+import { useNavigate } from "react-router-dom";
 
 
 interface FlightCardProps {
@@ -13,6 +17,23 @@ interface FlightCardProps {
 }
 
 function FlightCard({ flight, cabinClass, passengers }: FlightCardProps) {
+    const { user } = useAuthStore();
+    const { setSelectedFlight } = useFlightSelectedStore();
+    const navigate = useNavigate();
+
+    const selectFlight = () => {
+        if (!user) {
+            sileo.error({
+                title: "Debes iniciar sesión para ver los datos del vuelo"
+            });
+        }
+        else if (cabinClass && passengers) {
+            setSelectedFlight(flight, cabinClass, passengers);
+            navigate("/flightSelector");
+
+        }
+    }
+
     return (
         <div className="flex p-4 border border-gray-100 rounded-lg shadow-lg hover:shadow-xl hover:border-blue-300 transition-all duration-500">
             <div className="flex flex-col gap-4 flex-4 justify-center">
@@ -20,7 +41,7 @@ function FlightCard({ flight, cabinClass, passengers }: FlightCardProps) {
                     <LegData
                         key={index}
                         airline={leg.carriers[0].name}
-                        airlineLogo={leg.carriers[0].logoUrl}
+                        airlineLogo={leg.carriers[0].logoUrl || ''}
                         duration ={leg.durationMinutes}
                         stops={leg.stopCount}
                         originCity={leg.origin.city}
@@ -42,7 +63,12 @@ function FlightCard({ flight, cabinClass, passengers }: FlightCardProps) {
                     </span>
                     por persona
                 </p>
-                <button className="text-md mt-4 bg-[#2c5aa0] text-white px-8 py-3 rounded-lg hover:bg-[#1a3d7a] hover:scale-105 transition-all duration-200">Seleccionar</button>
+                <button 
+                    className="text-md mt-4 bg-[#2c5aa0] text-white px-8 py-3 rounded-lg hover:bg-[#1a3d7a] hover:scale-105 transition-all duration-200"
+                    onClick={() => selectFlight()}
+                >
+                    Seleccionar
+                </button>
             </div>
         </div>
     );

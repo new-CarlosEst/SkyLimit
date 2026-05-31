@@ -2,7 +2,6 @@ import type { User } from "../../../types/user.types";
 import { useState } from "react";
 import { useAuthStore } from "../../../store/authStore";
 import { useNavigate } from "react-router-dom";
-import { sileo } from "sileo";
 
 function UserButton({ user }: { user: User }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,7 +20,7 @@ function UserButton({ user }: { user: User }) {
             {isMenuOpen && (
                 <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2">
                     <button 
-                        onClick={() => sileo.warning({ title: "Función no disponible" })}
+                        onClick={() => navigate('/personalData?tab=reservations')}
                         className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">
                         Mis reservas
                     </button>

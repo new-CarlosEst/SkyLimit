@@ -9,9 +9,8 @@ import { ApiflightModule } from './apiflight/apiflight.module';
 import { AirportModule } from './airport/airport.module';
 import { MailModule } from './mail/mail.module';
 import { PaymentModule } from './payment/payment.module';
-import { FlightService } from './flight/flight.service';
-import { FlightController } from './flight/flight.controller';
 import { FlightModule } from './flight/flight.module';
+import { ReservationModule } from './reservation/reservation.module';
 @Module({
   //Aqui en el modulo de app solo importo los modulos necesarios, nada de controllers ni services (solo los propios de app)
   imports: [
@@ -24,8 +23,9 @@ import { FlightModule } from './flight/flight.module';
     MailModule,
     PaymentModule,
     FlightModule,
+    ReservationModule,
   ],
-  controllers: [AppController, FlightController],
-  providers: [AppService, FlightService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

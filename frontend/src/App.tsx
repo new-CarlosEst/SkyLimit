@@ -13,9 +13,12 @@ import PasswordRecovery from "./pages/PasswordRecovery";
 import Flights from "./pages/Flights";
 import PersonalData from "./pages/PersonalData";
 import AdminPanel from "./pages/AdminPanel";
-import loginBackground from "./assets/backgrounds/Login-Avion-azul.jpg";
-import registerBackground from "./assets/backgrounds/Register-Pasaporte-azul.jpg";
-import forgotPasswordBackground from "./assets/backgrounds/aeropuerto-azul.png";
+import loginBackground from "./assets/backgrounds/Login-Avion-azul.webp";
+import registerBackground from "./assets/backgrounds/Register-Pasaporte-azul.webp";
+import forgotPasswordBackground from "./assets/backgrounds/aeropuerto-azul.webp";
+import FlightSelector from "./pages/FlightSelector";
+import PassengerData from "./pages/PassengerData";
+import Payment from "./pages/Payment";
 
 
 function App() {
@@ -69,6 +72,9 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/personalData" element={<PersonalData />} />
         <Route path="/adminPanel" element={<AdminPanel />} />
+        <Route path="/flightSelector" element={<FlightSelector />} />
+        <Route path="/passengers" element={<PassengerData />} />
+        <Route path="/payment" element={<Payment />} />
       </Routes>
       {showHeader && <Footer />}
     </>

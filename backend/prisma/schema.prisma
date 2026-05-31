@@ -36,6 +36,12 @@ enum TransactionStatus {
   CANCELLED
 }
 
+//Tipo de tarifa
+enum FareType {
+  BASIC
+  CLASSIC
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   name      String
@@ -85,7 +91,9 @@ model Transaction {
   status   TransactionStatus @default(PENDING)
 
   // Stripe Integration
-  stripePaymentIntentId String? // ID único de Stripe para este intento de pago
+  stripePaymentIntentId String? 
+  cardBrand             String?  // ← AGREGAR ESTO (Visa, Mastercard, etc)
+  cardLast4             String?  // ← AGREGAR ESTO (últimos 4 dígitos)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -114,11 +122,26 @@ model Reservation {
   userId Int
   user   User @relation(fields: [userId], references: [id])
 
+  reservationFlights ReservationFlight[]
+  passengers        Passenger[]
+  transactions      Transaction[]
+  seats             Seat[]
+}
+
+// -------------------- ReservationFlight ---------------------
+model ReservationFlight {
+  id            Int      @id @default(autoincrement())
+  order         Int      // Orden del vuelo en la reserva (1, 2, 3...)
+
+  // Relations
+  reservationId Int
+  reservation   Reservation @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+
   flightId Int
   flight   Flight @relation(fields: [flightId], references: [id])
 
-  passengers   Passenger[]
-  transactions Transaction[]
+  @@index([reservationId])
+  @@index([flightId])
 }
 
 // -------------------- Passenger ------------------------
@@ -135,6 +158,7 @@ model Passenger {
   // Relations
   reservations Reservation[]
   documents    Document[]
+  seat         Seat?
 }
 
 // -------------------- Document -------------------------
@@ -160,7 +184,6 @@ model Airport {
   // Relations
   departures    Flight[] @relation("Departure")
   arrivals      Flight[] @relation("Arrival")
-  stopovers     Flight[] @relation("Stopover")
   favoriteUsers User[]   @relation("UserFavoriteAirport")
 }
 
@@ -177,25 +200,29 @@ model Flight {
   source            String   @default("Created") // "Api" | "Created"
 
   // Relations
-  reservations Reservation[]
+  reservationFlights ReservationFlight[]
 
   airportDepartureId Int
   airportDeparture   Airport @relation("Departure", fields: [airportDepartureId], references: [id])
 
   airportArrivalId Int
   airportArrival   Airport @relation("Arrival", fields: [airportArrivalId], references: [id])
-
-  airportStopoverId Int?
-  airportStopover   Airport?         @relation("Stopover", fields: [airportStopoverId], references: [id])
-  flightStopovers   FlightStopover[]
 }
 
-model FlightStopover {
-  id                Int      @id @default(autoincrement())
-  order             Int // 1, 2, 3... para ordenar las escalas
-  arrivalDateTime   DateTime // cuando llega a la escala
-  departureDateTime DateTime // cuando sale de la escala
+// -------------------- Seat ---------------------------
+model Seat {
+  id          Int      @id @default(autoincrement())
+  seatNumber  String   // Ej: "12A", "5F"
+  cabin       String   // Ej: "TURISTA", "EJECUTIVA", "PRIMERA CLASE"
+  fareType    FareType // BASIC | CLASSIC
+  price       Float    // Precio del asiento
 
-  flightId Int
-  flight   Flight @relation(fields: [flightId], references: [id])
+  // Relations
+  reservationId Int
+  reservation   Reservation @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+
+  passengerId Int?  @unique
+  passenger   Passenger? @relation(fields: [passengerId], references: [id])
+
+  @@index([reservationId])
 }

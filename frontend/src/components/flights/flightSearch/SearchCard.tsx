@@ -8,6 +8,7 @@ import { useFlightSearch } from "../../../hooks/useFlightSearch";
 
 import locationIcon from "../../../assets/ui/ProiconsLocation.svg";
 import planeIcon from "../../../assets/ui/MynauiPlane.svg";
+import closeIcon from "../../../assets/ui/MynauiX.svg";
 
 function SearchCard() {
     const {
@@ -34,10 +35,25 @@ function SearchCard() {
         removeDestination,
         addDestination,
         handleSearch,
+        isLoading,
     } = useFlightSearch(); //Igualo los estados y las funciones de mi hook personalizado
 
     return (
         <div className="search-card w-full max-w-5xl mb-6" >
+            {isLoading && (
+                <div className="flight-loading-overlay">
+                    <div className="flight-loading-icon"></div>
+                    <div className="flight-loading-text">
+                        Buscando vuelos
+                        <span className="dots">
+                            <span>.</span>
+                            <span>.</span>
+                            <span>.</span>
+                        </span>
+                    </div>
+                </div>
+            )}
+
             {/* Contenedor para seleccionar entre ida, ida y vuelta y multi */}
             <div className="trip-type">
                 <TripTypePill
@@ -98,17 +114,13 @@ function SearchCard() {
 
                                 {/* Boton para eliminar el trayecto que solo se muestra cuando hay mas de un trayect */}
                                 {multiDestinations.length > 1 && (
-
-                                    // TODO: Cambiarlo para que le ui del boton de borrar sea mas bonito y este integrado
                                     <button
                                         type="button"
                                         onClick={() => removeDestination(index)}
                                         className="remove-leg-btn"
                                         title="Eliminar trayecto"
                                     >
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                                            <path d="M18 6L6 18M6 6l12 12" />
-                                        </svg>
+                                        <img src={closeIcon} alt="Eliminar" />
                                     </button>
                                 )}
                             </div>

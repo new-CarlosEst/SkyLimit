@@ -167,6 +167,44 @@
     font-size: 1.05rem !important;
 }
 
+/* Month/Year dropdown selects - white text and arrow */
+.sky-datepicker .react-datepicker__year-select,
+.sky-datepicker .react-datepicker__month-select {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    border: 1px solid rgba(255, 255, 255, 0.45) !important;
+    border-radius: 6px !important;
+    padding: 2px 22px 2px 8px !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    color: white !important;
+    -webkit-text-fill-color: white !important;
+    background-color: rgba(255, 255, 255, 0.18) !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 5px center !important;
+    background-size: 12px !important;
+    cursor: pointer !important;
+    outline: none !important;
+}
+
+.sky-datepicker .react-datepicker__year-select option,
+.sky-datepicker .react-datepicker__month-select option {
+    color: #374151 !important;
+    background-color: white !important;
+    -webkit-text-fill-color: #374151 !important;
+}
+
+/* Center the dropdown container */
+.sky-datepicker .react-datepicker__header .react-datepicker__header__dropdown {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin-top: 6px !important;
+    width: 100% !important;
+}
+
 .sky-datepicker.react-datepicker--inline {
     border: 1px solid #e5e7eb !important;
     display: inline-block !important;

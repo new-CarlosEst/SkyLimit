@@ -1,6 +1,5 @@
 import { useAuthStore } from "../../../store/authStore";
-import { sileo } from "sileo";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ProiconsPerson from "../../../assets/ui/ProiconsPerson.svg";
 import FamiconsCard from "../../../assets/ui/FamiconsCard.svg";
 import IconoirCalendar from "../../../assets/ui/IconoirCalendar.svg";
@@ -15,10 +14,7 @@ interface SidebarProps {
 
 function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
     const { user } = useAuthStore();
-
-    const handleUnavailable = () => {
-        sileo.warning({ title: "Función no disponible" });
-    };
+    const navigate = useNavigate();
 
     const menuItems = [
         {
@@ -32,19 +28,28 @@ function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
             id: "profile",
             label: "Perfil",
             icon: ProiconsPerson,
-            onClick: () => setActiveTab("profile")
+            onClick: () => {
+                navigate("/personalData?tab=profile");
+                setActiveTab("profile");
+            }
         },
         {
             id: "payment",
             label: "Métodos de Pago",
             icon: FamiconsCard,
-            onClick: handleUnavailable
+            onClick: () => {
+                navigate("/personalData?tab=payment");
+                setActiveTab("payment");
+            }
         },
         {
             id: "reservations",
             label: "Mis Reservas",
             icon: IconoirCalendar,
-            onClick: handleUnavailable
+            onClick: () => {
+                navigate("/personalData?tab=reservations");
+                setActiveTab("reservations");
+            }
         }
     ];
 
@@ -52,7 +57,6 @@ function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
         id: "admin",
         label: "Panel de Administración",
         icon: PajamasAdmin,
-        onClick: () => setActiveTab("admin")
     };
 
     return (
@@ -64,18 +68,6 @@ function Sidebar({ activeTab, setActiveTab }: SidebarProps) {
                             <Link 
                                 key={item.id}
                                 to={item.to}
-                                className={`sidebar-menu-item ${activeTab === item.id ? "active" : ""}`}
-                            >
-                                <div className="sidebar-menu-content">
-                                    <img src={item.icon} alt={item.label} className="sidebar-menu-icon" />
-                                    {item.label}
-                                </div>
-                                <img src={pointRightArrow} alt="→" className="sidebar-arrow" />
-                            </Link>
-                        ) : item.id === "profile" ? (
-                            <Link 
-                                key={item.id}
-                                to="/personalData"
                                 className={`sidebar-menu-item ${activeTab === item.id ? "active" : ""}`}
                             >
                                 <div className="sidebar-menu-content">

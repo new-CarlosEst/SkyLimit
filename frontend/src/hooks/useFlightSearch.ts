@@ -34,6 +34,8 @@ export function useFlightSearch() {
         { origin: null, destination: null }
     ]);
 
+    const [isLoading, setIsLoading] = useState(false);
+
     //Borra una leg/trip de el array con multiples destinos
     const removeDestination = (indexToRemove: number) => {
         if (multiDestinations.length > 1) {
@@ -79,6 +81,7 @@ export function useFlightSearch() {
 
             //Busqueda de vuelo de ida
             try {
+                setIsLoading(true);
                 const result = await searchOneWay(flightData);
                 console.log(result);
                 setSearchResults(result, "oneWay");
@@ -99,6 +102,8 @@ export function useFlightSearch() {
                     description: "Inténtalo otra vez en unos minutos",
                 });
                 throw error;
+            } finally {
+                setIsLoading(false);
             }
         } 
         
@@ -142,6 +147,7 @@ export function useFlightSearch() {
             };
 
             try {
+                setIsLoading(true);
                 const result = await searchRoundTrip(flightData);
                 console.log("Resultado de búsqueda roundTrip:", result);
                 setSearchResults(result, "roundTrip");
@@ -162,6 +168,8 @@ export function useFlightSearch() {
                     description: "Inténtalo otra vez en unos minutos",
                 });
                 throw error;
+            } finally {
+                setIsLoading(false);
             }
         } 
         //Peticion si es multiples destinos
@@ -197,6 +205,7 @@ export function useFlightSearch() {
             };
 
             try {
+                setIsLoading(true);
                 const result = await searchMultiTrip(flightData);
                 console.log("Resultado de búsqueda multi:", result);
                 setSearchResults(result, "multi");
@@ -217,6 +226,8 @@ export function useFlightSearch() {
                     description: "Inténtalo otra vez en unos minutos",
                 });
                 throw error;
+            } finally {
+                setIsLoading(false);
             }
         }
     };
@@ -233,6 +244,7 @@ export function useFlightSearch() {
         passengers,
         multiDates,
         multiAirports,
+        isLoading,
 
         // Setters
         setTripType,

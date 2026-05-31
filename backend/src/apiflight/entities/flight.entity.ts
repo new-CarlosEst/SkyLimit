@@ -30,6 +30,7 @@ export class LegEntity {
 
 export class FlightEntity {
   id: string;
+  source?: 'Api' | 'Created';
   price: {
     amount: number;
     currency: string;
