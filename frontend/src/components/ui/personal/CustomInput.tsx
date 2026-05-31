@@ -8,7 +8,7 @@ interface CustomInputProps {
     required?: boolean;
 }
 
-function CustomInput({ label, name, type = "text", placeholder, icon, options, required = true }: CustomInputProps) {
+function CustomInput({ label, name, type = "text", placeholder, icon, options, required = false }: CustomInputProps) {
     return (
         <div className="passenger-input-container">
             <label htmlFor={name} className="passenger-input-label">

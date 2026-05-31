@@ -284,4 +284,124 @@ export class PaymentService {
             );
         }
     }
+
+    async addPaymentMethod(userId: number, addPaymentMethodDto: any) {
+        try {
+            const { holderName, brand, expirationDate, last4Digits, stripePaymentMethodId } = addPaymentMethodDto;
+
+            // Crear o obtener el cliente de Stripe
+            const user = await this.prisma.user.findUnique({
+                where: { id: userId },
+            });
+
+            if (!user) {
+                throw new HttpException(
+                    'Usuario no encontrado',
+                    HttpStatus.NOT_FOUND,
+                );
+            }
+
+            let stripeCustomerId;
+            const existingPaymentMethod = await this.prisma.paymentMethod.findFirst({
+                where: { userId },
+            });
+
+            if (existingPaymentMethod?.stripeCustomerId) {
+                stripeCustomerId = existingPaymentMethod.stripeCustomerId;
+            } else {
+                // Crear nuevo cliente en Stripe
+                const customer = await this.stripe.customers.create({
+                    email: user.email,
+                    name: `${user.name} ${user.surname}`,
+                });
+                stripeCustomerId = customer.id;
+            }
+
+            // Guardar el método de pago en la base de datos
+            const paymentMethod = await this.prisma.paymentMethod.create({
+                data: {
+                    holderName,
+                    brand,
+                    expirationDate: new Date(expirationDate),
+                    last4Digits,
+                    stripeCustomerId,
+                    stripePaymentMethodId,
+                    userId,
+                },
+            });
+
+            return {
+                success: true,
+                paymentMethodId: paymentMethod.id,
+                message: 'Método de pago agregado exitosamente',
+            };
+
+        } catch (error: any) {
+            if (error instanceof HttpException) {
+                throw error;
+            }
+
+            throw new HttpException(
+                'Error al agregar el método de pago',
+                HttpStatus.INTERNAL_SERVER_ERROR,
+            );
+        }
+    }
+
+    async getUserPaymentMethods(userId: number) {
+        try {
+            const paymentMethods = await this.prisma.paymentMethod.findMany({
+                where: { userId },
+                orderBy: { createdAt: 'desc' },
+            });
+
+            return {
+                success: true,
+                paymentMethods,
+            };
+        } catch (error: any) {
+            throw new HttpException(
+                'Error al obtener los métodos de pago',
+                HttpStatus.INTERNAL_SERVER_ERROR,
+            );
+        }
+    }
+
+    async deletePaymentMethod(paymentMethodId: number, userId: number) {
+        try {
+            // Verify the payment method belongs to the user
+            const paymentMethod = await this.prisma.paymentMethod.findFirst({
+                where: {
+                    id: paymentMethodId,
+                    userId,
+                },
+            });
+
+            if (!paymentMethod) {
+                throw new HttpException(
+                    'Método de pago no encontrado',
+                    HttpStatus.NOT_FOUND,
+                );
+            }
+
+            // Delete the payment method
+            await this.prisma.paymentMethod.delete({
+                where: { id: paymentMethodId },
+            });
+
+            return {
+                success: true,
+                message: 'Método de pago eliminado exitosamente',
+            };
+        } catch (error: any) {
+            if (error instanceof HttpException) {
+                throw error;
+            }
+
+            throw new HttpException(
+                'Error al eliminar el método de pago',
+                HttpStatus.INTERNAL_SERVER_ERROR,
+            );
+        }
+    }
 }

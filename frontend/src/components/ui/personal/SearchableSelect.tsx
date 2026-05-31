@@ -20,7 +20,7 @@ function SearchableSelect({
     onChange, 
     placeholder = "Selecciona una opción...", 
     icon, 
-    required = true,
+    required = false,
     options,
     useCountries = false
 }: SearchableSelectProps) {

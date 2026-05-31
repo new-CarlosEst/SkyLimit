@@ -1,6 +1,9 @@
 import { useState } from "react";
 import CardSelector, { type Card } from "./CardSelector";
 import { cards as stripeCards } from "../../../utils/cards";
+import { usePaymentMethods } from "../../../hooks/usePaymentMethods";
+import FamiconsCard from "../../../assets/ui/FamiconsCard.svg";
+import MynauiX from "../../../assets/ui/MynauiX.svg";
 import "./PaymentMethods.css";
 
 const testCards: Card[] = stripeCards.map((card, index) => ({
@@ -19,11 +22,18 @@ function PaymentMethods() {
     const [cardName, setCardName] = useState("");
     const [expiry, setExpiry] = useState("");
     const [cvv, setCvv] = useState("");
+    const { isSaving, paymentMethods, isLoadingMethods, handleAddTestCard, handleAddCustomCard, handleDeletePaymentMethod } = usePaymentMethods();
 
-    const handleCardSelect = (cardId: string) => {
-        setSelectedTestCard(cardId);
-        setShowCardSelection(false);
-        setShowCustomForm(false);
+    const handleCardSelect = async (cardId: string) => {
+        const card = testCards.find(c => c.id === cardId);
+        if (card) {
+            const success = await handleAddTestCard(cardId, card);
+            if (success) {
+                setSelectedTestCard(cardId);
+                setShowCardSelection(false);
+                setShowCustomForm(false);
+            }
+        }
     };
 
     const handleAddCard = () => {
@@ -56,10 +66,57 @@ function PaymentMethods() {
         return v;
     };
 
+    const handleSaveCustomCard = async () => {
+        const success = await handleAddCustomCard({ cardName, cardNumber, expiry });
+        if (success) {
+            setShowCustomForm(false);
+            setCardNumber("");
+            setCardName("");
+            setExpiry("");
+            setCvv("");
+        }
+    };
+
     return (
         <div className="card">
             <h2 className="card-title">Métodos de Pago</h2>
             
+            {/* Saved payment methods */}
+            {paymentMethods.length > 0 && (
+                <div className="saved-payment-methods">
+                    <h3 className="section-title">Tarjetas Guardadas</h3>
+                    {isLoadingMethods ? (
+                        <p className="loading-text">Cargando...</p>
+                    ) : (
+                        <div className="payment-methods-list">
+                            {paymentMethods.map((method: any) => (
+                                <div key={method.id} className="payment-method-card">
+                                    <div className="payment-method-left">
+                                        <img src={FamiconsCard} alt="Card" className="payment-method-icon" />
+                                        <div className="payment-method-info">
+                                            <span className="payment-method-brand">{method.brand}</span>
+                                            <span className="payment-method-number">•••• {method.last4Digits}</span>
+                                        </div>
+                                    </div>
+                                    <div className="payment-method-right">
+                                        <span className="payment-method-expiry">
+                                            Exp: {new Date(method.expirationDate).toLocaleDateString('es-ES', { month: '2-digit', year: '2-digit' })}
+                                        </span>
+                                        <button 
+                                            className="delete-card-button"
+                                            onClick={() => handleDeletePaymentMethod(method.id)}
+                                            aria-label="Eliminar tarjeta"
+                                        >
+                                            <img src={MynauiX} alt="Eliminar" className="delete-icon" />
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            )}
+
             <div className="payment-section">
                 <button
                     className="custom-card-button"
@@ -130,20 +187,16 @@ function PaymentMethods() {
                             </div>
                         </div>
 
-                        <button className="submit-button">
-                            Guardar Tarjeta
+                        <button 
+                            className="submit-button"
+                            onClick={handleSaveCustomCard}
+                            disabled={isSaving}
+                        >
+                            {isSaving ? "Guardando..." : "Guardar Tarjeta"}
                         </button>
                     </div>
                 )}
             </div>
-
-            {selectedTestCard && (
-                <div className="selected-card-info">
-                    <p className="text-sm text-gray-600">
-                        Tarjeta seleccionada: <strong>{testCards.find(c => c.id === selectedTestCard)?.brand}</strong> terminada en <strong>{testCards.find(c => c.id === selectedTestCard)?.last4}</strong>
-                    </p>
-                </div>
-            )}
         </div>
     );
 }

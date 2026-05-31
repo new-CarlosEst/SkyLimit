@@ -11,7 +11,7 @@ interface DateInputProps {
     required?: boolean;
 }
 
-function DateInput({ label, value, onChange, maxDate, minDate, required = true }: DateInputProps) {
+function DateInput({ label, value, onChange, maxDate, minDate, required = false }: DateInputProps) {
     return (
         <div className="passenger-input-container">
             <label className="passenger-input-label">

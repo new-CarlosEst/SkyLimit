@@ -1,12 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import CardSelectorModal from "../components/payment/CardSelectorModal";
-import { createReservation } from "../api/reservation.api";
-import { verifyPayment } from "../api/payment.api";
 import { useAuthStore } from "../store/authStore";
 import { useCheckoutStore } from "../store/checkoutStore";
-import type { CheckoutPaymentCard } from "../types/checkout.types";
-import { sileo } from "sileo";
+import { usePaymentForm } from "../hooks/usePaymentForm";
 import "./Payment.css";
 
 // Icons
@@ -16,78 +12,21 @@ import cardIcon from "../assets/ui/FamiconsCard.svg";
 
 function Payment() {
     const navigate = useNavigate();
-    const [showCardModal, setShowCardModal] = useState(false);
-    const [selectedCard, setSelectedCard] = useState<CheckoutPaymentCard | null>(null);
-    const [loading, setLoading] = useState(false);
     const { user, token } = useAuthStore();
     const { buildReservationPayload, setPaymentCard, setPaymentResult, clearCheckout } = useCheckoutStore();
 
-    const handleCardSelect = (card: CheckoutPaymentCard) => {
-        setSelectedCard(card);
-        setShowCardModal(false);
-    };
+    const {
+        showCardModal,
+        selectedCard,
+        loading,
+        handleCardSelect,
+        handleInputChange,
+        handleSubmit,
+        setShowCardModal,
+    } = usePaymentForm(user, token, buildReservationPayload, setPaymentCard, setPaymentResult, clearCheckout);
 
-    const handleInputChange = () => {
-        setShowCardModal(true);
-    };
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        void (async () => {
-            if (!user || !token) {
-                sileo.error({ title: "Debes iniciar sesión para pagar" });
-                return;
-            }
-
-            if (!selectedCard) {
-                sileo.error({ title: "Selecciona una tarjeta de prueba para continuar" });
-                return;
-            }
-
-            const formData = new FormData(e.currentTarget as HTMLFormElement);
-            const cardholderName = String(formData.get("cardholderName") || "").trim();
-
-            if (!cardholderName) {
-                sileo.error({ title: "Debes indicar el titular de la tarjeta" });
-                return;
-            }
-
-            const reservationPayload = buildReservationPayload();
-            if (!reservationPayload) {
-                sileo.error({ title: "Faltan datos de la reserva. Vuelve a completar el proceso" });
-                return;
-            }
-
-            setLoading(true);
-            try {
-                setPaymentCard({
-                    ...selectedCard,
-                    cardholderName,
-                });
-
-                const reservationResponse = await createReservation(reservationPayload, token);
-                const paymentResponse = await verifyPayment({
-                    amount: reservationPayload.totalPrice,
-                    paymentMethodId: selectedCard.paymentMethodId,
-                    reservationId: String(reservationResponse.reservationId),
-                    email: user?.email || cardholderName,
-                });
-
-                setPaymentResult(reservationResponse.reservationId, paymentResponse.stripePaymentIntentId);
-                sileo.success({
-                    title: "Pago completado y reserva generada",
-                });
-                clearCheckout();
-                navigate("/");
-            } catch (error: any) {
-                sileo.error({
-                    title: "Error al procesar la reserva",
-                    description: error?.response?.data?.message || error?.message || "Error desconocido al procesar el pago",
-                });
-            } finally {
-                setLoading(false);
-            }
-        })();
+    const handlePaymentSubmit = (e: React.FormEvent) => {
+        handleSubmit(e, () => navigate("/"));
     };
 
     const getCardIcon = (brand: string) => {
@@ -136,7 +75,7 @@ function Payment() {
                     <p className="text-slate-600">Completa los datos de pago para finalizar tu reserva.</p>
                 </div>
 
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handlePaymentSubmit}>
                     {/* Datos personales */}
                     <div className="payment-card">
                         <div className="payment-card-header">

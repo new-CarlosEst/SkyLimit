@@ -3,8 +3,6 @@ import { usePassengerForm } from "../hooks/usePassengerForm";
 import { useSearchParamsStore } from "../store/searchParamsStore";
 import { registerLocale } from "react-datepicker";
 import { es } from "date-fns/locale/es";
-import { useState } from "react";
-import { sileo } from "sileo";
 import "./PassengerData.css";
 import SearchableSelect from "../components/ui/personal/SearchableSelect";
 import CustomInput from "../components/ui/personal/CustomInput";
@@ -12,6 +10,7 @@ import DateInput from "../components/ui/personal/DateInput";
 import SeatSelector from "../components/ui/personal/SeatSelector";
 import { useCheckoutStore } from "../store/checkoutStore";
 import type { PassengerCheckoutData } from "../types/checkout.types";
+import { useSeatSelection } from "../hooks/useSeatSelection";
  
 // Register Spanish locale
 registerLocale("es", es);
@@ -26,46 +25,26 @@ import genderIcon from "../assets/ui/men-broken.svg";
  
 function PassengerData() {
     const navigate = useNavigate();
-    const { passengerList, dates, setPassengerDate, handleSubmit } = usePassengerForm();
+    const { passengerList, dates, setPassengerDate } = usePassengerForm();
     const { cabinClass } = useSearchParamsStore();
     const { travelClass, setPassengers } = useCheckoutStore();
-    const [selectedSeats, setSelectedSeats] = useState<Record<number, { seat: string | null; price: number }>>({});
-    const [showSeatSelector, setShowSeatSelector] = useState(false);
- 
-    // ✅ CORRECCIÓN: guardamos los datos del form aquí antes de desmontar el <form>
-    const [formPassengersData, setFormPassengersData] = useState<PassengerCheckoutData[]>([]);
- 
     const today = new Date();
- 
-    const getTravelClass = () => {
-        switch (cabinClass) {
-            case 'economy':
-                return 'TURISTA';
-            case 'premiumeconomy':
-                return 'TURISTA PREMIUM';
-            case 'business':
-                return 'EJECUTIVA';
-            case 'first':
-                return 'PRIMERA CLASE';
-            default:
-                return 'TURISTA';
-        }
-    };
- 
-    const handleSeatSelect = (passengerIndex: number, seat: string | null, price: number) => {
-        setSelectedSeats(prev => ({
-            ...prev,
-            [passengerIndex]: { seat, price }
-        }));
-    };
- 
-    // ✅ CORRECCIÓN: leemos formData aquí (el form todavía existe) y lo guardamos en estado
-    const handleContinueToSeats = (e: React.FormEvent) => {
+
+    const {
+        showSeatSelector,
+        handleSeatSelect,
+        handleContinueToSeats,
+        handleBackToForm,
+        handleContinueToPayment,
+        getTravelClass,
+    } = useSeatSelection(cabinClass, travelClass);
+
+    const handleFormSubmit = (e: React.FormEvent) => {
         e.preventDefault();
- 
+
         const formEl = e.currentTarget as HTMLFormElement;
         const formData = new FormData(formEl);
- 
+
         const payload: PassengerCheckoutData[] = passengerList.map((passenger, pIdx) => ({
             type: passenger.type as "Adulto" | "Niño" | "Bebé",
             name: String(formData.get(`p${pIdx}_name`) || ""),
@@ -91,54 +70,15 @@ function PassengerData() {
                 cabin: travelClass || getTravelClass(),
             },
         }));
- 
-        setFormPassengersData(payload);
-        setShowSeatSelector(true);
-        window.scrollTo(0, 0);
+
+        handleContinueToSeats(payload);
     };
- 
-    const handleBackToForm = () => {
-        setShowSeatSelector(false);
-        window.scrollTo(0, 0);
-    };
- 
-    // ✅ CORRECCIÓN: usamos formPassengersData (ya guardado) en lugar de buscar el form en el DOM
-    const handleContinueToPayment = () => {
-        const passengersPayload: PassengerCheckoutData[] = formPassengersData.map((passenger, pIdx) => {
-            const seatData = selectedSeats[pIdx] || { seat: null, price: 0 };
-            return {
-                ...passenger,
-                seat: {
-                    seatNumber: seatData.seat,
-                    price: seatData.price || 0,
-                    cabin: travelClass || getTravelClass(),
-                },
-            };
-        });
- 
-        const hasIncompletePassengers = passengersPayload.some((passenger) =>
-            !passenger.name ||
-            !passenger.surname ||
-            !passenger.gender ||
-            !passenger.birthDate ||
-            !passenger.nationality ||
-            !passenger.document.type ||
-            !passenger.document.number ||
-            !passenger.document.country ||
-            !passenger.document.expirationDate,
-        );
- 
-        if (hasIncompletePassengers) {
-            sileo.error({
-                title: "Faltan datos de pasajeros o documentos",
-            });
-            return;
-        }
- 
+
+    const handlePaymentNavigation = (passengersPayload: PassengerCheckoutData[]) => {
         setPassengers(passengersPayload);
         navigate('/payment');
     };
- 
+
     return (
         <div className="passenger-data-container">
             <div className="passenger-data-content">
@@ -161,8 +101,7 @@ function PassengerData() {
                             <p className="text-slate-600">Por favor, introduce los datos tal y como aparecen en el documento de identidad oficial.</p>
                         </div>
  
-                        {/* ✅ CORRECCIÓN: onSubmit maneja todo, el botón es solo type="submit" sin onClick extra */}
-                        <form onSubmit={handleContinueToSeats}>
+                        <form onSubmit={handleFormSubmit}>
                             {passengerList.map((passenger, pIdx) => (
                                 <div key={pIdx} className="passenger-card">
                                     <div className="passenger-card-header">
@@ -254,7 +193,6 @@ function PassengerData() {
                             ))}
  
                             <div className="flex justify-end mt-8 mb-12">
-                                {/* ✅ CORRECCIÓN: type="submit" solo, sin onClick duplicado */}
                                 <button
                                     type="submit"
                                     className="bg-[#2b5aa0] hover:bg-[#1a3c79] text-white px-8 py-4 rounded-xl font-bold text-lg shadow-md transition-colors"
@@ -297,7 +235,7 @@ function PassengerData() {
                         <div className="flex justify-end mt-8 mb-12">
                             <button
                                 type="button"
-                                onClick={handleContinueToPayment}
+                                onClick={() => handleContinueToPayment(handlePaymentNavigation)}
                                 className="bg-[#2b5aa0] hover:bg-[#1a3c79] text-white px-8 py-4 rounded-xl font-bold text-lg shadow-md transition-colors"
                             >
                                 Confirmar y Continuar al Pago

@@ -1,5 +1,6 @@
 import apiClient from "./cliente";
 import type { CheckoutReservationPayload } from "../types/checkout.types";
+import { useAuthStore } from "../store/authStore";
 
 export interface CreateReservationResponse {
     success: boolean;
@@ -63,10 +64,16 @@ export const createReservation = async (
     return response.data;
 };
 
-export const getUserReservations = async (token: string): Promise<UserReservation[]> => {
+export const getUserReservations = async (): Promise<UserReservation[]> => {
+    const { user } = useAuthStore.getState();
+    
+    if (!user?.id) {
+        throw new Error("User not authenticated");
+    }
+
     const response = await apiClient.get<UserReservation[]>("/reservation/user", {
-        headers: {
-            Authorization: `Bearer ${token}`,
+        params: {
+            userId: user.id,
         },
     });
 

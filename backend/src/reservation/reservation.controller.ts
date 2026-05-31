@@ -4,6 +4,7 @@ import {
   Get,
   Body,
   Headers,
+  Query,
   HttpCode,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -61,14 +62,8 @@ export class ReservationController {
   @Get('user')
   @HttpCode(200)
   public async getUserReservations(
-    @Headers('Authorization') authHeader: string,
+    @Query('userId') userId: number,
   ) {
-    if (!authHeader) {
-      throw new UnauthorizedException('No autorizado');
-    }
-
-    const token = authHeader.split(' ')[1];
-    const validated = (await this.authService.validateJWT(token)) as any;
-    return this.reservationService.getUserReservations(validated.user.id);
+    return this.reservationService.getUserReservations(userId);
   }
 }
