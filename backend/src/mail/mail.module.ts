@@ -11,11 +11,11 @@ import { MailController } from './mail.controller';
       useFactory: (configService: ConfigService) => ({
         transport: {
           host: 'smtp.gmail.com',
-          port: 465,
-          secure: true,
+          port: 587,
+          secure: false,
           auth: {
             user: configService.get<string>('EMAIL_ACCOUNT'),
-            pass: configService.get<string>('EMAIL_PASSCODE'),
+            pass: configService.get<string>('EMAIL_PASS'),  // antes era EMAIL_PASSCODE
           },
         },
         defaults: {
