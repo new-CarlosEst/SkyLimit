@@ -13,6 +13,7 @@ import { MailController } from './mail.controller';
           host: 'smtp.gmail.com',
           port: 587,
           secure: false,
+          family: 4,
           auth: {
             user: configService.get<string>('EMAIL_ACCOUNT'),
             pass: configService.get<string>('EMAIL_PASS'),  // antes era EMAIL_PASSCODE
