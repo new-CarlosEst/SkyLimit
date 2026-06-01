@@ -101,21 +101,30 @@ export class PaymentService {
             });
             reservation.status = 'CONFIRMED';
 
-            await this.mailService.sendPurchaseDocumentsEmail({
-                customerEmail: email,
-                customerName: `${reservation.user.name} ${reservation.user.surname}`,
-                reservation,
-                transaction: {
-                    id: transaction.id,
-                    amount: transaction.amount,
-                    currency: transaction.currency,
-                    status: transaction.status,
-                    stripePaymentIntentId: paymentIntent.id,
-                    cardBrand: paymentMethod.card?.brand || 'unknown',
-                    cardLast4: paymentMethod.card?.last4 || '',
-                    cardholderName: email,
-                },
-            });
+            let emailSent = true;
+            let emailError = null;
+
+            try {
+                await this.mailService.sendPurchaseDocumentsEmail({
+                    customerEmail: email,
+                    customerName: `${reservation.user.name} ${reservation.user.surname}`,
+                    reservation,
+                    transaction: {
+                        id: transaction.id,
+                        amount: transaction.amount,
+                        currency: transaction.currency,
+                        status: transaction.status,
+                        stripePaymentIntentId: paymentIntent.id,
+                        cardBrand: paymentMethod.card?.brand || 'unknown',
+                        cardLast4: paymentMethod.card?.last4 || '',
+                        cardholderName: email,
+                    },
+                });
+            } catch (error) {
+                emailSent = false;
+                emailError = error;
+                console.error('[EMAIL ERROR] Error al enviar email de compra:', error);
+            }
 
             return {
                 success: true,
@@ -125,7 +134,10 @@ export class PaymentService {
                 status: transaction.status,
                 cardBrand: transaction.cardBrand,
                 cardLast4: transaction.cardLast4,
-                message: 'Pago verificado exitosamente y documentación enviada por correo',
+                emailSent,
+                message: emailSent 
+                    ? 'Pago verificado exitosamente y documentación enviada por correo'
+                    : 'Pago verificado exitosamente pero hubo un error al enviar el email de confirmación',
             };
 
         } catch (error: any) {
