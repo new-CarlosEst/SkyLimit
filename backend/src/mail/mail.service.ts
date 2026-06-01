@@ -2,6 +2,7 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
 import { ConfigService } from '@nestjs/config';
 import { ContactDataDto } from './dto/contact-data.dto';
+
 interface PurchaseMailPayload {
     customerEmail: string;
     customerName: string;
@@ -26,36 +27,36 @@ export class MailService {
     ) {}
 
     private emailRecoveryBody(token: string, name: string, email: string): string {
-    return `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <div style="display: flex; width: 100%; justify-content: center; align-items: center;">
-                <img src="${this.configService.get<string>('FRONTEND_URL')}/logo.png" 
-                    alt="Skylimit Logo" 
-                    style="width: 150px; height: 150px;">
-            </div>
-
-            <div>
-                <p>Hola ${name},</p>
-
-                <p><strong>¿Has olvidado la contraseña?</strong></p>
-                <p>Hemos recibido una petición para recuperar tu contraseña.</p>
-                <p>Haz clic en el botón de abajo:</p>
-
-                <div style="text-align: center; margin: 20px 0;">
-                    <a href="${this.configService.get<string>('FRONTEND_URL')}/?token=${token}"
-                        style="background-color: #007bff; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px;">
-                        Recuperar contraseña
-                    </a>
+        return `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <div style="display: flex; width: 100%; justify-content: center; align-items: center;">
+                    <img src="${this.configService.get<string>('FRONTEND_URL')}/logo.png" 
+                        alt="Skylimit Logo" 
+                        style="width: 150px; height: 150px;">
                 </div>
 
-                <p>Si el botón no funciona, copia y pega esta URL en tu navegador:</p>
-                <p style="word-break: break-all;">
-                    ${this.configService.get<string>('FRONTEND_URL')}/?token=${token}
-                </p>
+                <div>
+                    <p>Hola ${name},</p>
+
+                    <p><strong>¿Has olvidado la contraseña?</strong></p>
+                    <p>Hemos recibido una petición para recuperar tu contraseña.</p>
+                    <p>Haz clic en el botón de abajo:</p>
+
+                    <div style="text-align: center; margin: 20px 0;">
+                        <a href="${this.configService.get<string>('FRONTEND_URL')}/?token=${token}"
+                            style="background-color: #007bff; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px;">
+                            Recuperar contraseña
+                        </a>
+                    </div>
+
+                    <p>Si el botón no funciona, copia y pega esta URL en tu navegador:</p>
+                    <p style="word-break: break-all;">
+                        ${this.configService.get<string>('FRONTEND_URL')}/?token=${token}
+                    </p>
+                </div>
             </div>
-        </div>
-    `;
-}
+        `;
+    }
 
     public async sendRecoveryEmail(email: string, token: string, name: string) {
         try {
@@ -63,9 +64,17 @@ export class MailService {
                 to: email,
                 subject: 'Recuperación de contraseña - Skylimit',
                 html: this.emailRecoveryBody(token, name, email),
-            })
+            });
         } catch (error) {
-            console.log("error enviando el email de recuperacion: ", error)
+            console.error(`[MailService][sendRecoveryEmail] Error al enviar email a: ${email}`);
+            console.error(`  EMAIL_ACCOUNT definido: ${!!this.configService.get<string>('EMAIL_ACCOUNT')}`);
+            console.error(`  EMAIL_PASS definido: ${!!this.configService.get<string>('EMAIL_PASS')}`);
+            console.error(`  Mensaje: ${error?.message}`);
+            console.error(`  Codigo: ${error?.code}`);
+            console.error(`  Comando SMTP: ${error?.command}`);
+            console.error(`  Respuesta SMTP: ${error?.response}`);
+            console.error(`  ResponseCode: ${error?.responseCode}`);
+            console.error(`  Stack: ${error?.stack}`);
             throw new InternalServerErrorException('Error al enviar el email de recuperación');
         }
     }
@@ -76,9 +85,18 @@ export class MailService {
                 to: this.configService.get<string>('EMAIL_ACCOUNT'),
                 subject: 'Nuevo mensaje de contacto - Skylimit',
                 html: this.emailContactBody(contactData),
-            })
+            });
         } catch (error) {
-            console.log("error enviando el email de contacto: ", error)
+            const emailAccount = this.configService.get<string>('EMAIL_ACCOUNT');
+            console.error(`[MailService][sendContactMail] Error al enviar email de contacto`);
+            console.error(`  Destino: ${emailAccount ? `${emailAccount.substring(0, 4)}...` : 'NO DEFINIDO'}`);
+            console.error(`  EMAIL_PASS definido: ${!!this.configService.get<string>('EMAIL_PASS')}`);
+            console.error(`  Mensaje: ${error?.message}`);
+            console.error(`  Codigo: ${error?.code}`);
+            console.error(`  Comando SMTP: ${error?.command}`);
+            console.error(`  Respuesta SMTP: ${error?.response}`);
+            console.error(`  ResponseCode: ${error?.responseCode}`);
+            console.error(`  Stack: ${error?.stack}`);
             throw new InternalServerErrorException('Error al enviar el email de contacto');
         }
     }
@@ -208,10 +226,18 @@ export class MailService {
                 ],
             });
         } catch (error) {
-            console.log('error enviando email de compra: ', error);
-            throw new InternalServerErrorException(
-                'Error al enviar la documentación de la compra por email',
-            );
+            console.error(`[MailService][sendPurchaseDocumentsEmail] Error al enviar email a: ${payload.customerEmail}`);
+            console.error(`  Reserva ID: ${payload.reservation?.id}`);
+            console.error(`  Transaccion ID: ${payload.transaction?.id}`);
+            console.error(`  EMAIL_ACCOUNT definido: ${!!this.configService.get<string>('EMAIL_ACCOUNT')}`);
+            console.error(`  EMAIL_PASS definido: ${!!this.configService.get<string>('EMAIL_PASS')}`);
+            console.error(`  Mensaje: ${error?.message}`);
+            console.error(`  Codigo: ${error?.code}`);
+            console.error(`  Comando SMTP: ${error?.command}`);
+            console.error(`  Respuesta SMTP: ${error?.response}`);
+            console.error(`  ResponseCode: ${error?.responseCode}`);
+            console.error(`  Stack: ${error?.stack}`);
+            throw new InternalServerErrorException('Error al enviar la documentación de la compra por email');
         }
     }
 
