@@ -1,7 +1,7 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { MailerService } from '@nestjs-modules/mailer';
 import { ConfigService } from '@nestjs/config';
 import { ContactDataDto } from './dto/contact-data.dto';
+import * as sgMail from '@sendgrid/mail';
 
 interface PurchaseMailPayload {
     customerEmail: string;
@@ -21,10 +21,14 @@ interface PurchaseMailPayload {
 
 @Injectable()
 export class MailService {
+    private readonly fromEmail: string;
+
     constructor(
-        private readonly mailerService: MailerService,
         private readonly configService: ConfigService,
-    ) {}
+    ) {
+        sgMail.setApiKey(this.configService.get<string>('SENDGRID_API_KEY')!);
+        this.fromEmail = this.configService.get<string>('EMAIL_ACCOUNT')!;
+    }
 
     private emailRecoveryBody(token: string, name: string, email: string): string {
         return `
@@ -60,20 +64,21 @@ export class MailService {
 
     public async sendRecoveryEmail(email: string, token: string, name: string) {
         try {
-            await this.mailerService.sendMail({
+            await sgMail.send({
                 to: email,
+                from: this.fromEmail,
                 subject: 'Recuperación de contraseña - Skylimit',
                 html: this.emailRecoveryBody(token, name, email),
             });
         } catch (error) {
             console.error(`[MailService][sendRecoveryEmail] Error al enviar email a: ${email}`);
-            console.error(`  EMAIL_ACCOUNT definido: ${!!this.configService.get<string>('EMAIL_ACCOUNT')}`);
-            console.error(`  EMAIL_PASS definido: ${!!this.configService.get<string>('EMAIL_PASS')}`);
+            console.error(`  SENDGRID_API_KEY definida: ${!!this.configService.get<string>('SENDGRID_API_KEY')}`);
+            console.error(`  FROM email: ${this.fromEmail}`);
             console.error(`  Mensaje: ${error?.message}`);
-            console.error(`  Codigo: ${error?.code}`);
-            console.error(`  Comando SMTP: ${error?.command}`);
-            console.error(`  Respuesta SMTP: ${error?.response}`);
-            console.error(`  ResponseCode: ${error?.responseCode}`);
+            console.error(`  Status code: ${error?.code}`);
+            if (error?.response) {
+                console.error(`  Response body: ${JSON.stringify(error.response.body)}`);
+            }
             console.error(`  Stack: ${error?.stack}`);
             throw new InternalServerErrorException('Error al enviar el email de recuperación');
         }
@@ -81,8 +86,9 @@ export class MailService {
 
     public async sendContactMail(contactData: ContactDataDto) {
         try {
-            await this.mailerService.sendMail({
+            await sgMail.send({
                 to: this.configService.get<string>('EMAIL_ACCOUNT'),
+                from: this.fromEmail,
                 subject: 'Nuevo mensaje de contacto - Skylimit',
                 html: this.emailContactBody(contactData),
             });
@@ -90,12 +96,12 @@ export class MailService {
             const emailAccount = this.configService.get<string>('EMAIL_ACCOUNT');
             console.error(`[MailService][sendContactMail] Error al enviar email de contacto`);
             console.error(`  Destino: ${emailAccount ? `${emailAccount.substring(0, 4)}...` : 'NO DEFINIDO'}`);
-            console.error(`  EMAIL_PASS definido: ${!!this.configService.get<string>('EMAIL_PASS')}`);
+            console.error(`  SENDGRID_API_KEY definida: ${!!this.configService.get<string>('SENDGRID_API_KEY')}`);
             console.error(`  Mensaje: ${error?.message}`);
-            console.error(`  Codigo: ${error?.code}`);
-            console.error(`  Comando SMTP: ${error?.command}`);
-            console.error(`  Respuesta SMTP: ${error?.response}`);
-            console.error(`  ResponseCode: ${error?.responseCode}`);
+            console.error(`  Status code: ${error?.code}`);
+            if (error?.response) {
+                console.error(`  Response body: ${JSON.stringify(error.response.body)}`);
+            }
             console.error(`  Stack: ${error?.stack}`);
             throw new InternalServerErrorException('Error al enviar el email de contacto');
         }
@@ -208,20 +214,23 @@ export class MailService {
                 'No permite embarque ni uso comercial.',
             ]);
 
-            await this.mailerService.sendMail({
+            await sgMail.send({
                 to: payload.customerEmail,
+                from: this.fromEmail,
                 subject: `Confirmacion de reserva #${payload.reservation.id} - Skylimit`,
                 html: this.purchaseEmailBody(payload),
                 attachments: [
                     {
+                        content: transactionPdf.toString('base64'),
                         filename: `transaccion-${payload.transaction.id}.pdf`,
-                        content: transactionPdf,
-                        contentType: 'application/pdf',
+                        type: 'application/pdf',
+                        disposition: 'attachment',
                     },
                     {
+                        content: ticketPdf.toString('base64'),
                         filename: `billete-reserva-${payload.reservation.id}.pdf`,
-                        content: ticketPdf,
-                        contentType: 'application/pdf',
+                        type: 'application/pdf',
+                        disposition: 'attachment',
                     },
                 ],
             });
@@ -229,13 +238,13 @@ export class MailService {
             console.error(`[MailService][sendPurchaseDocumentsEmail] Error al enviar email a: ${payload.customerEmail}`);
             console.error(`  Reserva ID: ${payload.reservation?.id}`);
             console.error(`  Transaccion ID: ${payload.transaction?.id}`);
-            console.error(`  EMAIL_ACCOUNT definido: ${!!this.configService.get<string>('EMAIL_ACCOUNT')}`);
-            console.error(`  EMAIL_PASS definido: ${!!this.configService.get<string>('EMAIL_PASS')}`);
+            console.error(`  SENDGRID_API_KEY definida: ${!!this.configService.get<string>('SENDGRID_API_KEY')}`);
+            console.error(`  FROM email: ${this.fromEmail}`);
             console.error(`  Mensaje: ${error?.message}`);
-            console.error(`  Codigo: ${error?.code}`);
-            console.error(`  Comando SMTP: ${error?.command}`);
-            console.error(`  Respuesta SMTP: ${error?.response}`);
-            console.error(`  ResponseCode: ${error?.responseCode}`);
+            console.error(`  Status code: ${error?.code}`);
+            if (error?.response) {
+                console.error(`  Response body: ${JSON.stringify(error.response.body)}`);
+            }
             console.error(`  Stack: ${error?.stack}`);
             throw new InternalServerErrorException('Error al enviar la documentación de la compra por email');
         }

@@ -83,21 +83,12 @@ function PasswordRecovery() {
                 {!success ? (
                     <form onSubmit={enviarDatos} className="form-login-content">
                         <PasswordInput />
-                        <div className="flex flex-col gap-1 w-full">
-                            <label htmlFor="confirmPassword" className="text-sm font-semibold text-gray-700">
-                                Confirmar contraseña
-                            </label>
-                            <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3 border border-gray-300 rounded-lg px-4 py-3 sm:py-3.5 focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-blue-100 transition-all bg-white group">
-                                <input
-                                    type="password"
-                                    id="confirmPassword"
-                                    name="confirmPassword"
-                                    placeholder="Confirma tu contraseña..."
-                                    autoComplete="off"
-                                    className="outline-none text-gray-700 text-sm bg-transparent placeholder-gray-500 font-medium text-left w-full h-full"
-                                />
-                            </div>
-                        </div>
+                        <PasswordInput
+                            label="Confirmar contraseña"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            placeholder="Confirma tu contraseña..."
+                        />
                         {error && (
                             <p className="text-red-500 text-xs font-semibold mb-1 bg-red-50 p-2 rounded border border-red-100">
                                 {error}

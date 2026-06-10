@@ -18,20 +18,92 @@
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
     border: 1px solid #e2e8f0;
     margin-bottom: 1.5rem;
+    transition: padding 0.3s ease;
 }
 
 .passenger-card-header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid #e2e8f0;
+    transition: margin-bottom 0.3s ease, padding-bottom 0.3s ease, border-color 0.3s ease;
+}
+
+.passenger-card-header.collapsed {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom-color: transparent;
 }
 
 .passenger-card-title {
     font-size: 1.25rem;
     font-weight: 600;
     color: #2b5aa0;
+}
+
+.passenger-card-toggle-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+}
+
+.passenger-card-toggle-btn:hover {
+    background-color: #f1f5f9;
+}
+
+.passenger-card-chevron {
+    width: 1.5rem;
+    height: 1.5rem;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: rotate(180deg); /* points down when loaded? Wait, chevron down points DOWN by default, so if open is true, we point UP (180deg). If collapsed, we point DOWN (0deg). Oh wait! Let's default it to open (pointing up) so transform: rotate(180deg) when open. */
+    transform: rotate(180deg);
+}
+
+.passenger-card-chevron.open {
+    transform: rotate(0deg); /* Let's check: FlowbiteChevronDownOutline points DOWN by default. So if it is open, we want it to point UP (180deg). If it is closed, we want it to point DOWN (0deg). Let's set open to rotate(180deg) and normal to rotate(0deg) */
+}
+
+/* Let's redefine chevron: normal points down (rotate 0deg). When open (meaning active/expanded), it points up (rotate 180deg) */
+.passenger-card-chevron {
+    width: 1.5rem;
+    height: 1.5rem;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: rotate(0deg);
+}
+
+.passenger-card-chevron.open {
+    transform: rotate(180deg);
+}
+
+.passenger-card-body {
+    max-height: 2000px;
+    opacity: 1;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+}
+
+.passenger-card-body.collapsed {
+    max-height: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.passenger-card.collapsed-card {
+    cursor: pointer;
+    transition: padding 0.3s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.passenger-card.collapsed-card:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.08);
 }
 
 .form-grid {

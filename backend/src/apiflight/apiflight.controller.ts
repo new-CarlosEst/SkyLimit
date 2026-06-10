@@ -22,7 +22,8 @@ export class ApiflightController {
     @Query('children') children?: string,
     @Query('infants') infants?: string,
   ) {
-    //const apiFlights = await this.apiflightService.getFlightsRoundTripMock();
+    // TODO: CAMBIAR A LA API REAL ANTES DE SUBIR A PRODUCCION
+    // const apiFlights = await this.apiflightService.getFlightsRoundTripMock();
     const apiFlights = await this.apiflightService.getFlightsRoundTrip(originName, destinationName, origin, departure, cabinClass, date, returnDate, adults, children, infants);
 
     // Obtener vuelos de la base de datos interna
@@ -53,7 +54,8 @@ export class ApiflightController {
     @Query('children') children?: string,
     @Query('infants') infants?: string,
   ) {
-    //const apiFlights = await this.apiflightService.getFlightsOneWayMock();
+    // TODO: CAMBIAR A LA API REAL ANTES DE SUBIR A PRODUCCION
+    // const apiFlights = await this.apiflightService.getFlightsOneWayMock();
     const apiFlights = await this.apiflightService.getFlightsOneWay(originName, destinationName, origin, departure, cabinClass, date, adults, children, infants);
 
     // Obtener vuelos de la base de datos interna
@@ -78,7 +80,8 @@ export class ApiflightController {
   ) {
     const legsArray = JSON.parse(legs);
 
-    //const apiFlights = await this.apiflightService.getFlightsMultiMock();
+    // TODO: CAMBIAR A LA API REAL ANTES DE SUBIR A PRODUCCION
+    // const apiFlights = await this.apiflightService.getFlightsMultiMock();
     const apiFlights = await this.apiflightService.getFlightsMulti(legsArray, cabinClass, adults);
 
     // Obtener vuelos de la base de datos interna

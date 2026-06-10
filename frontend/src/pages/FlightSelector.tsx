@@ -47,7 +47,7 @@ function FlightSelector() {
             <div className="flight-selector-content">
                 <div className="mb-6 flex">
                     <button 
-                        onClick={() => navigate(-2)}
+                        onClick={() => navigate(-1)}
                         className="bg-[#2b5aa0] hover:bg-[#1a3c79] text-white px-5 py-2.5 rounded-lg flex items-center gap-2 font-medium transition-colors shadow-sm"
                         style={{ display: 'flex', position: 'relative', zIndex: 50 }}
                     >
