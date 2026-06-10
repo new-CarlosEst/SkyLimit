@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { usePassengerForm } from "../hooks/usePassengerForm";
 import { useSearchParamsStore } from "../store/searchParamsStore";
@@ -11,6 +12,8 @@ import SeatSelector from "../components/ui/personal/SeatSelector";
 import { useCheckoutStore } from "../store/checkoutStore";
 import type { PassengerCheckoutData } from "../types/checkout.types";
 import { useSeatSelection } from "../hooks/useSeatSelection";
+import { sileo } from "sileo";
+import { isValidEmail, isValidDocument } from "../utils/validation";
  
 // Register Spanish locale
 registerLocale("es", es);
@@ -22,6 +25,7 @@ import passportIcon from "../assets/ui/passport.svg";
 import locationIcon from "../assets/ui/ProiconsLocation.svg";
 import mailIcon from "../assets/ui/mail.svg";
 import genderIcon from "../assets/ui/men-broken.svg";
+import chevronIcon from "../assets/ui/FlowbiteChevronDownOutline.svg";
  
 function PassengerData() {
     const navigate = useNavigate();
@@ -39,6 +43,22 @@ function PassengerData() {
         getTravelClass,
     } = useSeatSelection(cabinClass, travelClass);
 
+    // Estado para controlar qué tarjetas de pasajeros están desplegadas (abiertas)
+    const [openCards, setOpenCards] = useState<Record<number, boolean>>(() => {
+        const initial: Record<number, boolean> = {};
+        passengerList.forEach((_, pIdx) => {
+            initial[pIdx] = false; // Por defecto todas cerradas
+        });
+        return initial;
+    });
+
+    const toggleCard = (pIdx: number) => {
+        setOpenCards(prev => ({
+            ...prev,
+            [pIdx]: !prev[pIdx]
+        }));
+    };
+
     const handleFormSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -47,18 +67,18 @@ function PassengerData() {
 
         const payload: PassengerCheckoutData[] = passengerList.map((passenger, pIdx) => ({
             type: passenger.type as "Adulto" | "Niño" | "Bebé",
-            name: String(formData.get(`p${pIdx}_name`) || ""),
-            surname: String(formData.get(`p${pIdx}_surname`) || ""),
+            name: String(formData.get(`p${pIdx}_name`) || "").trim(),
+            surname: String(formData.get(`p${pIdx}_surname`) || "").trim(),
             gender: dates[pIdx]?.gender || "",
             birthDate: dates[pIdx]?.birthDate
                 ? new Date(dates[pIdx].birthDate as Date).toISOString()
                 : "",
             nationality: dates[pIdx]?.nationality || "",
-            email: String(formData.get(`p${pIdx}_email`) || ""),
-            phone: String(formData.get(`p${pIdx}_phone`) || ""),
+            email: String(formData.get(`p${pIdx}_email`) || "").trim(),
+            phone: String(formData.get(`p${pIdx}_phone`) || "").trim(),
             document: {
                 type: dates[pIdx]?.docType || "",
-                number: String(formData.get(`p${pIdx}_doc_number`) || ""),
+                number: String(formData.get(`p${pIdx}_doc_number`) || "").trim(),
                 country: dates[pIdx]?.docCountry || "",
                 expirationDate: dates[pIdx]?.docExpiration
                     ? new Date(dates[pIdx].docExpiration as Date).toISOString()
@@ -70,6 +90,108 @@ function PassengerData() {
                 cabin: travelClass || getTravelClass(),
             },
         }));
+
+        // Validaciones previas a la selección de asientos
+        for (let i = 0; i < payload.length; i++) {
+            const p = payload[i];
+            const pLabel = `Pasajero ${i + 1} (${p.type})`;
+
+            if (!p.name) {
+                sileo.error({
+                    title: "Datos incompletos",
+                    description: `Por favor, introduce el nombre para el ${pLabel}.`
+                });
+                return;
+            }
+            if (!p.surname) {
+                sileo.error({
+                    title: "Datos incompletos",
+                    description: `Por favor, introduce los apellidos para el ${pLabel}.`
+                });
+                return;
+            }
+            if (!p.gender) {
+                sileo.error({
+                    title: "Datos incompletos",
+                    description: `Por favor, selecciona el género para el ${pLabel}.`
+                });
+                return;
+            }
+            if (!p.birthDate) {
+                sileo.error({
+                    title: "Datos incompletos",
+                    description: `Por favor, introduce la fecha de nacimiento para el ${pLabel}.`
+                });
+                return;
+            }
+            if (!p.nationality) {
+                sileo.error({
+                    title: "Datos incompletos",
+                    description: `Por favor, selecciona la nacionalidad para el ${pLabel}.`
+                });
+                return;
+            }
+
+            if (p.type === "Adulto") {
+                if (!p.email) {
+                    sileo.error({
+                        title: "Datos incompletos",
+                        description: `Por favor, introduce el correo electrónico para el ${pLabel}.`
+                    });
+                    return;
+                }
+                if (!isValidEmail(p.email)) {
+                    sileo.error({
+                        title: "Formato incorrecto",
+                        description: `El formato del correo electrónico para el ${pLabel} no es válido.`
+                    });
+                    return;
+                }
+                if (!p.phone) {
+                    sileo.error({
+                        title: "Datos incompletos",
+                        description: `Por favor, introduce el número de teléfono para el ${pLabel}.`
+                    });
+                    return;
+                }
+            }
+
+            if (!p.document.type) {
+                sileo.error({
+                    title: "Datos incompletos",
+                    description: `Por favor, selecciona el tipo de documento para el ${pLabel}.`
+                });
+                return;
+            }
+            if (!p.document.number) {
+                sileo.error({
+                    title: "Datos incompletos",
+                    description: `Por favor, introduce el número de documento para el ${pLabel}.`
+                });
+                return;
+            }
+            if (!isValidDocument(p.document.type, p.document.number)) {
+                sileo.error({
+                    title: "Formato incorrecto",
+                    description: `El formato del documento (${p.document.type === 'DNI' ? 'DNI' : 'Pasaporte'}) para el ${pLabel} es incorrecto.`
+                });
+                return;
+            }
+            if (!p.document.country) {
+                sileo.error({
+                    title: "Datos incompletos",
+                    description: `Por favor, selecciona el país de expedición del documento para el ${pLabel}.`
+                });
+                return;
+            }
+            if (!p.document.expirationDate) {
+                sileo.error({
+                    title: "Datos incompletos",
+                    description: `Por favor, introduce la fecha de caducidad del documento para el ${pLabel}.`
+                });
+                return;
+            }
+        }
 
         handleContinueToSeats(payload);
     };
@@ -103,89 +225,115 @@ function PassengerData() {
  
                         <form onSubmit={handleFormSubmit}>
                             {passengerList.map((passenger, pIdx) => (
-                                <div key={pIdx} className="passenger-card">
-                                    <div className="passenger-card-header">
+                                <div 
+                                    key={pIdx} 
+                                    className={`passenger-card ${openCards[pIdx] ? "" : "collapsed-card"}`}
+                                    onClick={() => {
+                                        if (!openCards[pIdx]) {
+                                            toggleCard(pIdx);
+                                        }
+                                    }}
+                                >
+                                    <div 
+                                        className={`passenger-card-header cursor-pointer select-none ${openCards[pIdx] ? "" : "collapsed"}`}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            toggleCard(pIdx);
+                                        }}
+                                    >
                                         <h2 className="passenger-card-title">
                                             Pasajero {pIdx + 1} <span className="text-base font-normal text-slate-500 ml-2">({passenger.type})</span>
                                         </h2>
+                                        <button
+                                            type="button"
+                                            className="passenger-card-toggle-btn focus:outline-none"
+                                        >
+                                            <img 
+                                                src={chevronIcon} 
+                                                alt="Toggle" 
+                                                className={`passenger-card-chevron ${openCards[pIdx] ? "open" : ""}`}
+                                            />
+                                        </button>
                                     </div>
  
-                                    {/* Datos personales */}
-                                    <div className="mb-6">
-                                        <h3 className="text-lg font-medium text-slate-700 mb-4">Datos Personales</h3>
-                                        <div className="form-grid">
-                                            <CustomInput label="Nombre"    name={`p${pIdx}_name`}    placeholder="Tu nombre"    icon={personIcon} />
-                                            <CustomInput label="Apellidos" name={`p${pIdx}_surname`}  placeholder="Tus apellidos" icon={personIcon} />
-                                            <SearchableSelect
-                                                label="Género"
-                                                name={`p${pIdx}_gender`}
-                                                value={dates[pIdx]?.gender || ''}
-                                                onChange={(value) => setPassengerDate(pIdx, 'gender', value)}
-                                                icon={genderIcon}
-                                                options={[
-                                                    { value: "M", label: "Hombre" },
-                                                    { value: "F", label: "Mujer"  },
-                                                    { value: "O", label: "Otro"   },
-                                                ]}
-                                            />
-                                            <DateInput
-                                                label="Fecha de Nacimiento"
-                                                name={`p${pIdx}_birthdate`}
-                                                value={dates[pIdx]?.birthDate}
-                                                onChange={(d) => setPassengerDate(pIdx, "birthDate", d)}
-                                                maxDate={today}
-                                            />
-                                            <SearchableSelect
-                                                label="Nacionalidad"
-                                                name={`p${pIdx}_nationality`}
-                                                value={dates[pIdx]?.nationality || ''}
-                                                onChange={(value) => setPassengerDate(pIdx, 'nationality', value)}
-                                                placeholder="Ej: España"
-                                                icon={locationIcon}
-                                                useCountries={true}
-                                            />
+                                    <div className={`passenger-card-body ${openCards[pIdx] ? "open" : "collapsed"}`}>
+                                        {/* Datos personales */}
+                                        <div className="mb-6">
+                                            <h3 className="text-lg font-medium text-slate-700 mb-4">Datos Personales</h3>
+                                            <div className="form-grid">
+                                                <CustomInput label="Nombre"    name={`p${pIdx}_name`}    placeholder="Tu nombre"    icon={personIcon} />
+                                                <CustomInput label="Apellidos" name={`p${pIdx}_surname`}  placeholder="Tus apellidos" icon={personIcon} />
+                                                <SearchableSelect
+                                                    label="Género"
+                                                    name={`p${pIdx}_gender`}
+                                                    value={dates[pIdx]?.gender || ''}
+                                                    onChange={(value) => setPassengerDate(pIdx, 'gender', value)}
+                                                    icon={genderIcon}
+                                                    options={[
+                                                        { value: "M", label: "Hombre" },
+                                                        { value: "F", label: "Mujer"  },
+                                                        { value: "O", label: "Otro"   },
+                                                    ]}
+                                                />
+                                                <DateInput
+                                                    label="Fecha de Nacimiento"
+                                                    name={`p${pIdx}_birthdate`}
+                                                    value={dates[pIdx]?.birthDate}
+                                                    onChange={(d) => setPassengerDate(pIdx, "birthDate", d)}
+                                                    maxDate={today}
+                                                />
+                                                <SearchableSelect
+                                                    label="Nacionalidad"
+                                                    name={`p${pIdx}_nationality`}
+                                                    value={dates[pIdx]?.nationality || ''}
+                                                    onChange={(value) => setPassengerDate(pIdx, 'nationality', value)}
+                                                    placeholder="Ej: España"
+                                                    icon={locationIcon}
+                                                    useCountries={true}
+                                                />
  
-                                            {passenger.type === "Adulto" && (
-                                                <>
-                                                    <CustomInput label="Correo Electrónico" name={`p${pIdx}_email`} type="email" placeholder="ejemplo@correo.com" icon={mailIcon} />
-                                                    <CustomInput label="Teléfono"           name={`p${pIdx}_phone`} type="tel"   placeholder="+34 600 000 000"   icon={phoneIcon} />
-                                                </>
-                                            )}
+                                                {passenger.type === "Adulto" && (
+                                                    <>
+                                                        <CustomInput label="Correo Electrónico" name={`p${pIdx}_email`} type="email" placeholder="ejemplo@correo.com" icon={mailIcon} />
+                                                        <CustomInput label="Teléfono"           name={`p${pIdx}_phone`} type="tel"   placeholder="+34 600 000 000"   icon={phoneIcon} />
+                                                    </>
+                                                )}
+                                            </div>
                                         </div>
-                                    </div>
  
-                                    {/* Documento de identidad */}
-                                    <div className="mt-8 pt-6 border-t border-slate-200">
-                                        <h3 className="text-lg font-medium text-slate-700 mb-4">Documento de Identidad</h3>
-                                        <div className="form-grid">
-                                            <SearchableSelect
-                                                label="Tipo de Documento"
-                                                name={`p${pIdx}_doc_type`}
-                                                value={dates[pIdx]?.docType || ''}
-                                                onChange={(value) => setPassengerDate(pIdx, 'docType', value)}
-                                                icon={passportIcon}
-                                                options={[
-                                                    { value: "DNI",      label: "DNI / Documento Nacional" },
-                                                    { value: "PASSPORT", label: "Pasaporte" },
-                                                ]}
-                                            />
-                                            <CustomInput label="Número de Documento" name={`p${pIdx}_doc_number`}  placeholder="Número del documento" icon={passportIcon} />
-                                            <SearchableSelect
-                                                label="País de Expedición"
-                                                name={`p${pIdx}_doc_country`}
-                                                value={dates[pIdx]?.docCountry || ''}
-                                                onChange={(value) => setPassengerDate(pIdx, 'docCountry', value)}
-                                                placeholder="Ej: España"
-                                                icon={locationIcon}
-                                                useCountries={true}
-                                            />
-                                            <DateInput
-                                                label="Fecha de Caducidad"
-                                                name={`p${pIdx}_doc_expiration`}
-                                                value={dates[pIdx]?.docExpiration}
-                                                onChange={(d) => setPassengerDate(pIdx, "docExpiration", d)}
-                                                minDate={today}
-                                            />
+                                        {/* Documento de identidad */}
+                                        <div className="mt-8 pt-6 border-t border-slate-200">
+                                            <h3 className="text-lg font-medium text-slate-700 mb-4">Documento de Identidad</h3>
+                                            <div className="form-grid">
+                                                <SearchableSelect
+                                                    label="Tipo de Documento"
+                                                    name={`p${pIdx}_doc_type`}
+                                                    value={dates[pIdx]?.docType || ''}
+                                                    onChange={(value) => setPassengerDate(pIdx, 'docType', value)}
+                                                    icon={passportIcon}
+                                                    options={[
+                                                        { value: "DNI",      label: "DNI / Documento Nacional" },
+                                                        { value: "PASSPORT", label: "Pasaporte" },
+                                                    ]}
+                                                />
+                                                <CustomInput label="Número de Documento" name={`p${pIdx}_doc_number`}  placeholder="Número del documento" icon={passportIcon} />
+                                                <SearchableSelect
+                                                    label="País de Expedición"
+                                                    name={`p${pIdx}_doc_country`}
+                                                    value={dates[pIdx]?.docCountry || ''}
+                                                    onChange={(value) => setPassengerDate(pIdx, 'docCountry', value)}
+                                                    placeholder="Ej: España"
+                                                    icon={locationIcon}
+                                                    useCountries={true}
+                                                />
+                                                <DateInput
+                                                    label="Fecha de Caducidad"
+                                                    name={`p${pIdx}_doc_expiration`}
+                                                    value={dates[pIdx]?.docExpiration}
+                                                    onChange={(d) => setPassengerDate(pIdx, "docExpiration", d)}
+                                                    minDate={today}
+                                                />
+                                            </div>
                                         </div>
                                     </div>
  
