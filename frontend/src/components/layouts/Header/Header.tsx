@@ -5,7 +5,7 @@ import AuthModal from "../../auth/AuthModal";
 import { useAuthStore } from "../../../store/authStore";
 import UserButton from "../../ui/header/UserButton";
 import { Link } from "react-router-dom";
-import { sileo } from "sileo";
+//import { sileo } from "sileo";
 
 function Header() {
 
@@ -19,7 +19,8 @@ function Header() {
                 <ul>
                     {/* TODO: Meter los enlaces en rutas de react-router cuando tenga las paginas y cambiar los onClick por los enlaces */}
                     <li><Link to="/">Inicio</Link></li>
-                    <li onClick={() => sileo.warning({ title: "Función no disponible" })}>Ofertas</li>
+                    {/* TODO: Una vez presentada la aplicacion hacer la parte de ofertas bien */}
+                    {/* <li onClick={() => sileo.warning({ title: "Función no disponible" })}>Ofertas</li> */} 
                     <li><Link to="/blog">Blog</Link></li>
                     <li><Link to="/contact">Contacto</Link></li>
                 </ul>
